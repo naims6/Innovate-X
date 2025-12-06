@@ -7,19 +7,19 @@ import "./navbar.css";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileNav from "./MobileNav";
 import Logo from "../../../Components/Logo";
+import useAuth from "../../../hooks/useAuth";
 
 function Navbar() {
+  const { user, logOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const isLoggedIn = false;
-  const user = {
-    name: "John Doe",
-    profilePicture:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2",
-  };
+  //     name: "John Doe",
+  //     profilePicture:
+  //       "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2",
+  //   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -86,21 +86,21 @@ function Navbar() {
             </button>
 
             {/* Profile or Sign In */}
-            {isLoggedIn ? (
+            {user ? (
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className={`flex items-center space-x-2 p-1 rounded-full transition-all duration-300 cursor-pointer`}
                 >
                   <img
-                    src={user.profilePicture}
+                    src={user.photoURL}
                     alt={user.name}
                     className={`w-10 h-10 rounded-full border-2 object-cover transition-all duration-300 border-primary`}
                   />
                 </button>
 
                 {isDropdownOpen && (
-                  <ProfileDropdown user={user} theme={theme} />
+                  <ProfileDropdown user={user} theme={theme} logOut={logOut} />
                 )}
               </div>
             ) : (

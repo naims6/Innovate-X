@@ -1,24 +1,45 @@
-import { useState, useRef } from "react";
+import { useState, useRef, use } from "react";
 import { Eye, EyeOff, Upload, X } from "lucide-react";
 import Logo from "../../../Components/Logo";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import SocialLogin from "../SocialLogin/SocialLogin";
+import AuthContext from "../../../Context/AuthContext";
+import { Controller, useForm } from "react-hook-form";
+import { getImageUrl } from "../../../utility/getImageUrl";
 
 export default function SignUp() {
+  const { createUser, updateUserProfile } = use(AuthContext);
+  const { register, handleSubmit, control } = useForm();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [agreed, setAgreed] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const fileInputRef = useRef(null);
+
+  const onSubmit = async (data) => {
+    // console.log(data);
+    const { fullName, email, password, profilePicture } = data;
+    console.log(profilePicture);
+    try {
+      const imageURL = await getImageUrl(profilePicture);
+
+      await createUser(email, password);
+      await updateUserProfile(fullName, imageURL);
+
+      navigate("/");
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
 
     if (file) {
       const reader = new FileReader();
-      reader.readAsDataURL(file);
-      console.log(reader);
       reader.onloadend = () => {
         setPreviewImage(reader.result);
       };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -47,7 +68,7 @@ export default function SignUp() {
               Create your account
             </h2>
 
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Profile Image Upload */}
               <div className="mb-6">
                 <label className="block text-sm font-medium mb-3">
@@ -59,12 +80,25 @@ export default function SignUp() {
                     onClick={triggerFileInput}
                     className="flex-1 border-2 border-dashed border-border rounded-xl p-6 cursor-pointer hover:border-cyan-500 transition-colors group"
                   >
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      className="hidden"
+                    <Controller
+                      name="profilePicture"
+                      control={control}
+                      rules={{ required: "Profile picture is required" }}
+                      render={({ field }) => (
+                        <input
+                          {...field}
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            field.onChange(file);
+                            handleImageUpload(e);
+                          }}
+                          className="hidden"
+                          value=""
+                        />
+                      )}
                     />
                     {previewImage ? (
                       <div className="flex flex-col items-center gap-2">
@@ -116,6 +150,8 @@ export default function SignUp() {
                 <input
                   type="text"
                   placeholder="Enter your full name"
+                  autoComplete="name"
+                  {...register("fullName", { required: true })}
                   className="w-full bg-placeholder/50 px-4 py-3 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
                 />
               </div>
@@ -128,6 +164,8 @@ export default function SignUp() {
                 <input
                   type="email"
                   placeholder="you@example.com"
+                  autoComplete="email"
+                  {...register("email", { required: true })}
                   className="w-full px-4 py-3 bg-placeholder/50 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
                 />
               </div>
@@ -141,6 +179,8 @@ export default function SignUp() {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
+                    autoComplete="new-password"
+                    {...register("password", { required: true })}
                     className="w-full px-4 py-3 bg-placeholder/50 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
                   />
                   <button
@@ -158,8 +198,7 @@ export default function SignUp() {
                 <input
                   type="checkbox"
                   id="terms"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
+                  {...register("terms", { required: true })}
                   className="w-5 h-5 rounded bg-gray-800 border-gray-700 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-gray-900"
                 />
                 <label htmlFor="terms" className="text-sm text-gray-400">
@@ -183,7 +222,6 @@ export default function SignUp() {
               {/* Sign Up Button */}
               <button
                 type="submit"
-                disabled={!agreed}
                 className="w-full py-3.5 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium rounded-xl hover:from-blue-700 hover:to-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
                 Sign up
@@ -198,27 +236,7 @@ export default function SignUp() {
             </div>
 
             {/* Google Sign Up */}
-            <button className="w-full py-3.5 bg-gray-800 border border-gray-700 text-white font-medium rounded-xl hover:bg-gray-750 flex items-center justify-center gap-3 transition">
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path
-                  fill="#EA4335"
-                  d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.59 4.418 1.559L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.734-4.856l-4.026 3.115C3.198 21.302 7.27 24 12 24c3.055 0 5.782-1.145 7.91-3l-3.87-3.987z"
-                />
-                <path
-                  fill="#4A90E2"
-                  d="M19.834 21c1.735-1.89 2.91-4.764 2.91-8 0-.54-.05-1.06-.15-1.57h-10.59V15.8h7.73c-.33 1.72-1.29 3.18-2.79 4.2l3.87 3.987z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.266 14.235A7.077 7.077 0 0 1 4.91 12c0-.776.1-1.53.27-2.235l-4.026-3.115C.222 8.99 0 10.46 0 12c0 1.54.222 3.01.658 4.35l4.608-3.115z"
-                />
-              </svg>
-              Continue with Google
-            </button>
+            <SocialLogin />
 
             {/* Sign In Link */}
             <p className="text-center mt-6 text-gray-400 text-sm">

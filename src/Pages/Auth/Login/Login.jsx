@@ -1,10 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Logo from "../../../Components/Logo";
 import { Eye, EyeOff } from "lucide-react";
+import SocialLogin from "../SocialLogin/SocialLogin";
+import useAuth from "../../../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const { signIn } = useAuth();
+  const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  const onSubmit = async (data) => {
+    try {
+      await signIn(data.email, data.password);
+      toast.success("Login Successful");
+      navigate("/");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
@@ -19,7 +36,7 @@ const Login = () => {
             Sign in to your account
           </h2>
 
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -28,6 +45,8 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="you@example.com"
+                autoComplete="email"
+                {...register("email", { required: "Email is required" })}
                 className="w-full px-4 py-3 bg-placeholder/50 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
               />
             </div>
@@ -41,6 +60,10 @@ const Login = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
+                  autoComplete="current-password"
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                   className="w-full px-4 py-3 bg-placeholder/50 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
                 />
                 <button
@@ -85,27 +108,7 @@ const Login = () => {
           </div>
 
           {/* Google Sign Up */}
-          <button className="w-full py-3.5 bg-gray-800 border border-gray-700 text-white font-medium rounded-xl hover:bg-gray-750 flex items-center justify-center gap-3 transition">
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
-              <path
-                fill="#EA4335"
-                d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.59 4.418 1.559L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115z"
-              />
-              <path
-                fill="#34A853"
-                d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.734-4.856l-4.026 3.115C3.198 21.302 7.27 24 12 24c3.055 0 5.782-1.145 7.91-3l-3.87-3.987z"
-              />
-              <path
-                fill="#4A90E2"
-                d="M19.834 21c1.735-1.89 2.91-4.764 2.91-8 0-.54-.05-1.06-.15-1.57h-10.59V15.8h7.73c-.33 1.72-1.29 3.18-2.79 4.2l3.87 3.987z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.266 14.235A7.077 7.077 0 0 1 4.91 12c0-.776.1-1.53.27-2.235l-4.026-3.115C.222 8.99 0 10.46 0 12c0 1.54.222 3.01.658 4.35l4.608-3.115z"
-              />
-            </svg>
-            Continue with Google
-          </button>
+          <SocialLogin />
 
           {/* Sign In Link */}
           <p className="text-center mt-6 text-gray-400 text-sm">

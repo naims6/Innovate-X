@@ -1,6 +1,16 @@
 import React from "react";
 import { LayoutDashboard, LogOut } from "lucide-react";
-const ProfileDropdown = ({ theme, user }) => {
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
+const ProfileDropdown = ({ theme, user, logOut }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logOut();
+    navigate("/login");
+    toast.success("Logout Successful");
+  };
+
   return (
     <div
       className={`absolute right-0 mt-3 w-56 rounded-xl shadow-2xl border border-border overflow-hidden animate-slideDown transition-all duration-200 bg-bg-surface`}
@@ -9,8 +19,8 @@ const ProfileDropdown = ({ theme, user }) => {
       <div className={`px-4 py-3 border-b border-border`}>
         <div className="flex items-center space-x-3">
           <img
-            src={user.profilePicture}
-            alt={user.name}
+            src={user.photoURL}
+            alt={user.displayName}
             className={`w-10 h-10 rounded-full border-2 object-cover ${
               theme === "dark" ? "border-blue-400" : "border-blue-600"
             }`}
@@ -21,7 +31,7 @@ const ProfileDropdown = ({ theme, user }) => {
                 theme === "dark" ? "text-white" : "text-gray-900"
               }`}
             >
-              {user.name}
+              {user.displayName}
             </p>
             <p
               className={`text-xs ${
@@ -54,7 +64,7 @@ const ProfileDropdown = ({ theme, user }) => {
           <span className="text-sm font-medium">Dashboard</span>
         </a>
         <button
-          onClick={() => console.log("Logout")}
+          onClick={handleLogout}
           className={`w-full flex items-center space-x-3 px-4 py-2.5 transition-colors duration-200 group ${
             theme === "dark"
               ? "text-gray-300 hover:bg-red-900/20 hover:text-red-400"
