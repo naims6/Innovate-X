@@ -6,10 +6,15 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 import useAuth from "../../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { getAuthErrorMessage } from "../../../utility/auth/getAuthErrorMessage";
 
 const Login = () => {
   const { signIn } = useAuth();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -19,7 +24,9 @@ const Login = () => {
       toast.success("Login Successful");
       navigate("/");
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.code);
+      const message = getAuthErrorMessage(error.code);
+      toast.error(message);
     }
   };
 
@@ -50,6 +57,9 @@ const Login = () => {
                 className="w-full px-4 py-3 bg-placeholder/50 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
               />
             </div>
+            {errors?.email && (
+              <p className="text-red-500">{errors?.email?.message}</p>
+            )}
 
             {/* Password */}
             <div>
@@ -74,6 +84,9 @@ const Login = () => {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
+              {errors?.password && (
+                <p className="text-red-500">{errors?.password?.message}</p>
+              )}
             </div>
 
             {/* remember me and forgot password */}

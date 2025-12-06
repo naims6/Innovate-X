@@ -6,28 +6,35 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 import AuthContext from "../../../Context/AuthContext";
 import { Controller, useForm } from "react-hook-form";
 import { getImageUrl } from "../../../utility/getImageUrl";
+import { getAuthErrorMessage } from "../../../utility/auth/getAuthErrorMessage";
+import toast from "react-hot-toast";
 
 export default function SignUp() {
   const { createUser, updateUserProfile } = use(AuthContext);
-  const { register, handleSubmit, control } = useForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const fileInputRef = useRef(null);
 
+  console.log(errors);
+
   const onSubmit = async (data) => {
-    // console.log(data);
     const { fullName, email, password, profilePicture } = data;
-    console.log(profilePicture);
     try {
       const imageURL = await getImageUrl(profilePicture);
 
       await createUser(email, password);
       await updateUserProfile(fullName, imageURL);
-
       navigate("/");
     } catch (error) {
-      console.error("Error creating user:", error);
+      const message = getAuthErrorMessage(error.code);
+      toast.error(message);
     }
   };
 
@@ -68,7 +75,7 @@ export default function SignUp() {
               Create your account
             </h2>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
               {/* Profile Image Upload */}
               <div className="mb-6">
                 <label className="block text-sm font-medium mb-3">
@@ -141,6 +148,11 @@ export default function SignUp() {
                   )}
                 </div>
               </div>
+              {errors?.profilePicture && (
+                <p className="text-red-500">
+                  {errors?.profilePicture?.message}
+                </p>
+              )}
 
               {/* Full Name */}
               <div>
@@ -151,10 +163,15 @@ export default function SignUp() {
                   type="text"
                   placeholder="Enter your full name"
                   autoComplete="name"
-                  {...register("fullName", { required: true })}
+                  {...register("fullName", {
+                    required: "Full name is required",
+                  })}
                   className="w-full bg-placeholder/50 px-4 py-3 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
                 />
               </div>
+              {errors?.fullName && (
+                <p className="text-red-500">{errors.fullName.message}</p>
+              )}
 
               {/* Email */}
               <div>
@@ -165,10 +182,13 @@ export default function SignUp() {
                   type="email"
                   placeholder="you@example.com"
                   autoComplete="email"
-                  {...register("email", { required: true })}
+                  {...register("email", { required: "Email is required" })}
                   className="w-full px-4 py-3 bg-placeholder/50 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
                 />
               </div>
+              {errors?.email && (
+                <p className="text-red-500">{errors?.email?.message}</p>
+              )}
 
               {/* Password */}
               <div>
@@ -180,7 +200,9 @@ export default function SignUp() {
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     autoComplete="new-password"
-                    {...register("password", { required: true })}
+                    {...register("password", {
+                      required: "Paasword is required",
+                    })}
                     className="w-full px-4 py-3 bg-placeholder/50 border border-border rounded-xl placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50 transition"
                   />
                   <button
@@ -192,13 +214,18 @@ export default function SignUp() {
                   </button>
                 </div>
               </div>
+              {errors?.password && (
+                <p className="text-red-500">{errors?.password?.message}</p>
+              )}
 
               {/* Terms Checkbox */}
               <div className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   id="terms"
-                  {...register("terms", { required: true })}
+                  {...register("terms", {
+                    required: "Confirm Terms and Conditions",
+                  })}
                   className="w-5 h-5 rounded bg-gray-800 border-gray-700 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-gray-900"
                 />
                 <label htmlFor="terms" className="text-sm text-gray-400">
@@ -218,6 +245,9 @@ export default function SignUp() {
                   </a>
                 </label>
               </div>
+              {errors?.terms && (
+                <p className="text-red-500">{errors?.terms?.message}</p>
+              )}
 
               {/* Sign Up Button */}
               <button

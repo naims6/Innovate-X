@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import AuthContext from "../../../Context/AuthContext";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { getAuthErrorMessage } from "../../../utility/auth/getAuthErrorMessage";
 
 const SocialLogin = () => {
   const { signInWithGoogle } = useContext(AuthContext);
@@ -13,7 +14,8 @@ const SocialLogin = () => {
       navigate("/");
       toast.success("Successfully logged in with Google!");
     } catch (error) {
-      console.error("Google Sign-In Error:", error);
+      const message = getAuthErrorMessage(error.code);
+      toast.error(message);
     }
   };
 
