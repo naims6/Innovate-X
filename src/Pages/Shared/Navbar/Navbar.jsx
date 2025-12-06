@@ -1,19 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import {
-  Menu,
-  X,
-  Trophy,
-  LayoutDashboard,
-  LogOut,
-  Sun,
-  Moon,
-} from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import Container from "../../../Components/Container";
 import useTheme from "../../../hooks/useTheme";
 import { Link } from "react-router";
 import "./navbar.css";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileNav from "./MobileNav";
+import Logo from "../../../Components/Logo";
 
 function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -21,7 +14,7 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   const user = {
     name: "John Doe",
     profilePicture:
@@ -55,14 +48,7 @@ function Navbar() {
       <Container>
         <div className="flex items-center justify-between h-16 px-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-1.5 cursor-pointer">
-            <div className={`p-2 rounded-lg`}>
-              <Trophy className={`w-6 h-6`} />
-            </div>
-            <span className={`text-2xl font-bold tracking-wide`}>
-              InnovateX
-            </span>
-          </Link>
+          <Logo />
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
@@ -120,11 +106,13 @@ function Navbar() {
             ) : (
               <div className="flex items-center">
                 <Link
+                  to="/login"
                   className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 tracking-wide`}
                 >
                   Log in
                 </Link>
                 <Link
+                  to="/signup"
                   className={`px-6 py-2 rounded-3xl font-medium transition-all duration-300 bg-bg-reverse text-text-reverse tracking-wide`}
                 >
                   Sign Up
