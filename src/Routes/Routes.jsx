@@ -3,8 +3,10 @@ import RootLayout from "../Layouts/RootLayout";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Auth/Login/Login";
 import SignUp from "../Pages/Auth/SignUp/SignUp";
+import NotFoundPage from "../Pages/Error/404Page";
 
 export const router = createBrowserRouter([
+  // root layout
   {
     path: "/",
     Component: RootLayout,
@@ -15,6 +17,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  // auth
   {
     path: "/login",
     Component: Login,
@@ -22,5 +25,10 @@ export const router = createBrowserRouter([
   {
     path: "/signup",
     Component: SignUp,
+  },
+  // 404 page
+  {
+    path: "*",
+    Component: NotFoundPage,
   },
 ]);
