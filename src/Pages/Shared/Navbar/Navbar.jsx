@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Container from "../../../Components/Container";
 import useTheme from "../../../hooks/useTheme";
 import { Link } from "react-router";
@@ -8,10 +8,11 @@ import ProfileDropdown from "./ProfileDropdown";
 import MobileNav from "./MobileNav";
 import Logo from "../../../Components/Logo";
 import useAuth from "../../../hooks/useAuth";
+import ToogleTheme from "../../../Components/ToogleTheme";
 
 function Navbar() {
   const { user, logOut } = useAuth();
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -69,21 +70,7 @@ function Navbar() {
           {/* Right Side Actions */}
           <div className="flex items-center space-x-3">
             {/* Dark/Light Mode Toggle */}
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className={`p-2 rounded-lg transition-all duration-300`}
-              title={
-                theme === "dark"
-                  ? "Switch to Light Mode"
-                  : "Switch to Dark Mode"
-              }
-            >
-              {theme === "dark" ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
+            <ToogleTheme />
 
             {/* Profile or Sign In */}
             {user ? (

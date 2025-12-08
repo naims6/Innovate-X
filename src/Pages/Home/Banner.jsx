@@ -167,10 +167,7 @@ const BannerSection = ({ onSearch }) => {
             theme === "dark" ? "border-gray-700/50" : "border-gray-200/50"
           }`}
         >
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="text-center space-y-2"
-          >
+          <motion.div className="text-center space-y-2">
             <div
               className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-3 ${
                 theme === "dark" ? "bg-blue-950/50" : "bg-blue-50"
@@ -198,10 +195,7 @@ const BannerSection = ({ onSearch }) => {
             </p>
           </motion.div>
 
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="text-center space-y-2"
-          >
+          <motion.div className="text-center space-y-2">
             <div
               className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-3 ${
                 theme === "dark" ? "bg-cyan-950/50" : "bg-cyan-50"
@@ -229,10 +223,7 @@ const BannerSection = ({ onSearch }) => {
             </p>
           </motion.div>
 
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="text-center space-y-2"
-          >
+          <motion.div className="text-center space-y-2">
             <div
               className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-3 ${
                 theme === "dark" ? "bg-purple-950/50" : "bg-purple-50"

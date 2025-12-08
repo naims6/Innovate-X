@@ -30,7 +30,7 @@
   --color-accent: #f59e0b;
 
   /* Backgrounds */
-  --color-bg: #f9fafb;
+  --color-background: #f9fafb;
   --color-bg-surface: #eceaea;
   --color-bg-reverse: #111827;
   --color-placeholder: #f9fafb;
@@ -42,7 +42,7 @@
   /* Text */
   --color-text-primary: #111827;
   --color-text-secondary: #4b5563;
-  --color-text-reverse: #f9fafb,
+  --color-text-reverse: #fff;
   --color-text-muted: #9ca3af;
 
   /* Border */
@@ -51,7 +51,7 @@
 
 /* 🌚 Dark Theme */
 [data-theme="dark"] {
-  --color-primary: green;
+  --color-primary: rgb(36, 36, 187);
   /* --color-secondary: #4338ca;
   --color-accent: #fbbf24; */
 
@@ -59,7 +59,7 @@
   --color-background: #0a0f24;
   --color-bg-surface: #263344;
   --color-bg-reverse: #ebf0ff;
-  --color-placeholder: #1E2939;
+  --color-placeholder: #1e2939;
 
   /* --color-bg-muted: #374151;
   --color-bg-hover: #4b5563;
