@@ -1,7 +1,12 @@
 import React from "react";
+import BannerSection from "../Banner";
 
 const Home = () => {
-  return <div className="mt-[500px]">Home</div>;
+  return (
+    <div>
+      <BannerSection />
+    </div>
+  );
 };
 
 export default Home;

@@ -74,25 +74,3 @@
   /* Border */
   --color-border: #191d2f;
 }
-
-/* 🌳 Forest Theme */
-[data-theme="forest"] {
-  --color-primary: #16a34a;
-  --color-secondary: #15803d;
-  --color-accent: #84cc16;
-
-  /* Backgrounds */
-  --color-bg: #f0fdf4;
-  --color-surface: #dcfce7;
-  --color-bg-muted: #bbf7d0;
-  --color-bg-hover: #86efac;
-  --color-overlay: rgba(0, 50, 0, 0.3);
-
-  /* Text */
-  --color-text-primary: #14532d;
-  --color-text-secondary: #166534;
-  --color-text-muted: #4ade80;
-
-  /* Border */
-  --color-border: #86efac;
-}
