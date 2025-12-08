@@ -4,7 +4,7 @@ import Logo from "../../../Components/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-linear-to-r from-background border-t border-border mt-10 via-background/60 to-background transition-colors duration-300 py-14">
+    <footer className="bg-linear-to-r from-background border-t border-border via-background/60 to-background transition-colors duration-300 py-14">
       <div className="max-w-7xl mx-auto px-6">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">

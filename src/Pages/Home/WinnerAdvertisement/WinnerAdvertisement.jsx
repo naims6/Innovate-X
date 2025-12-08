@@ -147,7 +147,7 @@ const WinnerAdvertisement = () => {
         </div>
 
         {/* Winners Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {winners.map((winner, index) => (
             <WinnerCard
               key={winner.id}
@@ -160,7 +160,7 @@ const WinnerAdvertisement = () => {
 
         {/* Call to Action */}
         <div
-          className={`rounded-2xl p-8 sm:p-12 text-center transition-all duration-300 bg-bg-surface/30`}
+          className={`rounded-2xl p-8 sm:p-12 text-center transition-all duration-300 bg-bg-surface/30 border border-border/40 shadow-sm hover:shadow-md`}
         >
           <h3 className={`text-3xl font-bold mb-4 `}>
             Ready to Become a Champion?

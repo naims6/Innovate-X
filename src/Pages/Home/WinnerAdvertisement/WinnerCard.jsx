@@ -3,7 +3,7 @@ import React from "react";
 const WinnerCard = ({ winner, index, theme }) => {
   return (
     <div
-      className={`rounded-xl overflow-hidden transition-all duration-500 transform hover:-translate-y-2 bg-bg-surface/30`}
+      className={`rounded-xl overflow-hidden transition-all duration-500 transform hover:-translate-y-2 border border-border/60 bg-bg-surface/30`}
       style={{
         animation: `slideUpIn 0.6s ease-out forwards`,
         animationDelay: `${index * 0.1}s`,
@@ -37,11 +37,7 @@ const WinnerCard = ({ winner, index, theme }) => {
       </div>
 
       {/* Prize Money */}
-      <div
-        className={`px-6 py-4 border-t ${
-          theme === "dark" ? "border-slate-700" : "border-gray-200"
-        }`}
-      >
+      <div className={`px-6 py-4 border-t border-border`}>
         <p className={`text-xs font-medium mb-1`}>Prize Money</p>
         <p className="text-2xl font-bold bg-linear-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
           ${winner.prize.toLocaleString()}
