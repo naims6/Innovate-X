@@ -14,7 +14,7 @@ const BannerSection = ({ onSearch }) => {
 
   return (
     <div
-      className={`relative w-full min-h-[85vh] flex items-center mt-20 justify-center overflow-hidden bg-background`}
+      className={`relative w-full min-h-screen flex items-center mt-5 justify-center overflow-hidden bg-background border-b border-border`}
     >
       {/* Animated linear Orbs */}
       <motion.div

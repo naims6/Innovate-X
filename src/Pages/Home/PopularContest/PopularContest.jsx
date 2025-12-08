@@ -53,26 +53,16 @@ const PopularContest = () => {
         "Build complete web applications from frontend to backend using modern technologies.",
       category: "Development",
     },
-    {
-      id: 5,
-      name: "Mobile App Championship",
-      image:
-        "https://images.unsplash.com/photo-1512941691920-25bda36dc643?w=400&h=300&fit=crop",
-      participants: 640,
-      description:
-        "Create innovative mobile applications for iOS and Android platforms.",
-      category: "Mobile",
-    },
-    {
-      id: 6,
-      name: "Data Science Analytics",
-      image:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
-      participants: 520,
-      description:
-        "Analyze datasets and build predictive models to solve real-world problems.",
-      category: "Data Science",
-    },
+    // {
+    //   id: 6,
+    //   name: "Data Science Analytics",
+    //   image:
+    //     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
+    //   participants: 520,
+    //   description:
+    //     "Analyze datasets and build predictive models to solve real-world problems.",
+    //   category: "Data Science",
+    // }
   ];
 
   useEffect(() => {
@@ -142,7 +132,7 @@ const PopularContest = () => {
 
   return (
     <section
-      className={`py-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300 bg-background `}
+      className={`py-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300 bg-bg-secondary`}
     >
       <Container>
         {/* Header Section */}

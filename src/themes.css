@@ -6,6 +6,7 @@
 
   /* Backgrounds */
   --color-background: var(--color-background);
+  --color-bg-secondary: var(--color-bg-secondary);
   --color-placeholder: var(--color-placeholder);
   --color-bg-surface: var(--color-bg-surface);
   --color-bg-reverse: var(--color-bg-reverse);
@@ -31,6 +32,7 @@
 
   /* Backgrounds */
   --color-background: #f9fafb;
+  --color-bg-secondary: #fafafd;
   --color-bg-surface: #eceaea;
   --color-bg-reverse: #111827;
   --color-placeholder: #f9fafb;
@@ -57,6 +59,8 @@
 
   /* Backgrounds */
   --color-background: #0a0f24;
+  --color-bg-secondary: #0f172a;
+
   --color-bg-surface: #263344;
   --color-bg-reverse: #ebf0ff;
   --color-placeholder: #1e2939;

@@ -3,7 +3,7 @@ import React from "react";
 const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
   return (
     <div
-      className={`flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 bg-bg-surface/50`}
+      className={`flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 bg-bg-surface/30 border-border/50 border shadow-sm`}
       style={{
         animation: `slideUpIn 0.5s ease-out forwards`,
         animationDelay: `${index * 0.1}s`,
@@ -34,9 +34,7 @@ const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
         {/* Title */}
         <div>
           <h3
-            className={`text-lg sm:text-xl font-bold leading-snug line-clamp-2 transition-colors duration-300 ${
-              theme === "dark" ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-lg sm:text-xl font-bold leading-snug line-clamp-2 transition-colors duration-300 `}
           >
             {contest.name}
           </h3>
@@ -44,9 +42,7 @@ const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
 
         {/* Description */}
         <p
-          className={`text-sm leading-relaxed line-clamp-2 grow ${
-            theme === "dark" ? "text-gray-400" : "text-gray-600"
-          }`}
+          className={`text-sm leading-relaxed line-clamp-2 grow text-text-secondary`}
         >
           {contest.description.slice(0, 65)}…
         </p>
