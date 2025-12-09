@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
   return (
@@ -69,9 +70,9 @@ const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
         </div>
 
         {/* Details Button */}
-        <button
-          className={`w-full mt-2 py-2.5 px-4 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 transform active:scale-95 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5
-              
+        <Link
+          to={`/contests/${contest.id}`}
+          className={`w-full mt-2 py-2.5 px-4 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 transform active:scale-95 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5  
           }`}
         >
           View Details
@@ -88,7 +89,7 @@ const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
               d="M13 7l5 5m0 0l-5 5m5-5H6"
             />
           </svg>
-        </button>
+        </Link>
       </div>
 
       {/* CSS Animations */}

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import Container from "../../../Components/Container";
 import useTheme from "../../../hooks/useTheme";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import "./navbar.css";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileNav from "./MobileNav";
@@ -37,8 +37,8 @@ function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "All Contests", href: "#contests" },
+    { name: "Home", href: "/" },
+    { name: "All Contests", href: "/all-contests" },
     { name: "Extra Section", href: "#extra" },
   ];
 
@@ -54,16 +54,16 @@ function Navbar() {
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
+              <NavLink
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 className={`relative font-medium transition-all duration-300 group`}
               >
                 {link.name}
                 <span
                   className={`absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-primary`}
                 />
-              </a>
+              </NavLink>
             ))}
           </div>
 

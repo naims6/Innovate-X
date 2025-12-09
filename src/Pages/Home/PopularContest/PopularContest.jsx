@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import useTheme from "../../../hooks/useTheme";
 import Header from "./Header";
 import Container from "../../../Components/Container";
-import ContestCard from "./ContestCard";
+import ContestCard from "../../../Components/ContestCard";
 const PopularContest = () => {
   const { theme } = useTheme();
 
