@@ -6,6 +6,10 @@ import SignUp from "../Pages/Auth/SignUp/SignUp";
 import NotFoundPage from "../Pages/Error/404Page";
 import AllContests from "../Pages/AllContests/AllContests";
 import ContestDetails from "../Pages/AllContests/ContestDetails/ContestDetails";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import AddContest from "../Pages/Dashboard/AddContest/AddContest";
+import MyContests from "../Pages/Dashboard/MyContests/MyContests";
+import Submissions from "../Pages/Dashboard/Submissions/Submissions";
 
 export const router = createBrowserRouter([
   // root layout
@@ -35,6 +39,25 @@ export const router = createBrowserRouter([
   {
     path: "/signup",
     Component: SignUp,
+  },
+  // dashboard
+  {
+    path: "/dashboard",
+    Component: DashboardLayout,
+    children: [
+      {
+        path: "add-contest",
+        Component: AddContest,
+      },
+      {
+        path: "my-contests",
+        Component: MyContests,
+      },
+      {
+        path: "submissions",
+        Component: Submissions,
+      },
+    ],
   },
   // 404 page
   {
