@@ -53,16 +53,16 @@ const PopularContest = () => {
         "Build complete web applications from frontend to backend using modern technologies.",
       category: "Development",
     },
-    // {
-    //   id: 6,
-    //   name: "Data Science Analytics",
-    //   image:
-    //     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
-    //   participants: 520,
-    //   description:
-    //     "Analyze datasets and build predictive models to solve real-world problems.",
-    //   category: "Data Science",
-    // }
+    {
+      id: 6,
+      name: "Data Science Analytics",
+      image:
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
+      participants: 520,
+      description:
+        "Analyze datasets and build predictive models to solve real-world problems.",
+      category: "Data Science",
+    },
   ];
 
   useEffect(() => {

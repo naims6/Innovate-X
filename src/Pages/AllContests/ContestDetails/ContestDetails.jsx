@@ -1,12 +1,16 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router";
 // import SubmitTaskModal from "./SubmitTaskModal";
 import useTheme from "../../../hooks/useTheme";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ContestDetails = () => {
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const [isRegistered, setIsRegistered] = useState(false);
+  const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
+  const [isRegistered, setIsRegistered] = useState(true);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 45,
@@ -16,63 +20,16 @@ const ContestDetails = () => {
     ended: false,
   });
 
-  // Sample contest data
-  const contest = {
-    id: 1,
-    name: "Web Design Showdown 2024",
-    banner:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=600&fit=crop",
-    category: "Design",
-    level: "Intermediate",
-    participants: 1250,
-    prize: 5000,
-    deadline: "2024-03-15",
-    description:
-      "Create a stunning and responsive website design that showcases modern web design principles. Your task is to build a beautiful, user-friendly interface for a digital marketing agency.",
-    fullDescription: `
-      This is an exciting opportunity to showcase your web design skills! We're looking for creative and innovative designers who can create a responsive website design that stands out.
-
-      **Requirements:**
-      - Create a responsive website design
-      - Must be mobile-friendly
-      - Use modern design principles
-      - Include interactive elements
-      - Accessibility considerations
-
-      **What We're Looking For:**
-      - Creative and innovative designs
-      - Clean and organized code
-      - Proper use of typography and color schemes
-      - User experience focus
-      - Cross-browser compatibility
-
-      **Deliverables:**
-      - High-fidelity design mockups
-      - Responsive design at multiple breakpoints
-      - Design documentation
-      - Source files (Figma, Adobe XD, or similar)
-    `,
-    taskDetails: `
-      Design a complete website for a digital marketing agency.
-
-      1. Create a hero section with compelling CTA
-      2. Design a services section showcasing 4-6 services
-      3. Create a portfolio/case studies section
-      4. Design a testimonials section
-      5. Create a contact/footer section
-      6. Ensure responsive design for mobile, tablet, and desktop
-      7. Include hover effects and interactive elements
-    `,
-    creatorName: "TechStudio Pro",
-    creatorImage:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
-    winner: null,
-    winnerImage: null,
-    createdAt: "2024-01-15",
-  };
+  const { data: contest = {}, isLoading } = useQuery({
+    queryKey: ["contests", id],
+    queryFn: async () => {
+      const result = await axiosSecure(`/contests/${id}`);
+      return result.data;
+    },
+  });
 
   // Countdown timer effect
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev.seconds > 0) {
@@ -98,6 +55,14 @@ const ContestDetails = () => {
     return () => clearInterval(timer);
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h1 className="text-xl">Loading...</h1>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
@@ -118,7 +83,7 @@ const ContestDetails = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate("/all-contests")}
-          className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-900 font-semibold rounded-lg transition-all duration-300"
+          className="absolute top-22 left-24 flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-900 font-semibold rounded-lg transition-all duration-300"
         >
           <svg
             className="w-5 h-5"

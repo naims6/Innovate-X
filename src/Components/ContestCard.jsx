@@ -71,7 +71,7 @@ const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
 
         {/* Details Button */}
         <Link
-          to={`/contests/${contest.id}`}
+          to={`/contests/${contest._id}`}
           className={`w-full mt-2 py-2.5 px-4 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 transform active:scale-95 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5  
           }`}
         >
