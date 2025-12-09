@@ -9,19 +9,22 @@ import MobileNav from "./MobileNav";
 import Logo from "../../../Components/Logo";
 import useAuth from "../../../hooks/useAuth";
 import ToogleTheme from "../../../Components/ToogleTheme";
+import NavbarSkeleton from "./NavbarSkeleton";
 
 function Navbar() {
-  const { user, logOut } = useAuth();
+  const { user, logOut, loading } = useAuth();
   const { theme } = useTheme();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  //     name: "John Doe",
-  //     profilePicture:
-  //       "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2",
-  //   };
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "All Contests", href: "/all-contests" },
+    { name: "Extra Section", href: "#extra" },
+  ];
 
+  // handle click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -36,11 +39,9 @@ function Navbar() {
     };
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "All Contests", href: "/all-contests" },
-    { name: "Extra Section", href: "#extra" },
-  ];
+  if (loading) {
+    return <NavbarSkeleton />;
+  }
 
   return (
     <nav
