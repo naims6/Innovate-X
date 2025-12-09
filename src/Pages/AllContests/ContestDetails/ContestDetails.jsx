@@ -10,22 +10,22 @@ const ContestDetails = () => {
   const { theme } = useTheme();
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-  const [isRegistered, setIsRegistered] = useState(true);
+  const [isRegistered, setIsRegistered] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const { data: contest = {}, isLoading } = useQuery({
+    queryKey: ["contest", id],
+    queryFn: async () => {
+      const result = await axiosSecure(`/contests/${id}`);
+      return result.data;
+    },
+  });
+  console.log(contest);
   const [timeLeft, setTimeLeft] = useState({
     days: 45,
     hours: 12,
     minutes: 30,
     seconds: 15,
     ended: false,
-  });
-
-  const { data: contest = {}, isLoading } = useQuery({
-    queryKey: ["contests", id],
-    queryFn: async () => {
-      const result = await axiosSecure(`/contests/${id}`);
-      return result.data;
-    },
   });
 
   // Countdown timer effect

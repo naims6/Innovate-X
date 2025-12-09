@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Eye, EyeOff, Upload, X } from "lucide-react";
 import Logo from "../../../Components/Logo";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import { Controller, useForm } from "react-hook-form";
 import { getImageUrl } from "../../../utility/getImageUrl";
@@ -23,6 +23,7 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const fileInputRef = useRef(null);
+  const location = useLocation();
 
   const onSubmit = async (data) => {
     const { fullName, email, password, profilePicture } = data;
@@ -32,7 +33,7 @@ export default function SignUp() {
 
       await createUser(email, password);
       await updateUserProfile(fullName, imageURL);
-      navigate("/");
+      navigate(location.state || "/", { replace: true });
 
       saveUser({
         fullName,

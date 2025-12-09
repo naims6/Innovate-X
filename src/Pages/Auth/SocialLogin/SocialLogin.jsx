@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { getAuthErrorMessage } from "../../../utility/auth/getAuthErrorMessage";
 import useAuth from "../../../hooks/useAuth";
@@ -9,12 +9,13 @@ const SocialLogin = () => {
   const { signInWithGoogle } = useAuth();
   const [isAuthenticating, setIsAuthticating] = useState(false);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  console.log(location);
   const handleGoogleLogin = async () => {
     setIsAuthticating(true);
     try {
       const { user } = await signInWithGoogle();
-      navigate("/");
+      navigate(location.state || "/", { replace: true });
       toast.success("Successfully logged in with Google!");
       saveUser({
         fullName: user.displayName,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Logo from "../../../Components/Logo";
 import { Eye, EyeOff } from "lucide-react";
 import SocialLogin from "../SocialLogin/SocialLogin";
@@ -18,13 +18,14 @@ const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isAuthenticating, setIsAuthticating] = useState(false);
+  const location = useLocation();
 
   const onSubmit = async (data) => {
     setIsAuthticating(true);
     try {
       await signIn(data.email, data.password);
       toast.success("Login Successful");
-      navigate("/");
+      navigate(location.state || "/", { replace: true });
     } catch (error) {
       const message = getAuthErrorMessage(error.code);
       toast.error(message);
