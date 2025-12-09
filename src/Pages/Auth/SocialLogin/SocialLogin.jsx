@@ -1,21 +1,31 @@
-import React, { useContext } from "react";
-import AuthContext from "../../../Context/AuthContext";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { getAuthErrorMessage } from "../../../utility/auth/getAuthErrorMessage";
+import useAuth from "../../../hooks/useAuth";
+import { saveUser } from "../../../utility/auth/saveUser";
 
 const SocialLogin = () => {
-  const { signInWithGoogle } = useContext(AuthContext);
+  const { signInWithGoogle } = useAuth();
+  const [isAuthenticating, setIsAuthticating] = useState(false);
   const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
+    setIsAuthticating(true);
     try {
-      await signInWithGoogle();
+      const { user } = await signInWithGoogle();
       navigate("/");
       toast.success("Successfully logged in with Google!");
+      saveUser({
+        fullName: user.displayName,
+        email: user.email,
+        profilePicture: user.photoURL,
+      });
     } catch (error) {
       const message = getAuthErrorMessage(error.code);
       toast.error(message);
+    } finally {
+      setIsAuthticating(false);
     }
   };
 
@@ -42,7 +52,7 @@ const SocialLogin = () => {
           d="M5.266 14.235A7.077 7.077 0 0 1 4.91 12c0-.776.1-1.53.27-2.235l-4.026-3.115C.222 8.99 0 10.46 0 12c0 1.54.222 3.01.658 4.35l4.608-3.115z"
         />
       </svg>
-      Continue with Google
+      {isAuthenticating ? "Login in..." : "Continue with Google"}
     </button>
   );
 };

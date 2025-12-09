@@ -1,16 +1,17 @@
-import { useState, useRef, use } from "react";
+import { useState, useRef } from "react";
 import { Eye, EyeOff, Upload, X } from "lucide-react";
 import Logo from "../../../Components/Logo";
 import { Link, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
-import AuthContext from "../../../Context/AuthContext";
 import { Controller, useForm } from "react-hook-form";
 import { getImageUrl } from "../../../utility/getImageUrl";
 import { getAuthErrorMessage } from "../../../utility/auth/getAuthErrorMessage";
 import toast from "react-hot-toast";
+import { saveUser } from "../../../utility/auth/saveUser";
+import useAuth from "../../../hooks/useAuth";
 
 export default function SignUp() {
-  const { createUser, updateUserProfile } = use(AuthContext);
+  const { createUser, updateUserProfile } = useAuth();
   const {
     register,
     handleSubmit,
@@ -18,23 +19,31 @@ export default function SignUp() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const [isAuthenticating, setIsAuthticating] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const fileInputRef = useRef(null);
 
-  console.log(errors);
-
   const onSubmit = async (data) => {
     const { fullName, email, password, profilePicture } = data;
+    setIsAuthticating(true);
     try {
       const imageURL = await getImageUrl(profilePicture);
 
       await createUser(email, password);
       await updateUserProfile(fullName, imageURL);
       navigate("/");
+
+      saveUser({
+        fullName,
+        email,
+        profilePicture: imageURL,
+      });
     } catch (error) {
       const message = getAuthErrorMessage(error.code);
       toast.error(message);
+    } finally {
+      setIsAuthticating(false);
     }
   };
 
@@ -251,10 +260,13 @@ export default function SignUp() {
 
               {/* Sign Up Button */}
               <button
+                disabled={isAuthenticating}
                 type="submit"
-                className="w-full py-3.5 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium rounded-xl hover:from-blue-700 hover:to-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                className={`${
+                  isAuthenticating ? "opacity-60" : "opacity-100"
+                } w-full py-3.5 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium rounded-xl hover:from-blue-700 hover:to-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition`}
               >
-                Sign up
+                {isAuthenticating ? "Creating Account..." : "Sign Up"}
               </button>
             </form>
 

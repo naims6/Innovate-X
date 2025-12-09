@@ -17,16 +17,19 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isAuthenticating, setIsAuthticating] = useState(false);
 
   const onSubmit = async (data) => {
+    setIsAuthticating(true);
     try {
       await signIn(data.email, data.password);
       toast.success("Login Successful");
       navigate("/");
     } catch (error) {
-      console.log(error.code);
       const message = getAuthErrorMessage(error.code);
       toast.error(message);
+    } finally {
+      setIsAuthticating(false);
     }
   };
 
@@ -109,7 +112,7 @@ const Login = () => {
               type="submit"
               className="w-full py-3.5 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium rounded-xl hover:from-blue-700 hover:to-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
-              Sign In
+              {isAuthenticating ? "Login In..." : "Log in"}
             </button>
           </form>
 
