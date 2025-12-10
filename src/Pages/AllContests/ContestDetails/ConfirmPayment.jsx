@@ -314,7 +314,7 @@ const ConfirmPayment = ({
               disabled={!agree}
               className={`px-5 py-2 rounded-md font-semibold ${
                 !agree
-                  ? "opacity-60 cursor-not-allowed"
+                  ? "opacity-60 cursor-not-allowed border border-border/60"
                   : "bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-md"
               }`}
             >

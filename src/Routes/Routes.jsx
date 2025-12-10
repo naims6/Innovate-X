@@ -7,9 +7,9 @@ import NotFoundPage from "../Pages/Error/404Page";
 import AllContests from "../Pages/AllContests/AllContests";
 import ContestDetails from "../Pages/AllContests/ContestDetails/ContestDetails";
 import DashboardLayout from "../Layouts/DashboardLayout";
-import AddContest from "../Pages/Dashboard/AddContest/AddContest";
-import MyContests from "../Pages/Dashboard/MyContests/MyContests";
-import Submissions from "../Pages/Dashboard/Submissions/Submissions";
+import AddContest from "../Pages/Dashboard/CreatorDashboard/AddContest/AddContest";
+import MyContests from "../Pages/Dashboard/CreatorDashboard/MyContests/MyContests";
+import Submissions from "../Pages/Dashboard/CreatorDashboard/Submissions/Submissions";
 import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([

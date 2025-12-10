@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SubmissionDetailModal from "./SubmissionDetailModal";
-import useTheme from "../../../hooks/useTheme";
+import useTheme from "../../../../hooks/useTheme";
 
 const Submissions = () => {
   const { theme } = useTheme();
