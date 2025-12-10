@@ -23,6 +23,7 @@ const AllContests = () => {
       return result.data;
     },
   });
+  console.log(allContest);
 
   const categories = ["All", ...new Set(allContest.map((c) => c.category))];
 
