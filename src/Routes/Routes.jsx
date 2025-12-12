@@ -14,6 +14,7 @@ import PrivateRoute from "./PrivateRoute";
 import ManageUser from "../Pages/Dashboard/AdminDashboard/ManageUser/ManageUser";
 import MyParticipate from "../Pages/Dashboard/UserDashBoard/MyParticipate/MyParticipate";
 import MyWinningContests from "../Pages/Dashboard/UserDashBoard/WinningContest/WinningContest";
+import MyProfile from "../Pages/Dashboard/UserDashBoard/MyProfile/MyProfile";
 
 export const router = createBrowserRouter([
   // root layout
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
       {
         path: "my-participate",
         Component: MyParticipate,
+      },
+      {
+        path: "profile",
+        Component: MyProfile,
       },
       {
         path: "my-winning-contests",

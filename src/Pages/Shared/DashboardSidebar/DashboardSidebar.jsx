@@ -43,6 +43,11 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       href: "/dashboard/my-winning-contests",
     },
     {
+      icon: "👤",
+      label: "Profile",
+      href: "/dashboard/profile",
+    },
+    {
       icon: "⚙️",
       label: "Settings",
       href: "/dashboard/settings",
