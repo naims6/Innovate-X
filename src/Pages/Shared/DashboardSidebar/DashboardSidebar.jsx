@@ -1,37 +1,23 @@
 import React from "react";
 import { Link, useLocation } from "react-router";
 import useTheme from "../../../hooks/useTheme";
+import useRole from "../../../hooks/useRole";
+import useAuth from "../../../hooks/useAuth";
+import DashboardSidebarSkeleton from "./DashboardSidebarSkeleton";
 
 const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const { theme } = useTheme();
+  const { user, loading } = useAuth();
+  const { role, isRoleLoading } = useRole();
   const location = useLocation();
 
-  const menuItems = [
-    {
-      icon: "📊",
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      icon: "➕",
-      label: "Add Contest",
-      href: "/dashboard/add-contest",
-    },
-    {
-      icon: "🤷‍♂️",
-      label: "Manage User",
-      href: "/dashboard/manage-user",
-    },
-    {
-      icon: "📋",
-      label: "My Contests",
-      href: "/dashboard/my-contests",
-    },
-    {
-      icon: "📤",
-      label: "Submissions",
-      href: "/dashboard/submissions",
-    },
+  console.log(role);
+
+  if (isRoleLoading || loading) {
+    return <DashboardSidebarSkeleton theme={theme} sidebarOpen={sidebarOpen} />;
+  }
+
+  const userMenuItems = [
     {
       icon: "📝",
       label: "My Paricipate",
@@ -47,12 +33,64 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       label: "Profile",
       href: "/dashboard/profile",
     },
+  ];
+
+  const creatorMenuItems = [
     {
-      icon: "⚙️",
-      label: "Settings",
-      href: "/dashboard/settings",
+      icon: "➕",
+      label: "Add Contest",
+      href: "/dashboard/add-contest",
+    },
+    {
+      icon: "📋",
+      label: "My Contests",
+      href: "/dashboard/my-contests",
+    },
+    {
+      icon: "📤",
+      label: "Submissions",
+      href: "/dashboard/submissions",
     },
   ];
+
+  const adminMenuItems = [
+    {
+      icon: "🤷‍♂️",
+      label: "Manage User",
+      href: "/dashboard/manage-user",
+    },
+  ];
+
+  const menuItems =
+    role === "admin"
+      ? adminMenuItems
+      : role === "creator"
+      ? creatorMenuItems
+      : userMenuItems;
+
+  // const menuItemss = [
+  //   {
+  //     icon: "📊",
+  //     label: "Dashboard",
+  //     href: "/dashboard",
+  //   },
+
+  //   {
+  //     icon: "📝",
+  //     label: "My Paricipate",
+  //     href: "/dashboard/my-participate",
+  //   },
+  //   {
+  //     icon: "🏆",
+  //     label: "Winning Contests",
+  //     href: "/dashboard/my-winning-contests",
+  //   },
+  //   {
+  //     icon: "👤",
+  //     label: "Profile",
+  //     href: "/dashboard/profile",
+  //   },
+  // ];
 
   const isActive = (href) => location.pathname === href;
 
@@ -125,7 +163,10 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
           {sidebarOpen ? (
             <div className="flex items-center gap-3 w-full">
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop"
+                src={
+                  user?.photoURL ||
+                  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop"
+                }
                 alt="User"
                 className="w-10 h-10 rounded-full"
               />
@@ -135,14 +176,14 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     theme === "dark" ? "text-white" : "text-gray-900"
                   }`}
                 >
-                  John Doe
+                  {user?.displayName || "Annonymous User"}
                 </p>
                 <p
                   className={`text-xs truncate ${
                     theme === "dark" ? "text-gray-400" : "text-gray-500"
                   }`}
                 >
-                  Creator
+                  {role}
                 </p>
               </div>
             </div>
