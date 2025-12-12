@@ -11,6 +11,7 @@ import AddContest from "../Pages/Dashboard/CreatorDashboard/AddContest/AddContes
 import MyContests from "../Pages/Dashboard/CreatorDashboard/MyContests/MyContests";
 import Submissions from "../Pages/Dashboard/CreatorDashboard/Submissions/Submissions";
 import PrivateRoute from "./PrivateRoute";
+import ManageUser from "../Pages/Dashboard/AdminDashboard/ManageUser/ManageUser";
 
 export const router = createBrowserRouter([
   // root layout
@@ -61,6 +62,11 @@ export const router = createBrowserRouter([
       {
         path: "submissions",
         Component: Submissions,
+      },
+      // admin dashbaord routes
+      {
+        path: "manage-user",
+        Component: ManageUser,
       },
     ],
   },

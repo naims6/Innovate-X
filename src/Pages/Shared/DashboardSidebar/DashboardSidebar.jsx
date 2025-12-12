@@ -18,6 +18,11 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       href: "/dashboard/add-contest",
     },
     {
+      icon: "🤷‍♂️",
+      label: "Manage User",
+      href: "/dashboard/manage-user",
+    },
+    {
       icon: "📋",
       label: "My Contests",
       href: "/dashboard/my-contests",
@@ -49,7 +54,8 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
         }  flex-col h-screen sticky top-0 sm:flex`}
       >
         {/* Logo */}
-        <div
+        <Link
+          to="/"
           className={`h-16 flex items-center px-4 border-b ${
             theme === "dark" ? "border-slate-700" : "border-gray-200"
           }`}
@@ -72,7 +78,7 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
               IX
             </div>
           )}
-        </div>
+        </Link>
 
         {/* Menu Items */}
         <nav className="flex-1 px-2 py-6 space-y-2 overflow-y-auto">
