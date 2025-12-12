@@ -12,6 +12,8 @@ import MyContests from "../Pages/Dashboard/CreatorDashboard/MyContests/MyContest
 import Submissions from "../Pages/Dashboard/CreatorDashboard/Submissions/Submissions";
 import PrivateRoute from "./PrivateRoute";
 import ManageUser from "../Pages/Dashboard/AdminDashboard/ManageUser/ManageUser";
+import MyParticipate from "../Pages/Dashboard/UserDashBoard/MyParticipate/MyParticipate";
+import MyWinningContests from "../Pages/Dashboard/UserDashBoard/WinningContest/WinningContest";
 
 export const router = createBrowserRouter([
   // root layout
@@ -51,6 +53,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     Component: DashboardLayout,
     children: [
+      // creator dashboard routes
       {
         path: "add-contest",
         Component: AddContest,
@@ -67,6 +70,15 @@ export const router = createBrowserRouter([
       {
         path: "manage-user",
         Component: ManageUser,
+      },
+      // user dashboard routes
+      {
+        path: "my-participate",
+        Component: MyParticipate,
+      },
+      {
+        path: "my-winning-contests",
+        Component: MyWinningContests,
       },
     ],
   },

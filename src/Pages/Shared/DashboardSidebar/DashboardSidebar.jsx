@@ -33,6 +33,16 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       href: "/dashboard/submissions",
     },
     {
+      icon: "📝",
+      label: "My Paricipate",
+      href: "/dashboard/my-participate",
+    },
+    {
+      icon: "🏆",
+      label: "Winning Contests",
+      href: "/dashboard/my-winning-contests",
+    },
+    {
       icon: "⚙️",
       label: "Settings",
       href: "/dashboard/settings",
