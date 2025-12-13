@@ -11,13 +11,16 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const { role, isRoleLoading } = useRole();
   const location = useLocation();
 
-  console.log(role);
-
   if (isRoleLoading || loading) {
     return <DashboardSidebarSkeleton theme={theme} sidebarOpen={sidebarOpen} />;
   }
 
   const userMenuItems = [
+    {
+      icon: "👤",
+      label: "Profile",
+      href: "/dashboard/profile",
+    },
     {
       icon: "📝",
       label: "My Paricipate",
@@ -28,24 +31,20 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       label: "Winning Contests",
       href: "/dashboard/my-winning-contests",
     },
-    {
-      icon: "👤",
-      label: "Profile",
-      href: "/dashboard/profile",
-    },
   ];
 
   const creatorMenuItems = [
-    {
-      icon: "➕",
-      label: "Add Contest",
-      href: "/dashboard/add-contest",
-    },
     {
       icon: "📋",
       label: "My Contests",
       href: "/dashboard/my-contests",
     },
+    {
+      icon: "➕",
+      label: "Add Contest",
+      href: "/dashboard/add-contest",
+    },
+
     {
       icon: "📤",
       label: "Submissions",
@@ -67,30 +66,6 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       : role === "creator"
       ? creatorMenuItems
       : userMenuItems;
-
-  // const menuItemss = [
-  //   {
-  //     icon: "📊",
-  //     label: "Dashboard",
-  //     href: "/dashboard",
-  //   },
-
-  //   {
-  //     icon: "📝",
-  //     label: "My Paricipate",
-  //     href: "/dashboard/my-participate",
-  //   },
-  //   {
-  //     icon: "🏆",
-  //     label: "Winning Contests",
-  //     href: "/dashboard/my-winning-contests",
-  //   },
-  //   {
-  //     icon: "👤",
-  //     label: "Profile",
-  //     href: "/dashboard/profile",
-  //   },
-  // ];
 
   const isActive = (href) => location.pathname === href;
 

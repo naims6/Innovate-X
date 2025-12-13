@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import useTheme from "../../../../hooks/useTheme";
+import useAuth from "../../../../hooks/useAuth";
 
 const MyProfile = () => {
   const { theme } = useTheme();
+  const { user, loading } = useAuth();
+
   const [profile, setProfile] = useState({
     name: "John Doe",
     photo: "https://via.placeholder.com/150",
     bio: "Passionate innovator and tech enthusiast.",
     address: "123 Innovation St, Tech City",
   });
+
   const [editMode, setEditMode] = useState(false);
 
   // Mock win percentage data
@@ -25,6 +29,10 @@ const MyProfile = () => {
     // Implement save functionality later
     setEditMode(false);
   };
+
+  if (loading) {
+    return <h1 className="text-xl">Loading...</h1>;
+  }
 
   return (
     <div
@@ -49,7 +57,7 @@ const MyProfile = () => {
           >
             <div className="flex flex-col items-center mb-6">
               <img
-                src={profile.photo}
+                src={user.photoURL}
                 alt="Profile"
                 className="w-24 h-24 rounded-full mb-4"
               />
@@ -86,7 +94,7 @@ const MyProfile = () => {
                     }`}
                   />
                 ) : (
-                  <p>{profile.name}</p>
+                  <p>{user.displayName}</p>
                 )}
               </div>
               <div>

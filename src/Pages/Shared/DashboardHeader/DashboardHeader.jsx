@@ -1,9 +1,24 @@
+import { useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import useRole from "../../../hooks/useRole";
 import useTheme from "../../../hooks/useTheme";
+import toast from "react-hot-toast";
 
 const DashboardHeader = ({ sidebarOpen, setSidebarOpen }) => {
   const { theme } = useTheme();
+  const { role, isRoleLoading } = useRole();
+  const navigate = useNavigate();
   const { logOut } = useAuth();
+
+  const handleLogout = async () => {
+    await logOut();
+    navigate("/login");
+    toast.success("Logout Successful");
+  };
+
+  if (isRoleLoading) {
+    return <h1 className="text-xl">Loading...</h1>;
+  }
 
   return (
     <div
@@ -40,7 +55,7 @@ const DashboardHeader = ({ sidebarOpen, setSidebarOpen }) => {
             theme === "dark" ? "text-white" : "text-gray-900"
           }`}
         >
-          Creator Dashboard
+          {role?.charAt(0).toUpperCase() + role?.slice(1)} Dashboard
         </h1>
       </div>
 
@@ -70,7 +85,7 @@ const DashboardHeader = ({ sidebarOpen, setSidebarOpen }) => {
 
         {/* Logout */}
         <button
-          onClick={logOut}
+          onClick={handleLogout}
           className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
             theme === "dark"
               ? "bg-red-900/30 text-red-400 hover:bg-red-900/50"

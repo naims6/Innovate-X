@@ -2,8 +2,10 @@ import React from "react";
 import { LayoutDashboard, LogOut } from "lucide-react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
+import useRole from "../../../hooks/useRole";
 const ProfileDropdown = ({ theme, user, logOut }) => {
   const navigate = useNavigate();
+  const { role } = useRole();
 
   const handleLogout = async () => {
     await logOut();
@@ -47,7 +49,13 @@ const ProfileDropdown = ({ theme, user, logOut }) => {
       {/* Dropdown Menu Items */}
       <div className="py-2">
         <Link
-          to="/dashboard"
+          to={`${
+            role === "admin"
+              ? "/dashboard/manage-user"
+              : role === "creator"
+              ? "/dashboard/my-contests"
+              : "/dashboard/profile"
+          }`}
           className={`flex items-center space-x-3 px-4 py-2.5 transition-colors duration-200 group ${
             theme === "dark"
               ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"

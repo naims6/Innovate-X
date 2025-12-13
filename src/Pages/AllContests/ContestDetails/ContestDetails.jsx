@@ -15,6 +15,7 @@ const ContestDetails = () => {
   const axiosSecure = useAxiosSecure();
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
   const { data: contest = {}, isLoading } = useQuery({
     queryKey: ["contest", id],
     queryFn: async () => {

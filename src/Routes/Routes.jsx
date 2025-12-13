@@ -15,6 +15,8 @@ import ManageUser from "../Pages/Dashboard/AdminDashboard/ManageUser/ManageUser"
 import MyParticipate from "../Pages/Dashboard/UserDashBoard/MyParticipate/MyParticipate";
 import MyWinningContests from "../Pages/Dashboard/UserDashBoard/WinningContest/WinningContest";
 import MyProfile from "../Pages/Dashboard/UserDashBoard/MyProfile/MyProfile";
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess/PaymentSuccess";
+import PaymentCancel from "../Pages/Payment/PaymentCancel/PaymentCancel";
 
 export const router = createBrowserRouter([
   // root layout
@@ -86,6 +88,14 @@ export const router = createBrowserRouter([
         Component: MyWinningContests,
       },
     ],
+  },
+  {
+    path: "/payment-success",
+    Component: PaymentSuccess,
+  },
+  {
+    path: "/payment-cancel",
+    Component: PaymentCancel,
   },
   // 404 page
   {

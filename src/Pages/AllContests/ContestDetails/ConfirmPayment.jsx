@@ -1,6 +1,7 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ConfirmPayment = ({
   isPaymentModalOpen,
@@ -9,7 +10,22 @@ const ConfirmPayment = ({
   contest,
 }) => {
   const [agree, setAgree] = useState(false);
+  // const [paymentProccessing, setPaymentProccessing] = useState(false);
+  const axiosSecure = useAxiosSecure();
   const dark = theme === "dark";
+  // console.log(contest);
+  const handlePayment = async () => {
+    const contestInfo = {
+      prize: contest.prize,
+      creator_name: contest.creatorName,
+    };
+    console.log("hello");
+    const res = await axiosSecure.post("/create-checkout-session", contestInfo);
+
+    console.log("hello2");
+    console.log(res.data);
+    window.location.href = res.data.url;
+  };
 
   return (
     <Dialog
@@ -311,8 +327,9 @@ const ConfirmPayment = ({
 
             <button
               type="button"
+              onClick={handlePayment}
               disabled={!agree}
-              className={`px-5 py-2 rounded-md font-semibold ${
+              className={`px-5 py-2 rounded-md font-semibold cursor-pointer ${
                 !agree
                   ? "opacity-60 cursor-not-allowed border border-border/60"
                   : "bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-md"

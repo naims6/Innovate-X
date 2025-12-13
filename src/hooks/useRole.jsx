@@ -14,8 +14,6 @@ const useRole = () => {
       return result.data.role || "user";
     },
   });
-
-  console.log(role, isRoleLoading);
   return { role, isRoleLoading };
 };
 
