@@ -1,7 +1,7 @@
 // import { useEffect, useState } from "react";
 
 import { useContext } from "react";
-import { ThemeContext } from "../Context/Theme/ThemeContext";
+import { ThemeContext } from "../Context/ThemeContext";
 
 // const useTheme = () => {
 //   const [theme, setTheme] = useState(() => {

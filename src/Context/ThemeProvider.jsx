@@ -41,9 +41,7 @@ const ThemeProvider = ({ children }) => {
 
   const themeInfo = { theme, setTheme };
 
-  return (
-    <ThemeContext.Provider value={themeInfo}>{children}</ThemeContext.Provider>
-  );
+  return <ThemeContext value={themeInfo}>{children}</ThemeContext>;
 };
 
 export default ThemeProvider;

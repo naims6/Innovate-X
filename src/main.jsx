@@ -5,8 +5,8 @@ import { RouterProvider } from "react-router";
 import { router } from "./Routes/Routes.jsx";
 import AuthProvider from "./Context/AuthProvider.jsx";
 import { Toaster } from "react-hot-toast";
-import ThemeProvider from "./Context/Theme/ThemeProvider.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ThemeProvider from "./Context/ThemeProvider.jsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
