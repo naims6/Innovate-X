@@ -7,6 +7,8 @@ const UserTableRow = ({ user, theme, ROLE_OPTIONS }) => {
   const [selectedRole, setSelectedRole] = useState(role);
   const axiosSecure = useAxiosSecure();
 
+  console.log(selectedRole);
+
   // Logic to update user role
   const handleUserRoleUpdate = async (userId) => {
     const res = await axiosSecure.patch(`users/${userId}`, {
@@ -52,7 +54,7 @@ const UserTableRow = ({ user, theme, ROLE_OPTIONS }) => {
       {/* ROLE SELECT */}
       <td className="p-3">
         <select
-          value={selectedRole}
+          defaultValue={selectedRole}
           onChange={(e) => setSelectedRole(e.target.value)}
           className={
             "px-3 py-1.5 rounded-md text-sm focus:outline-none border border-border bg-bg-secondary"
@@ -60,7 +62,7 @@ const UserTableRow = ({ user, theme, ROLE_OPTIONS }) => {
         >
           {ROLE_OPTIONS.map((r) => (
             <option key={r} value={r}>
-              {r}
+              {r.toLowerCase()}
             </option>
           ))}
         </select>

@@ -41,7 +41,8 @@ export default function ManageUser() {
 
   // determine theme without adding state
   const { theme } = useTheme();
-  const ROLE_OPTIONS = ["User", "Creator", "Admin"];
+
+  const ROLE_OPTIONS = ["user", "creator", "admin"];
 
   return (
     <div className="p-6">

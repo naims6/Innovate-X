@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import ContestCard from "../../Components/ContestCard";
 import useTheme from "../../hooks/useTheme";
 import useAuth from "../../hooks/useAuth";
@@ -11,15 +11,17 @@ const AllContests = () => {
   const { theme } = useTheme();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(searchQuery);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
 
   const { data: allContest = [], isLoading } = useQuery({
     queryKey: ["allContest"],
     queryFn: async () => {
-      const result = await axiosSecure(`/contests`);
+      const result = await axiosSecure(`/contests?search=${searchTerm}`);
       return result.data;
     },
   });

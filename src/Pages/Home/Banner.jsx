@@ -2,14 +2,35 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Sparkles, Zap, Trophy } from "lucide-react";
 import useTheme from "../../hooks/useTheme";
+import { useNavigate } from "react-router";
 
-const BannerSection = ({ onSearch }) => {
+const BannerSection = () => {
   const [search, setSearch] = useState("");
   const { theme } = useTheme();
+  const navigate = useNavigate();
+
+  // quick contest type chips
+  const contestTypes = [
+    "design",
+    "article",
+    "gaming",
+    "business",
+    "photography",
+    "ux",
+  ];
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (onSearch) onSearch(search);
+
+    if (!search.trim()) return;
+
+    navigate(`/all-contests?search=${encodeURIComponent(search)}`);
+  };
+
+  const handleTypeClick = (type) => {
+    const normalized = type.toLowerCase();
+    setSearch(normalized);
+    navigate(`/all-contests?search=${normalized}`);
   };
 
   return (
@@ -157,6 +178,24 @@ const BannerSection = ({ onSearch }) => {
             Search
           </button>
         </motion.form>
+        <div className="mt-4 flex flex-wrap justify-center gap-3">
+          {contestTypes.map((type) => (
+            <button
+              key={type}
+              type="button"
+              onClick={() => handleTypeClick(type)}
+              className={`px-3 py-1 rounded-full text-sm font-medium transition ${
+                search === type
+                  ? "bg-blue-600 text-white"
+                  : theme === "dark"
+                  ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+              }`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
 
         {/* Stats Section */}
         <motion.div
