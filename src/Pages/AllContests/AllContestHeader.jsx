@@ -10,7 +10,12 @@ const AllContestHeader = ({
   categories,
   setSelectedCategory,
   selectedCategory,
+  refetch,
 }) => {
+  const handleSearch = () => {
+    refetch();
+  };
+
   return (
     <div className={`py-16 px-4 sm:px-6 lg:px-8 border-b border-border`}>
       <div className="max-w-7xl mx-auto">
@@ -63,6 +68,12 @@ const AllContestHeader = ({
               }`}
             />
           </div>
+          <button
+            onClick={handleSearch}
+            className="btn btn-primary border border-border px-5 bg-blue-400 rounded-md"
+          >
+            Search
+          </button>
 
           {/* Sort Dropdown */}
           <select

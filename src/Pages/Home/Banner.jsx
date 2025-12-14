@@ -12,11 +12,11 @@ const BannerSection = () => {
   // quick contest type chips
   const contestTypes = [
     "design",
-    "article",
-    "gaming",
-    "business",
-    "photography",
-    "ux",
+    "development",
+    "Programming",
+    "Mobile",
+    "Data Science",
+    "Devops",
   ];
 
   const handleSearch = (e) => {

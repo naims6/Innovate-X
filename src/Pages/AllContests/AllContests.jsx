@@ -18,14 +18,17 @@ const AllContests = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
 
-  const { data: allContest = [], isLoading } = useQuery({
-    queryKey: ["allContest"],
+  const {
+    data: allContest = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["allContest", searchTerm],
     queryFn: async () => {
       const result = await axiosSecure(`/contests?search=${searchTerm}`);
       return result.data;
     },
   });
-  console.log(allContest);
 
   const categories = ["All", ...new Set(allContest.map((c) => c.category))];
 
@@ -51,14 +54,6 @@ const AllContests = () => {
     navigate(`/contest/${contestId}`);
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-xl">Loading...</h1>
-      </div>
-    );
-  }
-
   return (
     <div className={`mt-16 min-h-screen transition-colors duration-300 `}>
       {/* Header Section */}
@@ -72,63 +67,73 @@ const AllContests = () => {
         categories={categories}
         setSelectedCategory={setSelectedCategory}
         selectedCategory={selectedCategory}
+        refetch={refetch}
       />
 
-      {/* Main Content */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-bg-secondary">
-        <div className="max-w-7xl mx-auto">
-          {allContest.length > 0 ? (
-            <>
-              {/* Results Count */}
-              <div className="mb-8">
-                <p
-                  className={`text-lg font-semibold ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-700"
-                  }`}
-                >
-                  Showing{" "}
-                  <span className="text-indigo-600 dark:text-indigo-400">
-                    {allContest.length}
-                  </span>{" "}
-                  contests
-                </p>
-              </div>
-
-              {/* Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {allContest.map((contest, index) => (
-                  <ContestCard
-                    key={contest.id}
-                    contest={contest}
-                    index={index}
-                    theme={theme}
-                    getCategoryColor={getCategoryColor}
-                    onDetailsClick={() => handleContestClick(contest.id)}
-                  />
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-20">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3
-                className={`text-2xl font-bold mb-3 ${
-                  theme === "dark" ? "text-white" : "text-gray-900"
-                }`}
-              >
-                No Contests Found
-              </h3>
-              <p
-                className={`text-lg ${
-                  theme === "dark" ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                Try adjusting your search or filters to find contests
-              </p>
-            </div>
-          )}
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <h1 className="text-xl mt-4">Loading...</h1>
         </div>
-      </div>
+      ) : (
+        <>
+          {" "}
+          {/* Main Content */}
+          <div className="py-16 px-4 sm:px-6 lg:px-8 bg-bg-secondary">
+            <div className="max-w-7xl mx-auto">
+              {allContest.length > 0 ? (
+                <>
+                  {/* Results Count */}
+                  <div className="mb-8">
+                    <p
+                      className={`text-lg font-semibold ${
+                        theme === "dark" ? "text-gray-300" : "text-gray-700"
+                      }`}
+                    >
+                      Showing{" "}
+                      <span className="text-indigo-600 dark:text-indigo-400">
+                        {allContest.length}
+                      </span>{" "}
+                      contests
+                    </p>
+                  </div>
+
+                  {/* Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {allContest.map((contest, index) => (
+                      <ContestCard
+                        key={contest.id}
+                        contest={contest}
+                        index={index}
+                        theme={theme}
+                        getCategoryColor={getCategoryColor}
+                        onDetailsClick={() => handleContestClick(contest.id)}
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-20">
+                  <div className="text-6xl mb-4">🔍</div>
+                  <h3
+                    className={`text-2xl font-bold mb-3 ${
+                      theme === "dark" ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    No Contests Found
+                  </h3>
+                  <p
+                    className={`text-lg ${
+                      theme === "dark" ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    Try adjusting your search or filters to find contests
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
 
       {/* CSS Animations */}
       <style jsx>{`

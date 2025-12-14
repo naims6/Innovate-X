@@ -26,6 +26,8 @@ const ContestDetails = () => {
   const [timeLeft, setTimeLeft] = useState();
   const isRegistered = contest?.isRegistered || false;
 
+  console.log(contest);
+
   const closePaymentModal = () => {
     setIsPaymentModalOpen(false);
   };
