@@ -89,7 +89,7 @@ const ContestDetails = () => {
         {/* Banner Section */}
         <div className="relative h-96 sm:h-[500px] overflow-hidden group">
           <img
-            src={contest.banner}
+            src={contest.bannerImage}
             alt={contest.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
@@ -173,7 +173,7 @@ const ContestDetails = () => {
                     theme === "dark" ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
-                  {contest.description}
+                  {contest.title}
                 </p>
 
                 <div
@@ -186,7 +186,7 @@ const ContestDetails = () => {
                       theme === "dark" ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
-                    {contest.fullDescription}
+                    {contest.description}
                   </p>
                 </div>
               </div>
@@ -304,7 +304,7 @@ const ContestDetails = () => {
                   Prize Money
                 </p>
                 <p className="text-4xl font-bold bg-linear-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-4">
-                  ${contest.prize.toLocaleString()}
+                  ${contest?.prize?.toLocaleString()}
                 </p>
                 <div
                   className={`flex items-center gap-2 text-sm ${
@@ -313,7 +313,7 @@ const ContestDetails = () => {
                 >
                   <span>👥</span>
                   <span>
-                    {contest.participants.toLocaleString()} Participants
+                    {contest?.participants?.toLocaleString()} Participants
                   </span>
                 </div>
               </div>

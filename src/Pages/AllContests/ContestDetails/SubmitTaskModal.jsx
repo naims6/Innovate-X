@@ -30,7 +30,7 @@ const SubmitTaskModal = ({ theme, contest, onClose }) => {
       });
 
       if (res.data.insertedId) {
-        toast("Your Task is Submitted");
+        toast.success("Your Task is Submitted");
       }
 
       onClose();

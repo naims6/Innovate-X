@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useTheme from "../../../../hooks/useTheme";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { getImageUrl } from "../../../../utility/getImageUrl";
 import useAuth from "../../../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const AddContest = () => {
-  const { theme } = useAuth();
+  const { theme } = useTheme();
+  const { user } = useAuth();
   const [previewImage, setPreviewImage] = useState("");
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     control,
+    handleSubmit,
     formState: { errors },
   } = useForm();
 
@@ -19,6 +26,33 @@ const AddContest = () => {
       const reader = new FileReader();
       reader.onloadend = () => setPreviewImage(reader.result);
       reader.readAsDataURL(file);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const imageURL = (await getImageUrl(data.bannerImage)) || "";
+
+      const contestDetails = {
+        ...data,
+        bannerImage: imageURL,
+        participants: 0,
+        winner: "",
+        winnerImage: "",
+        creatorName: user?.displayName,
+        creatorImage: user?.photoURL,
+        deadline: new Date(data.deadline).toISOString().split("T")[0],
+        createdAt: new Date().toISOString().split("T")[0],
+        stauts: "pending",
+      };
+      console.log(contestDetails);
+      const res = await axiosSecure.post("/contests", contestDetails);
+
+      if (res.data.insertedId) {
+        toast.success("Your Contest is Added. Wait until admin approve");
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -45,6 +79,7 @@ const AddContest = () => {
 
       {/* Form Card */}
       <form
+        onSubmit={handleSubmit(onSubmit)}
         className={`rounded-2xl p-8 transition-colors duration-300 ${
           theme === "dark"
             ? "bg-slate-800 border border-slate-700"
@@ -75,6 +110,29 @@ const AddContest = () => {
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
             )}
           </div>
+          {/* Contest Title */}
+          <div>
+            <label
+              className={`block text-sm font-semibold mb-3 ${
+                theme === "dark" ? "text-gray-200" : "text-gray-700"
+              }`}
+            >
+              Contest Title *
+            </label>
+            <input
+              type="text"
+              placeholder="e.g., Analyze datasets and build predictive models to solve real-world problems"
+              {...register("title", { required: "Contest Title is required" })}
+              className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
+                theme === "dark"
+                  ? "bg-slate-700 border border-slate-600 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                  : "bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              }`}
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            )}
+          </div>
 
           {/* Image Upload */}
           <div>
@@ -92,13 +150,25 @@ const AddContest = () => {
                   : "border-gray-300 hover:border-indigo-500"
               }`}
             >
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-                id="image-input"
+              <Controller
+                name="bannerImage"
+                control={control}
+                rules={{ required: "Contest banner image is required" }}
+                render={({ field }) => (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    id="image-input"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      field.onChange(file); // 👈 store file in react-hook-form
+                      handleImageUpload(e); // 👈 for preview only
+                    }}
+                  />
+                )}
               />
+
               {previewImage ? (
                 <div>
                   <img
@@ -163,20 +233,20 @@ const AddContest = () => {
             )}
           </div>
 
-          {/* Task Instructions */}
+          {/* Task Details */}
           <div>
             <label
               className={`block text-sm font-semibold mb-3 ${
                 theme === "dark" ? "text-gray-200" : "text-gray-700"
               }`}
             >
-              Task Instructions *
+              Task Details *
             </label>
             <textarea
               placeholder="Provide detailed instructions for participants..."
               rows="5"
-              {...register("taskInstructions", {
-                required: "Task instructions are required",
+              {...register("taskDetails", {
+                required: "Task details are required",
               })}
               className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-300 resize-none ${
                 theme === "dark"
@@ -184,7 +254,7 @@ const AddContest = () => {
                   : "bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
               }`}
             ></textarea>
-            {errors.taskInstructions && (
+            {errors.taskDetails && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.taskInstructions.message}
               </p>
@@ -219,33 +289,35 @@ const AddContest = () => {
               )}
             </div>
 
-            {/* Contest Type */}
+            {/* Contest Category */}
             <div>
               <label
                 className={`block text-sm font-semibold mb-3 ${
                   theme === "dark" ? "text-gray-200" : "text-gray-700"
                 }`}
               >
-                Contest Type *
+                Contest category *
               </label>
               <select
-                {...register("type", { required: "Contest type is required" })}
+                {...register("category", {
+                  required: "Contest category is required",
+                })}
                 className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                   theme === "dark"
                     ? "bg-slate-700 border border-slate-600 text-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                     : "bg-gray-50 border border-gray-300 text-gray-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                 }`}
               >
-                <option value="">Select a type</option>
+                <option value="">Select a category</option>
                 <option value="design">Design</option>
                 <option value="programming">Programming</option>
                 <option value="development">Development</option>
                 <option value="mobile">Mobile</option>
                 <option value="data-science">Data Science</option>
               </select>
-              {errors.type && (
+              {errors.category && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.type.message}
+                  {errors.category.message}
                 </p>
               )}
             </div>

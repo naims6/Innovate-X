@@ -25,7 +25,7 @@ const AllContests = () => {
   } = useQuery({
     queryKey: ["allContest", searchTerm],
     queryFn: async () => {
-      const result = await axiosSecure(`/contests?search=${searchTerm}`);
+      const result = await axiosSecure(`/contests/approved`);
       return result.data;
     },
   });
@@ -34,14 +34,14 @@ const AllContests = () => {
 
   const getCategoryColor = (category) => {
     const colors = {
-      Design: "from-pink-500 to-rose-500",
-      Programming: "from-blue-500 to-cyan-500",
-      Development: "from-purple-500 to-indigo-500",
-      Mobile: "from-green-500 to-emerald-500",
-      "Data Science": "from-orange-500 to-red-500",
-      Security: "from-red-500 to-pink-500",
-      DevOps: "from-cyan-500 to-blue-500",
-      "AI/ML": "from-violet-500 to-purple-500",
+      design: "from-pink-500 to-rose-500",
+      programming: "from-blue-500 to-cyan-500",
+      development: "from-purple-500 to-indigo-500",
+      mobile: "from-green-500 to-emerald-500",
+      "data science": "from-orange-500 to-red-500",
+      security: "from-red-500 to-pink-500",
+      devops: "from-cyan-500 to-blue-500",
+      "ai/ml": "from-violet-500 to-purple-500",
     };
     return colors[category] || "from-indigo-500 to-purple-500";
   };
@@ -101,7 +101,7 @@ const AllContests = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {allContest.map((contest, index) => (
                       <ContestCard
-                        key={contest.id}
+                        key={contest._id}
                         contest={contest}
                         index={index}
                         theme={theme}

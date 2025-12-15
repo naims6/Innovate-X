@@ -41,10 +41,10 @@ const Deadline = ({ theme, contest, timeLeft }) => {
       ) : (
         <div className="grid grid-cols-4 gap-2 mb-4">
           {[
-            { label: "Days", value: timeLeft.days },
-            { label: "Hours", value: timeLeft.hours },
-            { label: "Mins", value: timeLeft.minutes },
-            { label: "Secs", value: timeLeft.seconds },
+            { label: "Days", value: timeLeft?.days },
+            { label: "Hours", value: timeLeft?.hours },
+            { label: "Mins", value: timeLeft?.minutes },
+            { label: "Secs", value: timeLeft?.seconds },
           ].map((item, index) => (
             <div
               key={index}

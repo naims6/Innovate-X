@@ -14,7 +14,7 @@ const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
       {/* Image Container */}
       <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-linear-to-br from-indigo-300 to-purple-300 shrink-0">
         <img
-          src={contest.image}
+          src={contest.bannerImage}
           alt={contest.name}
           className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
         />
