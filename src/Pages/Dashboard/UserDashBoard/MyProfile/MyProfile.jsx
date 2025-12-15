@@ -30,7 +30,6 @@ const MyProfile = () => {
     Math.round((userData?.totalWon / userData?.totalParticipated) * 100) || 0;
 
   const onSubmit = async (data) => {
-    setEditMode(false);
     const { profilePicture, bio, fullName, address } = data;
     const updatedUser = {
       profilePicture,
@@ -38,11 +37,14 @@ const MyProfile = () => {
       fullName,
       address,
     };
-    const res = await axiosSecure.patch(`users/${userData?._id}`, updatedUser);
+    const res = await axiosSecure.patch(`/users/${userData?._id}`, updatedUser);
+    console.log(userData?._id);
+    console.log(res);
     if (res.data.modifiedCount) {
       toast.success("Profile Updated Successfully");
       refetch();
     }
+    setEditMode(false);
   };
 
   if (isLoading) {

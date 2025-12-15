@@ -1,16 +1,19 @@
 import { FaTrophy, FaMedal } from "react-icons/fa";
 import useTheme from "../../hooks/useTheme";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Leaderboard = () => {
   const { theme } = useTheme();
+  const axiosSecure = useAxiosSecure();
 
-  const users = [
-    { name: "Sarah Ahmed", wins: 12 },
-    { name: "John Smith", wins: 9 },
-    { name: "Naim Hasan", wins: 7 },
-    { name: "Emily Clark", wins: 5 },
-    { name: "David Lee", wins: 4 },
-  ];
+  const { data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure("/top-users");
+      return res.data;
+    },
+  });
 
   return (
     <div
@@ -60,7 +63,7 @@ const Leaderboard = () => {
             <tbody>
               {users.map((user, index) => (
                 <tr
-                  key={index}
+                  key={user._id}
                   className={`border-t ${
                     theme === "dark"
                       ? "border-slate-700 hover:bg-slate-700"
@@ -78,9 +81,9 @@ const Leaderboard = () => {
                       index + 1
                     )}
                   </td>
-                  <td className="px-6 py-4">{user.name}</td>
+                  <td className="px-6 py-4">{user?.fullName}</td>
                   <td className="px-6 py-4 text-blue-600 font-bold">
-                    {user.wins}
+                    {user?.totalWon}
                   </td>
                 </tr>
               ))}
