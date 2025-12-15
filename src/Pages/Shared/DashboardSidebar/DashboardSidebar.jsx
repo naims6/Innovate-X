@@ -58,6 +58,11 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       label: "Manage User",
       href: "/dashboard/manage-user",
     },
+    {
+      icon: "🥉",
+      label: "Manage Contest",
+      href: "/dashboard/manage-contests",
+    },
   ];
 
   const menuItems =

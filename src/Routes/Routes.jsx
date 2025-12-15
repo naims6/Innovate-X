@@ -19,6 +19,7 @@ import PaymentSuccess from "../Pages/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentCancel from "../Pages/Payment/PaymentCancel/PaymentCancel";
 import HowItWorks from "../Pages/HowItWorks/HowItWorks";
 import Leaderboard from "../Pages/Leaderboard/Leaderboard";
+import ManageContests from "../Pages/Dashboard/AdminDashboard/ManageContests/ManageContests";
 
 export const router = createBrowserRouter([
   // root layout
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path: "manage-user",
         Component: ManageUser,
+      },
+      {
+        path: "manage-contests",
+        Component: ManageContests,
       },
       // user dashboard routes
       {
