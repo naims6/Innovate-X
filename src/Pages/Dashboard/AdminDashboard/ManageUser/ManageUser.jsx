@@ -4,30 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import UserTableRow from "./UserTableRow";
 
-const FAKE_USERS = [
-  {
-    _id: "u_01a2b3c4",
-    name: "Alice Johnson",
-    email: "alice.johnson@example.com",
-    role: "Admin",
-    photoURL: "https://api.dicebear.com/6.x/initials/svg?seed=Alice%20Johnson",
-  },
-  {
-    _id: "u_02d4e5f6",
-    name: "Bob Smith",
-    email: "bob.smith@example.com",
-    role: "Creator",
-    photoURL: "https://api.dicebear.com/6.x/initials/svg?seed=Bob%20Smith",
-  },
-  {
-    _id: "u_03g7h8i9",
-    name: "Carla Reyes",
-    email: "carla.reyes@example.com",
-    role: "User",
-    photoURL: "https://api.dicebear.com/6.x/initials/svg?seed=Carla%20Reyes",
-  },
-];
-
 export default function ManageUser() {
   const axiosSecure = useAxiosSecure();
 
