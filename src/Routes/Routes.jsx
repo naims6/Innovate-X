@@ -17,6 +17,8 @@ import MyWinningContests from "../Pages/Dashboard/UserDashBoard/WinningContest/W
 import MyProfile from "../Pages/Dashboard/UserDashBoard/MyProfile/MyProfile";
 import PaymentSuccess from "../Pages/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentCancel from "../Pages/Payment/PaymentCancel/PaymentCancel";
+import HowItWorks from "../Pages/HowItWorks/HowItWorks";
+import Leaderboard from "../Pages/Leaderboard/Leaderboard";
 
 export const router = createBrowserRouter([
   // root layout
@@ -39,6 +41,14 @@ export const router = createBrowserRouter([
             <ContestDetails></ContestDetails>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "how-it-works",
+        Component: HowItWorks,
+      },
+      {
+        path: "leaderboard",
+        Component: Leaderboard,
       },
     ],
   },

@@ -21,7 +21,8 @@ function Navbar() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "All Contests", href: "/all-contests" },
-    { name: "Extra Section", href: "#extra" },
+    { name: "How It Works", href: "/how-it-works" },
+    { name: "Leaderboard", href: "/leaderboard" },
   ];
 
   // handle click outside to close dropdown
