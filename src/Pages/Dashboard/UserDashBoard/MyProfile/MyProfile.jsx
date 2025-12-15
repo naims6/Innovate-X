@@ -3,45 +3,49 @@ import useTheme from "../../../../hooks/useTheme";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const MyProfile = () => {
   const { theme } = useTheme();
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: userData = {}, isLoading } = useQuery({
+  const { register, handleSubmit } = useForm();
+  const {
+    data: userData = {},
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
-      const result = await axiosSecure(`/contests/${user?.email}`);
+      const result = await axiosSecure(`/users/${user?.email}`);
       return result.data;
     },
-  });
-  console.log(userData);
-
-  const [profile, setProfile] = useState({
-    name: "John Doe",
-    photo: "https://via.placeholder.com/150",
-    bio: "Passionate innovator and tech enthusiast.",
-    address: "123 Innovation St, Tech City",
   });
 
   const [editMode, setEditMode] = useState(false);
 
   // Mock win percentage data
-  const totalParticipated = 10;
-  const totalWon = 3;
-  const winPercentage = Math.round((totalWon / totalParticipated) * 100);
+  const winPercentage =
+    Math.round((userData?.totalWon / userData?.totalParticipated) * 100) || 0;
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfile({ ...profile, [name]: value });
-  };
-
-  const handleSave = () => {
-    // Implement save functionality later
+  const onSubmit = async (data) => {
     setEditMode(false);
+    const { profilePicture, bio, fullName, address } = data;
+    const updatedUser = {
+      profilePicture,
+      bio,
+      fullName,
+      address,
+    };
+    const res = await axiosSecure.patch(`users/${userData?._id}`, updatedUser);
+    if (res.data.modifiedCount) {
+      toast.success("Profile Updated Successfully");
+      refetch();
+    }
   };
 
-  if (loading) {
+  if (isLoading) {
     return <h1 className="text-xl">Loading...</h1>;
   }
 
@@ -57,7 +61,11 @@ const MyProfile = () => {
         <h1 className="text-4xl font-extrabold mb-8 text-center bg-clip-text text-transparent bg-linnear-to-r from-purple-600 to-pink-600">
           My Profile
         </h1>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <form
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {/* Profile Info */}
           <div
             className={`p-6 rounded-xl shadow-lg ${
@@ -66,18 +74,18 @@ const MyProfile = () => {
                 : "bg-white border border-gray-200"
             }`}
           >
+            {/* photo url */}
             <div className="flex flex-col items-center mb-6">
               <img
-                src={user.photoURL}
+                src={userData.profilePicture}
                 alt="Profile"
                 className="w-24 h-24 rounded-full mb-4"
               />
               {editMode ? (
                 <input
                   type="text"
-                  name="photo"
-                  value={profile.photo}
-                  onChange={handleInputChange}
+                  {...register("profilePicture")}
+                  defaultValue={userData.profilePicture}
                   className={`w-full p-2 rounded ${
                     theme === "dark"
                       ? "bg-gray-700 text-white"
@@ -86,18 +94,18 @@ const MyProfile = () => {
                   placeholder="Photo URL"
                 />
               ) : (
-                <h2 className="text-2xl font-bold">{profile.name}</h2>
+                <h2 className="text-2xl font-bold">{userData?.fullName}</h2>
               )}
             </div>
+            {/* full name and bio, address */}
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Name</label>
                 {editMode ? (
                   <input
                     type="text"
-                    name="name"
-                    value={profile.name}
-                    onChange={handleInputChange}
+                    {...register("fullName")}
+                    defaultValue={userData.fullName}
                     className={`w-full p-2 rounded ${
                       theme === "dark"
                         ? "bg-gray-700 text-white"
@@ -105,16 +113,15 @@ const MyProfile = () => {
                     }`}
                   />
                 ) : (
-                  <p>{user.displayName}</p>
+                  <p>{userData.fullName}</p>
                 )}
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">Bio</label>
                 {editMode ? (
                   <textarea
-                    name="bio"
-                    value={profile.bio}
-                    onChange={handleInputChange}
+                    {...register("bio")}
+                    defaultValue={userData?.bio}
                     className={`w-full p-2 rounded ${
                       theme === "dark"
                         ? "bg-gray-700 text-white"
@@ -123,7 +130,7 @@ const MyProfile = () => {
                     rows="3"
                   />
                 ) : (
-                  <p>{profile.bio}</p>
+                  <p>{userData?.bio}</p>
                 )}
               </div>
               <div>
@@ -133,9 +140,8 @@ const MyProfile = () => {
                 {editMode ? (
                   <input
                     type="text"
-                    name="address"
-                    value={profile.address}
-                    onChange={handleInputChange}
+                    {...register("address")}
+                    defaultValue={userData?.address}
                     className={`w-full p-2 rounded ${
                       theme === "dark"
                         ? "bg-gray-700 text-white"
@@ -143,29 +149,28 @@ const MyProfile = () => {
                     }`}
                   />
                 ) : (
-                  <p>{profile.address}</p>
+                  <p>{userData?.address}</p>
                 )}
               </div>
             </div>
             <div className="mt-6 text-center">
               {editMode ? (
                 <button
-                  onClick={handleSave}
+                  type="submit"
                   className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
                 >
                   Save Changes
                 </button>
               ) : (
-                <button
+                <span
                   onClick={() => setEditMode(true)}
                   className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
                 >
                   Edit Profile
-                </button>
+                </span>
               )}
             </div>
           </div>
-
           {/* Win Percentage Chart */}
           <div
             className={`p-6 rounded-xl shadow-lg ${
@@ -203,11 +208,12 @@ const MyProfile = () => {
                   theme === "dark" ? "text-gray-300" : "text-gray-600"
                 }`}
               >
-                {totalWon} Wins out of {totalParticipated} Participations
+                {userData?.totalWon || 0} Wins out of{" "}
+                {userData?.totalParticipated || 0} Participations
               </p>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
