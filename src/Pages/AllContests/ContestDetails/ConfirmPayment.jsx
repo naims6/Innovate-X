@@ -13,17 +13,11 @@ const ConfirmPayment = ({
   // const [paymentProccessing, setPaymentProccessing] = useState(false);
   const axiosSecure = useAxiosSecure();
   const dark = theme === "dark";
-  // console.log(contest);
+  console.log(contest);
   const handlePayment = async () => {
-    const contestInfo = {
-      prize: contest.prize,
-      creator_name: contest.creatorName,
-    };
-    console.log("hello");
-    const res = await axiosSecure.post("/create-checkout-session", contestInfo);
+    const res = await axiosSecure.post("/create-checkout-session", contest);
 
-    console.log("hello2");
-    console.log(res.data);
+    console.log("create ceckout seasson", res.data);
     window.location.href = res.data.url;
   };
 

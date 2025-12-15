@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-// import SubmitTaskModal from "./SubmitTaskModal";
+import SubmitTaskModal from "./SubmitTaskModal";
 import useTheme from "../../../hooks/useTheme";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -24,9 +24,7 @@ const ContestDetails = () => {
     },
   });
   const [timeLeft, setTimeLeft] = useState();
-  const isRegistered = contest?.isRegistered || false;
-
-  console.log(contest);
+  const isRegistered = contest?.isRegistered || true;
 
   const closePaymentModal = () => {
     setIsPaymentModalOpen(false);
@@ -331,11 +329,11 @@ const ContestDetails = () => {
                     <button
                       onClick={() => setShowSubmitModal(true)}
                       className={`w-full py-4 px-6 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all duration-300 transform ${
-                        timeLeft.ended
+                        timeLeft?.ended
                           ? "bg-gray-400 text-white cursor-not-allowed opacity-50"
                           : "bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white hover:shadow-lg hover:shadow-green-500/40 hover:-translate-y-1 active:scale-95"
                       }`}
-                      disabled={timeLeft.ended}
+                      disabled={timeLeft?.ended}
                     >
                       <span>📤</span>
                       Submit Task
@@ -439,6 +437,24 @@ const ContestDetails = () => {
             </div>
           </div>
         </div>
+        {/* Submit Task Modal */}
+        {showSubmitModal && (
+          <SubmitTaskModal
+            theme={theme}
+            contestName={contest.name}
+            contest={contest}
+            onClose={() => setShowSubmitModal(false)}
+          />
+        )}
+
+        {/* Confirm Payment Modal */}
+        <ConfirmPayment
+          isPaymentModalOpen={isPaymentModalOpen}
+          setIsPaymentModalOpen={setIsPaymentModalOpen}
+          onClose={closePaymentModal}
+          theme={theme}
+          contest={contest}
+        />
 
         {/* CSS Animations */}
         <style jsx>{`
@@ -454,23 +470,6 @@ const ContestDetails = () => {
           }
         `}</style>
       </div>
-      {/* Submit Task Modal */}
-      {showSubmitModal && (
-        <SubmitTaskModal
-          theme={theme}
-          contestName={contest.name}
-          onClose={() => setShowSubmitModal(false)}
-        />
-      )}
-
-      {/* Confirm Payment Modal */}
-      <ConfirmPayment
-        isPaymentModalOpen={isPaymentModalOpen}
-        setIsPaymentModalOpen={setIsPaymentModalOpen}
-        onClose={closePaymentModal}
-        theme={theme}
-        contest={contest}
-      />
     </>
   );
 };
