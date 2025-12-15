@@ -29,7 +29,7 @@ export default function SignUp() {
     const { fullName, email, password, profilePicture } = data;
     setIsAuthticating(true);
     try {
-      const imageURL = await getImageUrl(profilePicture);
+      const imageURL = (await getImageUrl(profilePicture)) || "";
 
       await createUser(email, password);
       await updateUserProfile(fullName, imageURL);

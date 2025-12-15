@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import useTheme from "../../../../hooks/useTheme";
 import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const MyProfile = () => {
   const { theme } = useTheme();
   const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { data: userData = {}, isLoading } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const result = await axiosSecure(`/contests/${user?.email}`);
+      return result.data;
+    },
+  });
+  console.log(userData);
 
   const [profile, setProfile] = useState({
     name: "John Doe",
