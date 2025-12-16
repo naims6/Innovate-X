@@ -10,8 +10,12 @@ const MyContests = () => {
   const { theme } = useTheme();
   const axiosSecure = useAxiosSecure();
 
-  const { data: myContests = [] } = useQuery({
-    queryKey: ["my-contests"],
+  const {
+    data: myContests = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["my-contests", user?.email],
     queryFn: async () => {
       const res = await axiosSecure(`/contests/email/${user?.displayName}`);
       console.log(res.data);
@@ -19,8 +23,29 @@ const MyContests = () => {
     },
   });
 
-  console.log(myContests);
+  const statsData = [
+    { label: "Total Contests", value: myContests.length, icon: "📊" },
+    {
+      label: "Active",
+      value: myContests.filter((c) => c.status === "approved").length,
+      icon: "✅",
+    },
+    {
+      label: "Total Submissions",
+      value: myContests.reduce((acc, c) => acc + c.submissions, 0),
+      icon: "📤",
+    },
+    {
+      label: "Total Participants",
+      value: myContests.reduce((acc, c) => acc + c.participants, 0),
+      icon: "👥",
+    },
+  ];
 
+  console.log(myContests);
+  if (isLoading) {
+    return <h1 className="text-xl">Loading...</h1>;
+  }
   return (
     <div>
       {/* Page Header */}
@@ -43,24 +68,7 @@ const MyContests = () => {
 
       {/* Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: "Total Contests", value: myContests.length, icon: "📊" },
-          {
-            label: "Active",
-            value: myContests.filter((c) => c.status === "Confirmed").length,
-            icon: "✅",
-          },
-          {
-            label: "Total Submissions",
-            value: myContests.reduce((acc, c) => acc + c.submissions, 0),
-            icon: "📤",
-          },
-          {
-            label: "Total Participants",
-            value: myContests.reduce((acc, c) => acc + c.participants, 0),
-            icon: "👥",
-          },
-        ].map((stat, index) => (
+        {statsData.map((stat, index) => (
           <div
             key={index}
             className={`rounded-xl p-6 transition-colors duration-300 ${
@@ -168,6 +176,7 @@ const MyContests = () => {
                   key={contest._id}
                   contest={contest}
                   theme={theme}
+                  refetch={refetch}
                 />
               ))}
             </tbody>

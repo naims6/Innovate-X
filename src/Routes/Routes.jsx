@@ -20,6 +20,7 @@ import PaymentCancel from "../Pages/Payment/PaymentCancel/PaymentCancel";
 import HowItWorks from "../Pages/HowItWorks/HowItWorks";
 import Leaderboard from "../Pages/Leaderboard/Leaderboard";
 import ManageContests from "../Pages/Dashboard/AdminDashboard/ManageContests/ManageContests";
+import EditContest from "../Pages/Dashboard/CreatorDashboard/EditContest/EditContest";
 
 export const router = createBrowserRouter([
   // root layout
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
       {
         path: "submissions",
         Component: Submissions,
+      },
+      {
+        path: "contest/edit/:id",
+        Component: EditContest,
       },
       // admin dashbaord routes
       {

@@ -105,27 +105,23 @@ export default function ContestTableRow({
 
       {/* Actions */}
       <td className="p-3 text-center space-x-2">
-        {!isApproved && (
-          <button
-            onClick={() => handleConfirm(contest._id)}
-            className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition duration-150 disabled:opacity-50"
-            disabled={isRejected}
-            title="Approve Contest"
-          >
-            <FaCheck />
-          </button>
-        )}
+        <button
+          onClick={() => handleConfirm(contest._id)}
+          disabled={isApproved}
+          className="p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition duration-150 disabled:opacity-50"
+          title="Approve Contest"
+        >
+          <FaCheck />
+        </button>
 
-        {!isRejected && (
-          <button
-            onClick={() => handleReject(contest._id)}
-            className="p-2 rounded-full bg-yellow-500 text-white hover:bg-yellow-600 transition duration-150 disabled:opacity-50"
-            disabled={isApproved}
-            title="Reject Contest"
-          >
-            <FaTimes />
-          </button>
-        )}
+        <button
+          onClick={() => handleReject(contest._id)}
+          disabled={isRejected}
+          className="p-2 rounded-full bg-yellow-500 text-white hover:bg-yellow-600 transition duration-150 disabled:opacity-50"
+          title="Reject Contest"
+        >
+          <FaTimes />
+        </button>
 
         <button
           onClick={() => handleDelete(contest._id)}

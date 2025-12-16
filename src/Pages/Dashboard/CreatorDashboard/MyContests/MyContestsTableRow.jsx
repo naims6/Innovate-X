@@ -1,6 +1,10 @@
 import React from "react";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { Link } from "react-router";
 
-const MyContestsTableRow = ({ theme, contest }) => {
+const MyContestsTableRow = ({ theme, contest, refetch }) => {
+  const axiosSecure = useAxiosSecure();
   const getStatusColor = (status) => {
     switch (status) {
       case "approved":
@@ -23,6 +27,20 @@ const MyContestsTableRow = ({ theme, contest }) => {
       security: "from-green-500 to-emerald-500",
     };
     return colors[category] || "from-indigo-500 to-purple-500";
+  };
+
+  const handleDeleteContest = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this contest?"))
+      return;
+
+    try {
+      await axiosSecure.delete(`/contests/${id}`);
+      toast.success("Contest Deleted!");
+      refetch();
+    } catch (error) {
+      toast.error("Failed to delete contest.");
+      console.error(error);
+    }
   };
 
   return (
@@ -81,10 +99,16 @@ const MyContestsTableRow = ({ theme, contest }) => {
         <div className="flex gap-2">
           {contest?.status === "pending" && (
             <>
-              <button className="px-3 py-1 rounded-lg text-xs font-semibold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400 hover:bg-indigo-200 dark:hover:bg-indigo-900/50 transition-colors duration-300">
+              <Link
+                to={`/dashboard/contest/edit/${contest._id}`}
+                className="px-3 py-1 rounded-lg text-xs font-semibold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400 hover:bg-indigo-200 dark:hover:bg-indigo-900/50 transition-colors duration-300"
+              >
                 Edit
-              </button>
-              <button className="px-3 py-1 rounded-lg text-xs font-semibold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors duration-300">
+              </Link>
+              <button
+                onClick={() => handleDeleteContest(contest._id)}
+                className="px-3 py-1 rounded-lg text-xs font-semibold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors duration-300"
+              >
                 Delete
               </button>
             </>

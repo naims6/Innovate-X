@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SubmissionDetailModal = ({ submission, theme, onClose }) => {
-  const [declaredWinner, setDeclaredWinner] = React.useState(false);
+  const [declaredWinner, setDeclaredWinner] = useState(false);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
