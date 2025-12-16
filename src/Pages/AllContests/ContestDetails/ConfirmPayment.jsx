@@ -22,7 +22,11 @@ const ConfirmPayment = ({
       userEmail: user?.email,
       price: contest?.price,
       creator_name: contest?.creatorName,
+      name: contest?.name,
+      deadline: contest?.deadline,
+      title: contest?.title,
     };
+
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
 
     console.log("create ceckout seasson", res.data);

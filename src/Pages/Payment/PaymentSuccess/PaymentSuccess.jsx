@@ -15,6 +15,7 @@ const PaymentSuccess = () => {
         .patch(`payment-success?session_id=${sessionId}`)
         .then((res) => {
           setContestId(res?.data?.contestId);
+          console.log(res.data);
         });
     }
   }, [axiosSecure, sessionId]);

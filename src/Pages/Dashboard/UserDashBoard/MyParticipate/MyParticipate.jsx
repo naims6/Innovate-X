@@ -1,41 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useTheme from "../../../../hooks/useTheme";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAuth from "../../../../hooks/useAuth";
+import { Link } from "react-router";
 
 const MyParticipate = () => {
   const { theme } = useTheme();
-  const [contests, setContests] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  useEffect(() => {
-    const fetchContests = async () => {
-      setLoading(true);
-      // Simulate API call
-      const data = [
-        {
-          id: 1,
-          name: "Innovative Design Contest",
-          paymentStatus: "Paid",
-          deadline: "2025-12-15",
-          description: "Showcase your creative designs.",
-        },
-        {
-          id: 2,
-          name: "Tech Startup Pitch",
-          paymentStatus: "Pending",
-          deadline: "2025-12-20",
-          description: "Pitch your startup idea to investors.",
-        },
-        // Add more contests
-      ];
-      // Sort by upcoming deadline (earliest first)
-      data.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
-      setContests(data);
-      setLoading(false);
-    };
-    fetchContests();
-  }, []);
+  const { data: contests = [], isLoading } = useQuery({
+    enabled: !!user,
+    queryKey: ["contests", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure(`/participate-contest/${user?.email}`);
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  console.log(contests);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div
         className={`min-h-screen flex items-center justify-center ${
@@ -64,8 +50,8 @@ const MyParticipate = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {contests.map((contest) => (
             <div
-              key={contest.id}
-              className={`relative p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 ${
+              key={contest.contestId}
+              className={`relative p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-103 flex flex-col justify-between ${
                 theme === "dark"
                   ? "bg-gray-800 border border-gray-700 hover:bg-gray-750"
                   : "bg-white border border-gray-200 hover:bg-gray-50"
@@ -90,7 +76,7 @@ const MyParticipate = () => {
                   theme === "dark" ? "text-gray-300" : "text-gray-600"
                 }`}
               >
-                {contest.description}
+                {contest.title}
               </p>
               <div className="flex items-center justify-between">
                 <p
@@ -100,9 +86,12 @@ const MyParticipate = () => {
                 >
                   Deadline: {new Date(contest.deadline).toLocaleDateString()}
                 </p>
-                <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200">
+                <Link
+                  to={`/contests/${contest.contestId}`}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
+                >
                   View Details
-                </button>
+                </Link>
               </div>
             </div>
           ))}
