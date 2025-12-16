@@ -2,6 +2,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 
 const ConfirmPayment = ({
   isPaymentModalOpen,
@@ -10,12 +11,19 @@ const ConfirmPayment = ({
   contest,
 }) => {
   const [agree, setAgree] = useState(false);
+  const { user } = useAuth();
   // const [paymentProccessing, setPaymentProccessing] = useState(false);
   const axiosSecure = useAxiosSecure();
   const dark = theme === "dark";
-  console.log(contest);
+  // console.log(contest);
   const handlePayment = async () => {
-    const res = await axiosSecure.post("/create-checkout-session", contest);
+    const paymentInfo = {
+      contestId: contest?._id,
+      userEmail: user?.email,
+      price: contest?.price,
+      creator_name: contest?.creatorName,
+    };
+    const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
 
     console.log("create ceckout seasson", res.data);
     window.location.href = res.data.url;
@@ -88,9 +96,9 @@ const ConfirmPayment = ({
               }`}
             >
               <div className="w-28 h-16 rounded-md overflow-hidden bg-gray-200 flex items-center justify-center text-sm text-gray-500">
-                {contest?.banner ? (
+                {contest?.bannerImage ? (
                   <img
-                    src={contest.banner}
+                    src={contest.bannerImage}
                     alt={contest.name}
                     className="w-full h-full object-cover"
                   />
@@ -127,7 +135,7 @@ const ConfirmPayment = ({
                       Prize
                     </p>
                     <p className="text-lg font-bold bg-clip-text text-transparent bg-linear-to-r from-green-500 to-emerald-500">
-                      ${contest?.prize ?? "0"}
+                      ${contest?.price ?? "0"}
                     </p>
                   </div>
                 </div>
@@ -138,9 +146,7 @@ const ConfirmPayment = ({
                   }`}
                 >
                   Registration fee:{" "}
-                  <span className="font-medium">
-                    ${contest?.price ?? "10.99"}
-                  </span>
+                  <span className="font-medium">${contest?.price}</span>
                 </p>
               </div>
             </div>
@@ -158,7 +164,7 @@ const ConfirmPayment = ({
                   Registration Fee
                 </span>
                 <span className={dark ? "text-gray-200" : "text-gray-900"}>
-                  ${contest?.price ?? "9.99"}
+                  ${contest?.price}
                 </span>
               </div>
               <div className="flex justify-between text-sm mb-2">
@@ -183,7 +189,7 @@ const ConfirmPayment = ({
                     Total
                   </span>
                   <span className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-600 to-purple-600">
-                    ${(contest?.price ?? 10.99).toFixed(2)}
+                    ${Number(contest?.price) + 1}
                   </span>
                 </div>
               </div>

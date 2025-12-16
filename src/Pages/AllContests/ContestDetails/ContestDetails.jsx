@@ -16,6 +16,7 @@ const ContestDetails = () => {
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
+  // contest data fetching with tanstack
   const { data: contest = {}, isLoading } = useQuery({
     queryKey: ["contest", id],
     queryFn: async () => {
@@ -23,29 +24,47 @@ const ContestDetails = () => {
       return result.data;
     },
   });
+
+  // is registeruser checking data fetching
+  const { data: registrationData = {}, isLoading: checkingRegistration } =
+    useQuery({
+      queryKey: ["registration", id],
+      enabled: !!id,
+      queryFn: async () => {
+        const res = await axiosSecure.get(`/registrations/check/${id}`);
+        return res.data;
+      },
+    });
+
   const [timeLeft, setTimeLeft] = useState();
-  const isRegistered = contest?.isRegistered || true;
+  const isRegistered = registrationData?.registered;
 
   const closePaymentModal = () => {
     setIsPaymentModalOpen(false);
   };
 
   useEffect(() => {
-    setTimeLeft(calculateTimeLeft(contest?.deadline));
-  }, [isLoading, contest]);
+    if (!contest?.deadline) return;
+
+    const interval = setInterval(() => {
+      setTimeLeft(calculateTimeLeft(contest.deadline));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [contest?.deadline]);
 
   // Countdown timer effect
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
-        if (prev.ended) return prev;
-        if (prev.seconds > 0) {
+        if (prev?.ended) return prev;
+        if (prev?.seconds > 0) {
           return { ...prev, seconds: prev.seconds - 1 };
-        } else if (prev.minutes > 0) {
+        } else if (prev?.minutes > 0) {
           return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-        } else if (prev.hours > 0) {
+        } else if (prev?.hours > 0) {
           return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        } else if (prev.days > 0) {
+        } else if (prev?.days > 0) {
           return {
             ...prev,
             days: prev.days - 1,
@@ -69,7 +88,7 @@ const ContestDetails = () => {
     return () => clearInterval(timer);
   }, []);
 
-  if (isLoading) {
+  if (isLoading || checkingRegistration) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <h1 className="text-xl">Loading...</h1>
@@ -278,7 +297,7 @@ const ContestDetails = () => {
                         Winner of this contest
                       </p>
                       <p className="text-xl font-bold bg-linear-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mt-2">
-                        Won ${contest.prize.toLocaleString()}
+                        Won ${contest?.prizeMoney.toLocaleString()}
                       </p>
                     </div>
                   </div>
@@ -304,7 +323,7 @@ const ContestDetails = () => {
                   Prize Money
                 </p>
                 <p className="text-4xl font-bold bg-linear-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-4">
-                  ${contest?.prize?.toLocaleString()}
+                  ${contest?.prizeMoney?.toLocaleString()}
                 </p>
                 <div
                   className={`flex items-center gap-2 text-sm ${
@@ -363,17 +382,17 @@ const ContestDetails = () => {
                     <button
                       onClick={() => setIsPaymentModalOpen(true)}
                       className={`w-full py-4 px-6 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all duration-300 transform ${
-                        timeLeft.ended
+                        timeLeft?.ended
                           ? "bg-gray-400 text-white cursor-not-allowed opacity-50"
                           : "bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-1 active:scale-95"
                       }`}
-                      disabled={timeLeft.ended}
+                      disabled={timeLeft?.ended}
                     >
                       <span>💳</span>
                       Register & Pay
                     </button>
 
-                    {timeLeft.ended && (
+                    {timeLeft?.ended && (
                       <div
                         className={`rounded-lg p-4 text-center ${
                           theme === "dark"

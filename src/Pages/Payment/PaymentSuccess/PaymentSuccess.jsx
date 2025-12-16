@@ -1,5 +1,5 @@
 import { LucideCheckCircle } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -7,14 +7,14 @@ const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const axiosSecure = useAxiosSecure();
   const sessionId = searchParams.get("session_id");
-  console.log(sessionId);
+  const [contestId, setContestId] = useState(null);
 
   useEffect(() => {
     if (sessionId) {
       axiosSecure
         .patch(`payment-success?session_id=${sessionId}`)
         .then((res) => {
-          console.log(res.data);
+          setContestId(res?.data?.contestId);
         });
     }
   }, [axiosSecure, sessionId]);
@@ -31,7 +31,7 @@ const PaymentSuccess = () => {
           successfully.
         </p>
         <Link
-          to="/all-contests"
+          to={contestId ? `/contests/${contestId}` : "/all-contests"}
           className="mt-8 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           Continue Joining

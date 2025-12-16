@@ -25,7 +25,7 @@ const AllContests = () => {
   } = useQuery({
     queryKey: ["allContest", searchTerm],
     queryFn: async () => {
-      const result = await axiosSecure(`/contests/approved`);
+      const result = await axiosSecure(`/contests/type/approved`);
       return result.data;
     },
   });
