@@ -43,7 +43,7 @@ const AddContest = () => {
         creatorImage: user?.photoURL,
         deadline: new Date(data.deadline).toISOString().split("T")[0],
         createdAt: new Date().toISOString().split("T")[0],
-        stauts: "pending",
+        status: "pending",
       };
       console.log(contestDetails);
       const res = await axiosSecure.post("/contests", contestDetails);
@@ -261,7 +261,7 @@ const AddContest = () => {
             )}
           </div>
 
-          {/* Grid Row */}
+          {/* Grid Row prize money, category, difficulty level, price deadline */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Prize Money */}
             <div>
@@ -275,16 +275,18 @@ const AddContest = () => {
               <input
                 type="number"
                 placeholder="5000"
-                {...register("prize", { required: "Prize money is required" })}
+                {...register("prizeMoney", {
+                  required: "Prize money is required",
+                })}
                 className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                   theme === "dark"
                     ? "bg-slate-700 border border-slate-600 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                     : "bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                 }`}
               />
-              {errors.prize && (
+              {errors.prizeMoney && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.prize.message}
+                  {errors.prizeMoney.message}
                 </p>
               )}
             </div>
@@ -352,40 +354,64 @@ const AddContest = () => {
                 </p>
               )}
             </div>
-          </div>
-
-          {/* Deadline */}
-          <div>
-            <label
-              className={`block text-sm font-semibold mb-3 ${
-                theme === "dark" ? "text-gray-200" : "text-gray-700"
-              }`}
-            >
-              Contest Deadline *
-            </label>
-            <Controller
-              name="deadline"
-              control={control}
-              rules={{ required: "Deadline is required" }}
-              render={({ field }) => (
-                <DatePicker
-                  selected={field.value}
-                  onChange={(date) => field.onChange(date)}
-                  minDate={new Date()}
-                  className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
-                    theme === "dark"
-                      ? "bg-slate-700 border border-slate-600 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
-                      : "bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
-                  }`}
-                  placeholderText="Select deadline"
-                />
+            {/* Price  */}
+            <div>
+              <label
+                className={`block text-sm font-semibold mb-3 ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
+                Price($) *
+              </label>
+              <input
+                type="number"
+                placeholder="500 - 1000"
+                {...register("price", { required: "Price is required" })}
+                className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
+                  theme === "dark"
+                    ? "bg-slate-700 border border-slate-600 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                    : "bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                }`}
+              />
+              {errors.price && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.price.message}
+                </p>
               )}
-            />
-            {errors.deadline && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.deadline.message}
-              </p>
-            )}
+            </div>
+            {/* Deadline */}
+            <div>
+              <label
+                className={`block text-sm font-semibold mb-3 ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
+                Contest Deadline *
+              </label>
+              <Controller
+                name="deadline"
+                control={control}
+                rules={{ required: "Deadline is required" }}
+                render={({ field }) => (
+                  <DatePicker
+                    selected={field.value}
+                    onChange={(date) => field.onChange(date)}
+                    minDate={new Date()}
+                    className={`w-full px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
+                      theme === "dark"
+                        ? "bg-slate-700 border border-slate-600 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                        : "bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+                    }`}
+                    placeholderText="Select deadline"
+                  />
+                )}
+              />
+              {errors.deadline && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.deadline.message}
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Buttons */}

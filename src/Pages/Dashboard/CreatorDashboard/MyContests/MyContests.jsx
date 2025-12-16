@@ -1,63 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import useTheme from "../../../../hooks/useTheme";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAuth from "../../../../hooks/useAuth";
+import MyContestsTableRow from "./MyContestsTableRow";
 
 const MyContests = () => {
+  const { user } = useAuth();
   const { theme } = useTheme();
-  const [contests, setContests] = useState([
-    {
-      id: 1,
-      name: "Web Design Showdown",
-      category: "Design",
-      status: "Confirmed",
-      participants: 45,
-      prize: 5000,
-      deadline: "2024-03-15",
-      submissions: 12,
-    },
-    {
-      id: 2,
-      name: "Algorithm Challenge",
-      category: "Programming",
-      status: "Pending",
-      participants: 23,
-      prize: 3000,
-      deadline: "2024-02-20",
-      submissions: 5,
-    },
-    {
-      id: 3,
-      name: "UI/UX Design",
-      category: "Design",
-      status: "Rejected",
-      participants: 0,
-      prize: 4000,
-      deadline: "2024-02-10",
-      submissions: 0,
-    },
-  ]);
+  const axiosSecure = useAxiosSecure();
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "Confirmed":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
-      case "Pending":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400";
-      case "Rejected":
-        return "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400";
-      default:
-        return "";
-    }
-  };
+  const { data: myContests = [] } = useQuery({
+    queryKey: ["my-contests"],
+    queryFn: async () => {
+      const res = await axiosSecure(`/contests/email/${user?.displayName}`);
+      console.log(res.data);
+      return res.data;
+    },
+  });
 
-  const getCategoryColor = (category) => {
-    const colors = {
-      Design: "from-pink-500 to-rose-500",
-      Programming: "from-blue-500 to-cyan-500",
-      Development: "from-purple-500 to-indigo-500",
-      Mobile: "from-green-500 to-emerald-500",
-    };
-    return colors[category] || "from-indigo-500 to-purple-500";
-  };
+  console.log(myContests);
 
   return (
     <div>
@@ -82,20 +44,20 @@ const MyContests = () => {
       {/* Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         {[
-          { label: "Total Contests", value: contests.length, icon: "📊" },
+          { label: "Total Contests", value: myContests.length, icon: "📊" },
           {
             label: "Active",
-            value: contests.filter((c) => c.status === "Confirmed").length,
+            value: myContests.filter((c) => c.status === "Confirmed").length,
             icon: "✅",
           },
           {
             label: "Total Submissions",
-            value: contests.reduce((acc, c) => acc + c.submissions, 0),
+            value: myContests.reduce((acc, c) => acc + c.submissions, 0),
             icon: "📤",
           },
           {
             label: "Total Participants",
-            value: contests.reduce((acc, c) => acc + c.participants, 0),
+            value: myContests.reduce((acc, c) => acc + c.participants, 0),
             icon: "👥",
           },
         ].map((stat, index) => (
@@ -201,77 +163,12 @@ const MyContests = () => {
                 borderColor: theme === "dark" ? "#475569" : "#e5e7eb",
               }}
             >
-              {contests.map((contest) => (
-                <tr
-                  key={contest.id}
-                  className={`transition-colors duration-300 hover:${
-                    theme === "dark" ? "bg-slate-700/50" : "bg-gray-50"
-                  }`}
-                >
-                  <td
-                    className={`px-6 py-4 font-semibold ${
-                      theme === "dark" ? "text-white" : "text-gray-900"
-                    }`}
-                  >
-                    {contest.name}
-                  </td>
-                  <td
-                    className={`px-6 py-4 ${
-                      theme === "dark" ? "text-gray-300" : "text-gray-600"
-                    }`}
-                  >
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-linear-to-r ${getCategoryColor(
-                        contest.category
-                      )}`}
-                    >
-                      {contest.category}
-                    </span>
-                  </td>
-                  <td className={`px-6 py-4`}>
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
-                        contest.status
-                      )}`}
-                    >
-                      {contest.status}
-                    </span>
-                  </td>
-                  <td
-                    className={`px-6 py-4 font-semibold ${
-                      theme === "dark" ? "text-white" : "text-gray-900"
-                    }`}
-                  >
-                    {contest.participants}
-                  </td>
-                  <td
-                    className={`px-6 py-4 font-semibold text-indigo-600 dark:text-indigo-400`}
-                  >
-                    {contest.submissions}
-                  </td>
-                  <td
-                    className={`px-6 py-4 font-bold bg-linear-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent`}
-                  >
-                    ${contest.prize}
-                  </td>
-                  <td className={`px-6 py-4`}>
-                    <div className="flex gap-2">
-                      {contest.status === "Pending" && (
-                        <>
-                          <button className="px-3 py-1 rounded-lg text-xs font-semibold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400 hover:bg-indigo-200 dark:hover:bg-indigo-900/50 transition-colors duration-300">
-                            Edit
-                          </button>
-                          <button className="px-3 py-1 rounded-lg text-xs font-semibold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors duration-300">
-                            Delete
-                          </button>
-                        </>
-                      )}
-                      <button className="px-3 py-1 rounded-lg text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors duration-300">
-                        See Submissions
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+              {myContests.map((contest) => (
+                <MyContestsTableRow
+                  key={contest._id}
+                  contest={contest}
+                  theme={theme}
+                />
               ))}
             </tbody>
           </table>
