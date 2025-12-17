@@ -23,16 +23,18 @@ const SubmitTaskModal = ({ theme, contest, onClose }) => {
         submissionLink,
         note,
         name: contest.name,
-        creatorEmail: contest.creator_email,
+        creatorEmail: contest.creatorEmail,
         submittedBy: {
           name: user?.displayName,
           email: user?.email,
+          image: user?.photoURL,
         },
         submitTime: new Date(),
       });
 
       if (res.data.insertedId) {
         toast.success("Your Task is Submitted");
+        console.log(res.data);
       }
 
       onClose();

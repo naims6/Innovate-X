@@ -454,19 +454,6 @@ const AddContest = () => {
           </div>
         </div>
       </form>
-
-      <style jsx>{`
-        :global(.react-datepicker__wrapper) {
-          width: 100%;
-        }
-        :global(.react-datepicker) {
-          background-color: ${theme === "dark" ? "#1e293b" : "#fff"};
-          border: 1px solid ${theme === "dark" ? "#475569" : "#e5e7eb"};
-        }
-        :global(.react-datepicker__day--selected) {
-          background-color: #4f46e5;
-        }
-      `}</style>
     </div>
   );
 };

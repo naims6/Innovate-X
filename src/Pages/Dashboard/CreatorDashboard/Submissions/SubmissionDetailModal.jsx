@@ -1,7 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const SubmissionDetailModal = ({ submission, theme, onClose }) => {
-  const [declaredWinner, setDeclaredWinner] = useState(false);
+  const axiosSecure = useAxiosSecure();
+
+  const handleDeclareWinner = async (submission) => {
+    const { submittedBy } = submission;
+    try {
+      const updatedDoc = {
+        winner: submittedBy?.name,
+        winnerImage: submittedBy?.image,
+        winnerEmail: submittedBy?.email,
+      };
+      const res = await axiosSecure.patch(
+        `/contests/${submission.contestId}`,
+        updatedDoc
+      );
+      if (res.data.modifiedCount) {
+        toast.success("Winner is Declared");
+      }
+      onClose();
+    } catch {
+      toast.error("Winner declaretation failed");
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -52,8 +75,8 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
           {/* Participant Info */}
           <div className="flex items-center gap-4">
             <img
-              src={submission.participantImage}
-              alt={submission.participantName}
+              src={submission.submittedBy.image}
+              alt={submission.submittedBy.name}
               className="w-20 h-20 rounded-full object-cover border-3 border-indigo-500"
             />
             <div>
@@ -62,14 +85,14 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
                   theme === "dark" ? "text-white" : "text-gray-900"
                 }`}
               >
-                {submission.participantName}
+                {submission.submittedBy.name}
               </h3>
               <p
                 className={`text-sm ${
                   theme === "dark" ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                {submission.participantEmail}
+                {submission.submittedBy.email}
               </p>
               <p
                 className={`text-xs mt-2 font-medium ${
@@ -77,7 +100,7 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
                 }`}
               >
                 Submitted on{" "}
-                {new Date(submission.submissionDate).toLocaleDateString()}
+                {new Date(submission.submitTime).toLocaleDateString()}
               </p>
             </div>
           </div>
@@ -100,7 +123,7 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
                 theme === "dark" ? "text-white" : "text-gray-900"
               }`}
             >
-              {submission.contestName}
+              {submission.name}
             </p>
           </div>
 
@@ -120,53 +143,25 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
                   : "bg-gray-50 text-gray-700"
               }`}
             >
-              {submission.taskInfo}
+              {submission.submissionLink}
             </div>
           </div>
 
-          {/* Status */}
           <div
             className={`rounded-lg p-4 border ${
               theme === "dark"
-                ? "bg-blue-900/30 border-blue-700/50"
-                : "bg-blue-50 border-blue-200"
+                ? "bg-amber-900/30 border-amber-700/50"
+                : "bg-amber-50 border-amber-200"
             }`}
           >
             <p
-              className={`text-sm font-semibold ${
-                theme === "dark" ? "text-blue-300" : "text-blue-900"
+              className={`text-sm font-medium ${
+                theme === "dark" ? "text-amber-300" : "text-amber-900"
               }`}
             >
-              ℹ️ Status:{" "}
-              <span
-                className={
-                  submission.status === "Pending"
-                    ? "text-yellow-500"
-                    : "text-green-500"
-                }
-              >
-                {submission.status}
-              </span>
+              ⚠️ Declare this participant as the winner of this contest?
             </p>
           </div>
-
-          {!declaredWinner && (
-            <div
-              className={`rounded-lg p-4 border ${
-                theme === "dark"
-                  ? "bg-amber-900/30 border-amber-700/50"
-                  : "bg-amber-50 border-amber-200"
-              }`}
-            >
-              <p
-                className={`text-sm font-medium ${
-                  theme === "dark" ? "text-amber-300" : "text-amber-900"
-                }`}
-              >
-                ⚠️ Declare this participant as the winner of this contest?
-              </p>
-            </div>
-          )}
         </div>
 
         {/* Footer */}
@@ -185,23 +180,14 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
           >
             Close
           </button>
-          {!declaredWinner && (
-            <button
-              onClick={() => setDeclaredWinner(true)}
-              className="px-6 py-2 rounded-lg font-semibold flex items-center gap-2 bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white transition-all duration-300 transform hover:-translate-y-1 active:scale-95 shadow-lg"
-            >
-              <span>🏆</span>
-              Declare Winner
-            </button>
-          )}
-          {declaredWinner && (
-            <div
-              className={`flex items-center gap-2 px-6 py-2 rounded-lg font-bold text-white bg-linear-to-r from-yellow-500 to-orange-500`}
-            >
-              <span>✓</span>
-              Winner Declared!
-            </div>
-          )}
+
+          <button
+            onClick={() => handleDeclareWinner(submission)}
+            className="px-6 py-2 rounded-lg font-semibold flex items-center gap-2 bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white transition-all duration-300 transform hover:-translate-y-1 active:scale-95 shadow-lg"
+          >
+            <span>🏆</span>
+            Declare Winner
+          </button>
         </div>
       </div>
     </div>
