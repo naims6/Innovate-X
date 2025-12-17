@@ -1,9 +1,26 @@
 import React from "react";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
-const SubmissionDetailModal = ({ submission, theme, onClose }) => {
+const SubmissionDetailModal = ({ submission, theme, onClose, user }) => {
   const axiosSecure = useAxiosSecure();
+
+  const { data: contest = {}, isLoading } = useQuery({
+    enabled: !!user,
+    queryKey: ["winner", submission.id],
+    queryFn: async () => {
+      const res = await axiosSecure(`/contests/${submission?.contestId}`);
+      return res.data;
+    },
+  });
+  console.log(submission);
+  const isDeadlineOver =
+    new Date() > new Date(contest?.deadline).setHours(23, 59, 59, 999);
+
+  const isWinnerDeclared = contest?.winner ? true : false;
+
+  console.log({ isDeadlineOver });
 
   const handleDeclareWinner = async (submission) => {
     const { submittedBy } = submission;
@@ -25,6 +42,10 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
       toast.error("Winner declaretation failed");
     }
   };
+
+  if (isLoading) {
+    return <h1 className="text-xl">Loading...</h1>;
+  }
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -147,21 +168,39 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
             </div>
           </div>
 
-          <div
-            className={`rounded-lg p-4 border ${
-              theme === "dark"
-                ? "bg-amber-900/30 border-amber-700/50"
-                : "bg-amber-50 border-amber-200"
-            }`}
-          >
-            <p
-              className={`text-sm font-medium ${
-                theme === "dark" ? "text-amber-300" : "text-amber-900"
+          {isDeadlineOver ? (
+            <div
+              className={`rounded-lg p-4 border ${
+                theme === "dark"
+                  ? "bg-amber-900/30 border-amber-700/50"
+                  : "bg-amber-50 border-amber-200"
               }`}
             >
-              ⚠️ Declare this participant as the winner of this contest?
-            </p>
-          </div>
+              <p
+                className={`text-sm font-medium ${
+                  theme === "dark" ? "text-amber-300" : "text-amber-900"
+                }`}
+              >
+                ⚠️ Declare this participant as the winner of this contest?
+              </p>
+            </div>
+          ) : (
+            <div
+              className={`rounded-lg p-4 border ${
+                theme === "dark"
+                  ? "bg-amber-900/30 border-amber-700/50"
+                  : "bg-amber-50 border-amber-200"
+              }`}
+            >
+              <p
+                className={`text-sm font-medium ${
+                  theme === "dark" ? "text-amber-300" : "text-amber-900"
+                }`}
+              >
+                ⚠️ Deadline is Not over yet
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Footer */}
@@ -182,11 +221,16 @@ const SubmissionDetailModal = ({ submission, theme, onClose }) => {
           </button>
 
           <button
+            disabled={isWinnerDeclared || !isDeadlineOver}
             onClick={() => handleDeclareWinner(submission)}
-            className="px-6 py-2 rounded-lg font-semibold flex items-center gap-2 bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white transition-all duration-300 transform hover:-translate-y-1 active:scale-95 shadow-lg"
+            className={`px-6 py-2 rounded-lg font-semibold flex items-center gap-2  text-white transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 shadow-lg disabled:opacity-55 ${
+              isWinnerDeclared
+                ? "bg-linear-to-r from-yellow-500 to-yellow-800 hover:from-yellow-600 hover:to-yellow-800"
+                : "bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+            }`}
           >
             <span>🏆</span>
-            Declare Winner
+            {isWinnerDeclared ? "Already Winner Declared" : "Declare Winner"}
           </button>
         </div>
       </div>

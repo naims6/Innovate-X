@@ -13,45 +13,6 @@ const Submissions = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedSubmission, setSelectedSubmission] = useState(null);
 
-  // const [testSubmissions, setTestSubmissions] = useState([
-  //   {
-  //     id: 1,
-  //     contestName: "Web Design Showdown",
-  //     participantName: "John Smith",
-  //     participantEmail: "john@example.com",
-  //     submissionDate: "2024-02-15",
-  //     status: "Pending",
-  //     taskInfo:
-  //       "https://github.com/john/project\nhttps://demo.example.com\nResponsive design implemented with React and Tailwind CSS",
-  //     participantImage:
-  //       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
-  //   },
-  //   {
-  //     id: 2,
-  //     contestName: "Web Design Showdown",
-  //     participantName: "Sarah Johnson",
-  //     participantEmail: "sarah@example.com",
-  //     submissionDate: "2024-02-14",
-  //     status: "Pending",
-  //     taskInfo:
-  //       "https://github.com/sarah/design\nFull Figma design file with components",
-  //     participantImage:
-  //       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
-  //   },
-  //   {
-  //     id: 3,
-  //     contestName: "Algorithm Challenge",
-  //     participantName: "Mike Davis",
-  //     participantEmail: "mike@example.com",
-  //     submissionDate: "2024-02-13",
-  //     status: "Pending",
-  //     taskInfo:
-  //       "Efficient sorting algorithm implementation\nTime complexity: O(n log n)\nSpace complexity: O(1)",
-  //     participantImage:
-  //       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
-  //   },
-  // ]);
-
   const { data: submissions = [] } = useQuery({
     enabled: !!user,
     queryKey: ["submission"],
@@ -173,7 +134,7 @@ const Submissions = () => {
                     }}
                     className="px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 bg-linear-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white hover:shadow-lg hover:shadow-green-500/40 hover:-translate-y-1 active:scale-95"
                   >
-                    Declare Winner
+                    See Submissions
                   </button>
                 </div>
               </div>
@@ -216,6 +177,7 @@ const Submissions = () => {
         <SubmissionDetailModal
           submission={selectedSubmission}
           theme={theme}
+          user={user}
           onClose={() => setSelectedSubmission(null)}
         />
       )}
