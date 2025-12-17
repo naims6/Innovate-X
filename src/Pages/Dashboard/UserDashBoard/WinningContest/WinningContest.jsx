@@ -1,39 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useTheme from "../../../../hooks/useTheme";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../../hooks/useAuth";
 
 const MyWinningContests = () => {
   const { theme } = useTheme();
-  const [winnings, setWinnings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  // const [winnings, setWinnings] = useState([]);
 
-  useEffect(() => {
-    const fetchWinnings = async () => {
-      setLoading(true);
-      // Simulate API call
-      const data = [
-        {
-          id: 1,
-          contestName: "Innovative Design Contest",
-          prize: "$500 Cash Prize",
-          wonDate: "2025-11-15",
-          description: "First place for your groundbreaking design.",
-        },
-        {
-          id: 2,
-          contestName: "Tech Startup Pitch",
-          prize: "Mentorship Program",
-          wonDate: "2025-10-20",
-          description: "Selected for exclusive mentorship.",
-        },
-        // Add more winnings
-      ];
-      setWinnings(data);
-      setLoading(false);
-    };
-    fetchWinnings();
-  }, []);
+  const { data: winnings = [], isLoading } = useQuery({
+    queryKey: ["winnings"],
+    queryFn: async () => {
+      const res = await axiosSecure(`/contests/winner/${user?.email}`);
+      return res.data;
+    },
+  });
+  console.log(winnings);
 
-  if (loading) {
+  // useEffect(() => {
+  //   const fetchWinnings = async () => {
+  //     // Simulate API call
+  //     const data = [
+  //       {
+  //         id: 1,
+  //         contestName: "Innovative Design Contest",
+  //         prize: "$500 Cash Prize",
+  //         wonDate: "2025-11-15",
+  //         description: "First place for your groundbreaking design.",
+  //       },
+  //       {
+  //         id: 2,
+  //         contestName: "Tech Startup Pitch",
+  //         prize: "Mentorship Program",
+  //         wonDate: "2025-10-20",
+  //         description: "Selected for exclusive mentorship.",
+  //       },
+  //     ];
+
+  //     setWinnings(data);
+  //   };
+  //   fetchWinnings();
+  // }, []);
+
+  if (isLoading) {
     return (
       <div
         className={`min-h-screen flex items-center justify-center ${
@@ -62,7 +73,7 @@ const MyWinningContests = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {winnings.map((win) => (
             <div
-              key={win.id}
+              key={win._id}
               className={`relative p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 ${
                 theme === "dark"
                   ? "bg-gray-800 border border-gray-700 hover:bg-gray-750"
@@ -71,7 +82,7 @@ const MyWinningContests = () => {
             >
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-green-600 dark:text-green-400">
-                  {win.contestName}
+                  {win.name}
                 </h2>
                 <span className="px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
                   Winner
@@ -82,7 +93,7 @@ const MyWinningContests = () => {
                   theme === "dark" ? "text-gray-300" : "text-gray-600"
                 }`}
               >
-                {win.description}
+                {win.title}
               </p>
               <div className="flex items-center justify-between">
                 <p
@@ -90,15 +101,16 @@ const MyWinningContests = () => {
                     theme === "dark" ? "text-gray-400" : "text-gray-500"
                   }`}
                 >
-                  Prize: {win.prize}
+                  Prize: {win.prizeMoney}
                 </p>
-                <p
+                {/* <p
                   className={`text-sm font-medium ${
                     theme === "dark" ? "text-gray-400" : "text-gray-500"
                   }`}
                 >
-                  Won: {new Date(win.wonDate).toLocaleDateString()}
-                </p>
+                  Won:{" "}
+                  {new Date(win?.wonDate)?.toLocaleDateString() || "not found"}
+                </p> */}
               </div>
             </div>
           ))}

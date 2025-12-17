@@ -19,7 +19,6 @@ const MyParticipate = () => {
       return res.data;
     },
   });
-  console.log(contests);
 
   if (isLoading) {
     return (

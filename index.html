@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>innovatex</title>
+    <script>
+      (() => {
+        const theme = localStorage.getItem("theme") || "dark";
+        const systemDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const root = document.documentElement;
+        if (theme === "dark" || (theme === "system" && systemDark)) {
+          root.setAttribute("data-theme", "dark");
+        } else {
+          root.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
