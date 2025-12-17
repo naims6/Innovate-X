@@ -22,6 +22,8 @@ const SubmitTaskModal = ({ theme, contest, onClose }) => {
         contestId: contest._id,
         submissionLink,
         note,
+        name: contest.name,
+        creatorEmail: contest.creator_email,
         submittedBy: {
           name: user?.displayName,
           email: user?.email,

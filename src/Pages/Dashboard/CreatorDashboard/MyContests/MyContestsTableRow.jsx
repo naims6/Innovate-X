@@ -88,7 +88,7 @@ const MyContestsTableRow = ({ theme, contest, refetch }) => {
       <td
         className={`px-6 py-4 font-semibold text-indigo-600 dark:text-indigo-400`}
       >
-        {contest?.submissions || "now 0"}
+        {contest?.submissions}
       </td>
       <td
         className={`px-6 py-4 font-bold bg-linear-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent`}

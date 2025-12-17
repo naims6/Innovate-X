@@ -23,7 +23,6 @@ const EditContest = () => {
     formState: { errors },
   } = useForm();
 
-  /* ================= FETCH CONTEST ================= */
   const { data: contest = {}, isLoading } = useQuery({
     queryKey: ["contest-edit", id],
     enabled: !!id,
@@ -33,7 +32,7 @@ const EditContest = () => {
     },
   });
 
-  /* ================= PREFILL FORM ================= */
+  /* PREFILL FORM  */
   useEffect(() => {
     if (contest?._id) {
       reset({
@@ -51,7 +50,7 @@ const EditContest = () => {
     }
   }, [contest, reset]);
 
-  /* ================= SUBMIT ================= */
+  /* On SUBMIT  */
   const onSubmit = async (data) => {
     try {
       let bannerImage = contest.bannerImage;
@@ -69,15 +68,14 @@ const EditContest = () => {
         price: Number(data.price),
         category: data.category,
         bannerImage,
-        deadline: new Date(data.deadline).toISOString(),
+        deadline: new Date(data.deadline).toISOString().split("T")[0],
       };
 
       await axiosSecure.patch(`/contests/${id}`, updatedContest);
       toast.success("Contest updated successfully!");
       navigate("/dashboard/my-contests");
-    } catch (error) {
+    } catch {
       toast.error("Failed to update contest");
-      console.error(error);
     }
   };
 

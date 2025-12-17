@@ -7,10 +7,13 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getImageUrl } from "../../../../utility/getImageUrl";
 import useAuth from "../../../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const AddContest = () => {
   const { theme } = useTheme();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [previewImage, setPreviewImage] = useState("");
   const axiosSecure = useAxiosSecure();
   const {
@@ -31,26 +34,42 @@ const AddContest = () => {
 
   const onSubmit = async (data) => {
     try {
-      const imageURL = (await getImageUrl(data.bannerImage)) || "";
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Add!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const imageURL = (await getImageUrl(data.bannerImage)) || "";
 
-      const contestDetails = {
-        ...data,
-        bannerImage: imageURL,
-        participants: 0,
-        winner: "",
-        winnerImage: "",
-        creatorName: user?.displayName,
-        creatorImage: user?.photoURL,
-        deadline: new Date(data.deadline).toISOString().split("T")[0],
-        createdAt: new Date().toISOString().split("T")[0],
-        status: "pending",
-      };
-      console.log(contestDetails);
-      const res = await axiosSecure.post("/contests", contestDetails);
+          const contestDetails = {
+            ...data,
+            bannerImage: imageURL,
+            participants: 0,
+            winner: "",
+            winnerImage: "",
+            submissions: 0,
+            creatorName: user?.displayName,
+            creatorImage: user?.photoURL,
+            creatorEmail: user?.email,
+            winnerEmail: "",
+            deadline: new Date(data.deadline).toISOString().split("T")[0],
+            createdAt: new Date().toISOString().split("T")[0],
+            status: "pending",
+          };
 
-      if (res.data.insertedId) {
-        toast.success("Your Contest is Added. Wait until admin approve");
-      }
+          const res = await axiosSecure.post("/contests", contestDetails);
+
+          if (res.data.insertedId) {
+            toast.success("Your Contest is Added. Wait until admin approve");
+            navigate("/dashboard/my-contests");
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }
