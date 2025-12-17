@@ -1,36 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import ContestCard from "../../Components/ContestCard";
 import useTheme from "../../hooks/useTheme";
-import useAuth from "../../hooks/useAuth";
+
 import AllContestHeader from "./AllContestHeader";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Pagination from "./Pagination";
 
 const AllContests = () => {
   const { theme } = useTheme();
-  const { user } = useAuth();
+
   const axiosSecure = useAxiosSecure();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
-  const navigate = useNavigate();
+
   const [searchTerm, setSearchTerm] = useState(searchQuery);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
-  const { data: allContest = [], isLoading } = useQuery({
-    queryKey: ["allContest", searchTerm, selectedCategory, sortBy],
+  const { data, isLoading } = useQuery({
+    queryKey: ["allContest", searchTerm, selectedCategory, sortBy, page],
     queryFn: async () => {
-      const response = await axiosSecure.get(`/contests/type/approved`, {
+      const res = await axiosSecure.get("/contests/type/approved", {
         params: {
           search: searchTerm,
           category: selectedCategory === "All" ? "" : selectedCategory,
           sort: sortBy,
+          page,
+          limit,
         },
       });
-      return response.data;
+      return res.data;
     },
+    keepPreviousData: true,
   });
+
+  const allContest = data?.contests || [];
+  const totalPages = data?.totalPages || 1;
+  const totalContest = data?.total || 1;
 
   const { data: categories = ["All"] } = useQuery({
     queryKey: ["categories"],
@@ -54,22 +64,25 @@ const AllContests = () => {
     return colors[category] || "from-indigo-500 to-purple-500";
   };
 
-  const handleContestClick = (contestId) => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-    navigate(`/contest/${contestId}`);
-  };
+  // useEffect(() => {
+  //   setPage(1);
+  // }, [searchTerm, selectedCategory, sortBy]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [page]);
 
   return (
     <div className={`mt-16 min-h-screen transition-colors duration-300 `}>
       {/* Header Section */}
       <AllContestHeader
         theme={theme}
+        totalContest={totalContest}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        contests={allContest}
         sortBy={sortBy}
         setSortBy={setSortBy}
         categories={categories}
@@ -113,12 +126,17 @@ const AllContests = () => {
                         index={index}
                         theme={theme}
                         getCategoryColor={getCategoryColor}
-                        onDetailsClick={() => handleContestClick(contest.id)}
                       />
                     ))}
                   </div>
+                  <Pagination
+                    page={page}
+                    setPage={setPage}
+                    totalPages={totalPages}
+                  />
                 </>
               ) : (
+                // in no contest fouund
                 <div className="text-center py-20">
                   <div className="text-6xl mb-4">🔍</div>
                   <h3

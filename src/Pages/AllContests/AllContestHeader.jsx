@@ -4,12 +4,12 @@ const AllContestHeader = ({
   theme,
   searchTerm,
   setSearchTerm,
-  contests,
   sortBy,
   setSortBy,
   categories,
   setSelectedCategory,
   selectedCategory,
+  totalContest,
 }) => {
   return (
     <div className={`py-16 px-4 sm:px-6 lg:px-8 border-b border-border`}>
@@ -30,8 +30,8 @@ const AllContestHeader = ({
               theme === "dark" ? "text-gray-400" : "text-gray-600"
             }`}
           >
-            Explore {contests.length}+ exciting coding contests and showcase
-            your skills
+            Explore {totalContest}+ exciting coding contests and showcase your
+            skills
           </p>
         </div>
 
