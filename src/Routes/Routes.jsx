@@ -23,6 +23,7 @@ import ManageContests from "../Pages/Dashboard/AdminDashboard/ManageContests/Man
 import EditContest from "../Pages/Dashboard/CreatorDashboard/EditContest/EditContest";
 import CreatorRoute from "./CreatorRoute";
 import AdminRoute from "./AdminRoute";
+import UserRoute from "./UserRoute";
 
 export const router = createBrowserRouter([
   // root layout
@@ -75,7 +76,9 @@ export const router = createBrowserRouter([
         path: "my-participate",
         element: (
           <PrivateRoute>
-            <MyParticipate />
+            <UserRoute>
+              <MyParticipate />
+            </UserRoute>
           </PrivateRoute>
         ),
       },
@@ -83,7 +86,9 @@ export const router = createBrowserRouter([
         path: "profile",
         element: (
           <PrivateRoute>
-            <MyProfile />
+            <UserRoute>
+              <MyProfile />
+            </UserRoute>
           </PrivateRoute>
         ),
       },
@@ -91,7 +96,9 @@ export const router = createBrowserRouter([
         path: "my-winning-contests",
         element: (
           <PrivateRoute>
-            <MyWinningContests />
+            <UserRoute>
+              <MyWinningContests />
+            </UserRoute>
           </PrivateRoute>
         ),
       },

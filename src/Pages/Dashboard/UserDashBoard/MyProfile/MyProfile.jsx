@@ -72,8 +72,8 @@ const MyProfile = () => {
           <div
             className={`p-6 rounded-xl shadow-lg ${
               theme === "dark"
-                ? "bg-gray-800 border border-gray-700"
-                : "bg-white border border-gray-200"
+                ? "bg-slate-800 border-r border-slate-700"
+                : "bg-white border-r border-gray-200"
             }`}
           >
             {/* photo url */}
@@ -177,8 +177,8 @@ const MyProfile = () => {
           <div
             className={`p-6 rounded-xl shadow-lg ${
               theme === "dark"
-                ? "bg-gray-800 border border-gray-700"
-                : "bg-white border border-gray-200"
+                ? "bg-slate-800 border-r border-slate-700"
+                : "bg-white border-r border-gray-200"
             }`}
           >
             <h2 className="text-2xl font-bold mb-6 text-center">

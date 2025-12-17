@@ -10,6 +10,7 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const { user, loading } = useAuth();
   const { role, isRoleLoading } = useRole();
   const location = useLocation();
+  console.log(role);
 
   if (isRoleLoading || loading) {
     return <DashboardSidebarSkeleton theme={theme} sidebarOpen={sidebarOpen} />;
