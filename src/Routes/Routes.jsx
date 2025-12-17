@@ -21,6 +21,8 @@ import HowItWorks from "../Pages/HowItWorks/HowItWorks";
 import Leaderboard from "../Pages/Leaderboard/Leaderboard";
 import ManageContests from "../Pages/Dashboard/AdminDashboard/ManageContests/ManageContests";
 import EditContest from "../Pages/Dashboard/CreatorDashboard/EditContest/EditContest";
+import CreatorRoute from "./CreatorRoute";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   // root layout
@@ -68,47 +70,96 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     Component: DashboardLayout,
     children: [
+      // user dashboard routes
+      {
+        path: "my-participate",
+        element: (
+          <PrivateRoute>
+            <MyParticipate />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-winning-contests",
+        element: (
+          <PrivateRoute>
+            <MyWinningContests />
+          </PrivateRoute>
+        ),
+      },
       // creator dashboard routes
       {
         path: "add-contest",
-        Component: AddContest,
+        element: (
+          <PrivateRoute>
+            <CreatorRoute>
+              <AddContest />
+            </CreatorRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-contests",
-        Component: MyContests,
+        element: (
+          <PrivateRoute>
+            <CreatorRoute>
+              <MyContests />
+            </CreatorRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "submissions",
-        Component: Submissions,
+        element: (
+          <PrivateRoute>
+            <CreatorRoute>
+              <Submissions />
+            </CreatorRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "contest/edit/:id",
-        Component: EditContest,
+        element: (
+          <PrivateRoute>
+            <CreatorRoute>
+              <EditContest />
+            </CreatorRoute>
+          </PrivateRoute>
+        ),
       },
       // admin dashbaord routes
       {
         path: "manage-user",
-        Component: ManageUser,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageUser />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "manage-contests",
-        Component: ManageContests,
-      },
-      // user dashboard routes
-      {
-        path: "my-participate",
-        Component: MyParticipate,
-      },
-      {
-        path: "profile",
-        Component: MyProfile,
-      },
-      {
-        path: "my-winning-contests",
-        Component: MyWinningContests,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageContests />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
     ],
   },
+  // payment related routes
   {
     path: "/payment-success",
     Component: PaymentSuccess,
