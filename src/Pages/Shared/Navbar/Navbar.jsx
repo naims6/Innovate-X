@@ -54,17 +54,20 @@ function Navbar() {
           <Logo />
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-3">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.href}
-                className={`relative font-medium transition-all duration-300 group`}
+                className={({ isActive }) =>
+                  `relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    isActive
+                      ? "bg-gray-200 font-extrabold text-gray-900 shadow-sm"
+                      : " hover:text-gray-900 hover:bg-gray-100"
+                  }`
+                }
               >
-                {link.name}
-                <span
-                  className={`absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 group-hover:w-full bg-primary`}
-                />
+                <div className="flex items-center gap-1">{link.name}</div>
               </NavLink>
             ))}
           </div>

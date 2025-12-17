@@ -20,7 +20,6 @@ const MyContests = () => {
     queryKey: ["my-contests", user?.email],
     queryFn: async () => {
       const res = await axiosSecure(`/contests/email/${user?.email}`);
-      console.log(res.data);
       return res.data;
     },
   });

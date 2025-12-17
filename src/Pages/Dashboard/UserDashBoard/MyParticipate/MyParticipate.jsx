@@ -15,7 +15,6 @@ const MyParticipate = () => {
     queryKey: ["contests", user?.email],
     queryFn: async () => {
       const res = await axiosSecure(`/participate-contest/${user?.email}`);
-      console.log(res.data);
       return res.data;
     },
   });
