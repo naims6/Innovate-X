@@ -7,8 +7,6 @@ const UserTableRow = ({ user, theme, ROLE_OPTIONS }) => {
   const [selectedRole, setSelectedRole] = useState(role);
   const axiosSecure = useAxiosSecure();
 
-  console.log(selectedRole);
-
   // Logic to update user role
   const handleUserRoleUpdate = async (userId) => {
     const res = await axiosSecure.patch(`users/${userId}`, {

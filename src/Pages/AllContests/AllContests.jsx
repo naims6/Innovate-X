@@ -18,19 +18,27 @@ const AllContests = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
 
-  const {
-    data: allContest = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["allContest", searchTerm],
+  const { data: allContest = [], isLoading } = useQuery({
+    queryKey: ["allContest", searchTerm, selectedCategory, sortBy],
     queryFn: async () => {
-      const result = await axiosSecure(`/contests/type/approved`);
-      return result.data;
+      const response = await axiosSecure.get(`/contests/type/approved`, {
+        params: {
+          search: searchTerm,
+          category: selectedCategory === "All" ? "" : selectedCategory,
+          sort: sortBy,
+        },
+      });
+      return response.data;
     },
   });
 
-  const categories = ["All", ...new Set(allContest.map((c) => c.category))];
+  const { data: categories = ["All"] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/contest-categories"); // You'll need this endpoint
+      return ["All", ...res.data];
+    },
+  });
 
   const getCategoryColor = (category) => {
     const colors = {
@@ -67,7 +75,6 @@ const AllContests = () => {
         categories={categories}
         setSelectedCategory={setSelectedCategory}
         selectedCategory={selectedCategory}
-        refetch={refetch}
       />
 
       {isLoading ? (
@@ -134,20 +141,6 @@ const AllContests = () => {
           </div>
         </>
       )}
-
-      {/* CSS Animations */}
-      <style jsx>{`
-        @keyframes slideUpIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };
