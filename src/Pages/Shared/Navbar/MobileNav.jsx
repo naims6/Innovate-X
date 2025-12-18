@@ -23,7 +23,7 @@ const MobileNav = ({
               {link.name}
             </Link>
           ))}
-          {user && (
+          {!user && (
             <div className="flex items-center gap-2 px-4">
               <Link
                 to="/login"
