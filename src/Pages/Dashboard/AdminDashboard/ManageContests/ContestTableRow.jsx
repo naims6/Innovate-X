@@ -1,6 +1,7 @@
 import React from "react";
 import { FaCheck, FaTimes, FaTrashAlt, FaEye } from "react-icons/fa";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router";
 
 export default function ContestTableRow({
   contest,
