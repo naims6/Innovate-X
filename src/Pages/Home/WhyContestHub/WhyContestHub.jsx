@@ -79,7 +79,7 @@ const WhyContestHub = () => {
 
         {/* Trust Section */}
         <div
-          className={`mt-20 rounded-3xl p-12 sm:p-16 text-center border ${
+          className={`mt-20 rounded-3xl p-8 sm:p-16 text-center border ${
             theme === "dark"
               ? "bg-linear-to-r from-indigo-900/30 to-purple-900/30 border-indigo-700/50"
               : "bg-linear-to-r from-indigo-50 to-purple-50 border-indigo-200"

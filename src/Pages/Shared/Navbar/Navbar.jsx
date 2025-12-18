@@ -46,15 +46,15 @@ function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 min-h-16 py-1.5 transition-all duration-300 bg-background border-b border-border/80`}
+      className={`fixed top-0 left-0 right-0 z-50 min-h-16 py-1.5 transition-all duration-300 bg-background/80 backdrop-blur-sm border-b border-border/80`}
     >
       <Container>
-        <div className="flex items-center justify-between h-16 px-4">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Logo />
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center space-x-3">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
@@ -73,7 +73,7 @@ function Navbar() {
           </div>
 
           {/* Right Side Actions */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-1 md:space-x-3">
             {/* Dark/Light Mode Toggle */}
             <ToogleTheme />
 
@@ -115,7 +115,7 @@ function Navbar() {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden p-2 rounded-lg transition-colors duration-300 ${
+              className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
                 theme === "dark"
                   ? "text-gray-300 hover:bg-gray-800"
                   : "text-gray-700 hover:bg-gray-100"
@@ -132,7 +132,13 @@ function Navbar() {
       </Container>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && <MobileNav navLinks={navLinks} />}
+      {isMobileMenuOpen && (
+        <MobileNav
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          navLinks={navLinks}
+        />
+      )}
     </nav>
   );
 }

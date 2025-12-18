@@ -35,7 +35,7 @@ const BannerSection = () => {
 
   return (
     <div
-      className={`relative w-full min-h-screen flex items-center mt-5 justify-center overflow-hidden bg-background border-b border-border`}
+      className={`relative w-full min-h-screen flex items-center pt-20 justify-center bg-background overflow-hidden border-b border-border`}
     >
       {/* Animated linear Orbs */}
       <motion.div
@@ -81,7 +81,7 @@ const BannerSection = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 max-w-5xl mx-auto text-center px-4 space-y-8"
+        className="relative z-10 w-full max-w-5xl text-center px-4 space-y-7 overflow-hidden"
       >
         {/* Badge */}
         <motion.div
@@ -105,7 +105,7 @@ const BannerSection = () => {
           className="space-y-4"
         >
           <h1
-            className={`text-5xl md:text-7xl font-black leading-tight tracking-tight drop-shadow-lg`}
+            className={`text-[42px] md:text-7xl font-black leading-tight tracking-tight drop-shadow-lg`}
           >
             Discover Creative
             <br />
@@ -119,7 +119,7 @@ const BannerSection = () => {
           <p
             className={`text-lg md:text-xl leading-relaxed max-w-3xl mx-auto ${
               theme === "dark" ? "text-gray-300" : "text-gray-700"
-            }`}
+            } px-1`}
           >
             Join thousands of creators competing across{" "}
             <span
@@ -140,14 +140,14 @@ const BannerSection = () => {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
           onSubmit={handleSearch}
-          className={`mt-10 flex items-center gap-0 rounded-2xl shadow-2xl overflow-hidden max-w-2xl mx-auto backdrop-blur-sm border transition-all duration-300 group ${
+          className={`mt-10 flex items-center justify-between gap-0 rounded-2xl shadow-2xl overflow-hidden w-full max-w-2xl mx-auto backdrop-blur-sm border transition-all duration-300 group px-1.5  ${
             theme === "dark"
               ? "bg-gray-800/60 border-gray-700/60 hover:border-cyan-500/40 focus-within:border-cyan-500/60"
               : "bg-white/80 border-gray-200/60 hover:border-blue-400/40 focus-within:border-blue-400/60"
           }`}
         >
           <Search
-            className={`ml-6 w-5 h-5 transition-colors ${
+            className={`ml-5 w-5 h-5 transition-colors ${
               theme === "dark"
                 ? "text-gray-400 group-focus-within:text-cyan-400"
                 : "text-gray-500 group-focus-within:text-blue-600"
@@ -178,6 +178,7 @@ const BannerSection = () => {
             Search
           </button>
         </motion.form>
+
         <div className="mt-4 flex flex-wrap justify-center gap-3">
           {contestTypes.map((type) => (
             <button
