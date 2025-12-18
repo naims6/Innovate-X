@@ -36,9 +36,9 @@ export default function ManageContests() {
   }
 
   return (
-    <div className="p-6">
+    <div className="">
       {/* HEADER */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row  lg:items-center lg:justify-between mb-6">
         <h2
           className={
             "text-xl font-semibold " +
