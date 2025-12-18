@@ -137,6 +137,7 @@ function Navbar() {
           isMobileMenuOpen={isMobileMenuOpen}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
           navLinks={navLinks}
+          user={user}
         />
       )}
     </nav>
