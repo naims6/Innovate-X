@@ -15,7 +15,6 @@ const ConfirmPayment = ({
   // const [paymentProccessing, setPaymentProccessing] = useState(false);
   const axiosSecure = useAxiosSecure();
   const dark = theme === "dark";
-  // console.log(contest);
   const handlePayment = async () => {
     const paymentInfo = {
       contestId: contest?._id,
@@ -29,7 +28,6 @@ const ConfirmPayment = ({
 
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
 
-    console.log("create ceckout seasson", res.data);
     window.location.href = res.data.url;
   };
 

@@ -70,8 +70,8 @@ const AddContest = () => {
           }
         }
       });
-    } catch (e) {
-      console.log(e);
+    } catch {
+      toast.error("Your Contest is not added");
     }
   };
 

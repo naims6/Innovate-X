@@ -48,7 +48,6 @@ const SubmissionDetailModal = ({ submission, theme, onClose, user }) => {
       // add user in winners database
       await axiosSecure.post("/winners", winnerData);
 
-      console.log(winnerData);
       if (res.data.modifiedCount) {
         toast.success("Winner is Declared");
       }

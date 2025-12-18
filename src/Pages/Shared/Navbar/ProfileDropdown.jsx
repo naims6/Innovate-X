@@ -15,7 +15,7 @@ const ProfileDropdown = ({ theme, user, logOut }) => {
 
   return (
     <div
-      className={`absolute right-0 mt-3 w-56 rounded-xl shadow-2xl border border-border overflow-hidden animate-slideDown transition-all duration-200 bg-bg-surface`}
+      className={`absolute right-0 z-32 mt-3 w-56 rounded-xl shadow-2xl border border-border overflow-hidden animate-slideDown transition-all duration-200 bg-bg-surface`}
     >
       {/* Dropdown Header */}
       <div className={`px-4 py-3 border-b border-border`}>

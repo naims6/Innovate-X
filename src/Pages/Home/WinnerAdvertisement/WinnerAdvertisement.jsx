@@ -25,7 +25,6 @@ const WinnerAdvertisement = () => {
       return res.data;
     },
   });
-  console.log(winners);
 
   useEffect(() => {
     setStats({

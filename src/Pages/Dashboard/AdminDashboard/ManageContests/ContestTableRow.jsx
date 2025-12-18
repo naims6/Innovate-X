@@ -94,13 +94,13 @@ export default function ContestTableRow({
 
       {/* View Button */}
       <td className="p-3">
-        <button
+        <Link
+          to={`/contests/${contest?._id}`}
           className={`transition duration-150 ${viewBtnClasses}`}
-          onClick={() => console.log("View details for", contest._id)}
           title="View Details"
         >
           <FaEye />
-        </button>
+        </Link>
       </td>
 
       {/* Actions */}

@@ -10,7 +10,7 @@ const SocialLogin = () => {
   const [isAuthenticating, setIsAuthticating] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
+
   const handleGoogleLogin = async () => {
     setIsAuthticating(true);
     try {

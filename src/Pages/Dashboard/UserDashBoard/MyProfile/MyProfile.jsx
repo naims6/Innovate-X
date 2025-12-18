@@ -38,8 +38,7 @@ const MyProfile = () => {
       address,
     };
     const res = await axiosSecure.patch(`/users/${userData?._id}`, updatedUser);
-    console.log(userData?._id);
-    console.log(res);
+
     if (res.data.modifiedCount) {
       toast.success("Profile Updated Successfully");
       refetch();

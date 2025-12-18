@@ -96,7 +96,7 @@ function Navbar() {
                 )}
               </div>
             ) : (
-              <div className="flex items-center">
+              <div className="hidden lg:flex items-center">
                 <Link
                   to="/login"
                   className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 tracking-wide`}
