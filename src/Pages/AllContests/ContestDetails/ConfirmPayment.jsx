@@ -12,9 +12,9 @@ const ConfirmPayment = ({
 }) => {
   const [agree, setAgree] = useState(false);
   const { user } = useAuth();
-  // const [paymentProccessing, setPaymentProccessing] = useState(false);
   const axiosSecure = useAxiosSecure();
   const dark = theme === "dark";
+
   const handlePayment = async () => {
     const paymentInfo = {
       contestId: contest?._id,
@@ -27,7 +27,6 @@ const ConfirmPayment = ({
     };
 
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
-
     window.location.href = res.data.url;
   };
 
@@ -35,19 +34,22 @@ const ConfirmPayment = ({
     <Dialog
       open={isPaymentModalOpen}
       onClose={() => setIsPaymentModalOpen(false)}
-      className="w-full max-w-2xl mx-auto mt-12 p-0 border-0 bg-transparent relative z-50"
+      className="relative z-50"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/30 backdrop-blur-xl" />
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+      <DialogBackdrop className="fixed inset-0 bg-black/50 backdrop-blur-md" />
+
+      <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-4">
         <DialogPanel
-          className={`mx-4 rounded-xl overflow-hidden shadow-2xl w-full max-w-2xl ${
-            dark ? "bg-slate-800" : "bg-white z-50"
+          className={`mx-auto rounded-xl shadow-2xl w-full max-w-2xl flex flex-col max-h-[95vh] ${
+            dark ? "bg-slate-800" : "bg-white"
           }`}
         >
-          {/* Header */}
+          {/* Header - Fixed */}
           <div
-            className={`flex items-center justify-between px-6 py-4 ${
-              dark ? "bg-slate-900/50" : "bg-gray-50"
+            className={`flex items-center justify-between px-6 py-4 shrink-0 border-b ${
+              dark
+                ? "bg-slate-900/50 border-slate-700"
+                : "bg-gray-50 border-gray-100"
             }`}
           >
             <div className="flex items-center gap-3">
@@ -87,8 +89,8 @@ const ConfirmPayment = ({
             </button>
           </div>
 
-          {/* Body */}
-          <div className="p-6 space-y-4">
+          {/* Body - Scrollable Area */}
+          <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {/* Contest summary */}
             <div
               className={`flex gap-4 items-center rounded-lg p-3 ${
@@ -97,7 +99,7 @@ const ConfirmPayment = ({
                   : "bg-gray-50 border border-gray-100"
               }`}
             >
-              <div className="w-28 h-16 rounded-md overflow-hidden bg-gray-200 flex items-center justify-center text-sm text-gray-500">
+              <div className="w-28 h-16 rounded-md overflow-hidden bg-gray-200 flex shrink-0 items-center justify-center text-sm text-gray-500">
                 {contest?.bannerImage ? (
                   <img
                     src={contest.bannerImage}
@@ -110,7 +112,7 @@ const ConfirmPayment = ({
               </div>
 
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div>
                     <p
                       className={`text-sm ${
@@ -128,7 +130,7 @@ const ConfirmPayment = ({
                     </p>
                   </div>
 
-                  <div className="text-right">
+                  <div className="md:text-right">
                     <p
                       className={`text-xs ${
                         dark ? "text-gray-400" : "text-gray-500"
@@ -153,7 +155,7 @@ const ConfirmPayment = ({
               </div>
             </div>
 
-            {/* Price */}
+            {/* Price Breakdown */}
             <div
               className={`rounded-lg p-4 ${
                 dark
@@ -197,7 +199,7 @@ const ConfirmPayment = ({
               </div>
             </div>
 
-            {/* Payment methods: Stripe active, others disabled */}
+            {/* Payment methods */}
             <fieldset className="space-y-2">
               <legend
                 className={`text-sm font-semibold ${
@@ -210,7 +212,7 @@ const ConfirmPayment = ({
               <label
                 className={`flex items-center gap-3 p-3 rounded-lg cursor-default border ${
                   dark
-                    ? "border-indigo-500 bg-indigo-500/6"
+                    ? "border-indigo-500 bg-indigo-500/10"
                     : "border-indigo-500 bg-indigo-50"
                 }`}
               >
@@ -245,7 +247,6 @@ const ConfirmPayment = ({
                 className={`flex items-center gap-3 p-3 rounded-lg border opacity-40 cursor-not-allowed ${
                   dark ? "border-slate-700" : "border-gray-200"
                 }`}
-                aria-disabled="true"
               >
                 <input
                   type="radio"
@@ -265,7 +266,6 @@ const ConfirmPayment = ({
                 className={`flex items-center gap-3 p-3 rounded-lg border opacity-40 cursor-not-allowed ${
                   dark ? "border-slate-700" : "border-gray-200"
                 }`}
-                aria-disabled="true"
               >
                 <input
                   type="radio"
@@ -286,7 +286,7 @@ const ConfirmPayment = ({
             <div
               className={`flex items-start gap-3 p-3 rounded-lg ${
                 dark
-                  ? "bg-blue-900/8 border border-blue-800/20"
+                  ? "bg-blue-900/20 border border-blue-800/20"
                   : "bg-blue-50 border border-blue-100"
               }`}
             >
@@ -310,9 +310,9 @@ const ConfirmPayment = ({
             </div>
           </div>
 
-          {/* Footer */}
+          {/* Footer - Fixed */}
           <div
-            className={`flex items-center justify-end gap-3 px-6 py-4 border-t ${
+            className={`flex items-center justify-end gap-3 px-6 py-4 border-t shrink-0 ${
               dark ? "border-slate-700" : "border-gray-100"
             }`}
           >
@@ -331,10 +331,10 @@ const ConfirmPayment = ({
               type="button"
               onClick={handlePayment}
               disabled={!agree}
-              className={`px-5 py-2 rounded-md font-semibold cursor-pointer ${
+              className={`px-5 py-2 rounded-md font-semibold ${
                 !agree
-                  ? "opacity-60 cursor-not-allowed border border-border/60"
-                  : "bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-md"
+                  ? "opacity-60 cursor-not-allowed border border-gray-300 bg-gray-100 text-gray-400"
+                  : "bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-md active:scale-95 transition-transform"
               }`}
             >
               <span className="mr-2">💳</span>
