@@ -79,12 +79,12 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       {/* Sidebar */}
       <div
         className={`${
-          sidebarOpen ? "w-64" : "w-20"
+          sidebarOpen ? "w-64" : "w-18"
         } transition-all duration-300 ${
           theme === "dark"
             ? "bg-slate-800 border-r border-slate-700"
             : "bg-white border-r border-gray-200"
-        }  flex-col h-screen sticky top-0 sm:flex`}
+        }  flex-col h-screen sticky top-0 z-50 sm:flex`}
       >
         {/* Logo */}
         <Link
@@ -180,7 +180,7 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       {/* Mobile Backdrop */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-30 sm:hidden bg-black/50"
+          className="fixed inset-0 z-30 md:hidden bg-black/50"
           onClick={() => setSidebarOpen(false)}
         ></div>
       )}

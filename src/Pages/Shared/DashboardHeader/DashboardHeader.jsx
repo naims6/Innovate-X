@@ -3,6 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/useRole";
 import useTheme from "../../../hooks/useTheme";
 import toast from "react-hot-toast";
+import ToogleTheme from "../../../Components/ToogleTheme";
 
 const DashboardHeader = ({ sidebarOpen, setSidebarOpen }) => {
   const { theme } = useTheme();
@@ -29,10 +30,10 @@ const DashboardHeader = ({ sidebarOpen, setSidebarOpen }) => {
       }`}
     >
       {/* Left Side */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 md:gap-4">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className={`p-2 rounded-lg transition-colors duration-300 sm:hidden ${
+          className={`p-2 rounded-lg transition-colors duration-300 ${
             theme === "dark" ? "hover:bg-slate-700" : "hover:bg-gray-100"
           }`}
         >
@@ -60,7 +61,7 @@ const DashboardHeader = ({ sidebarOpen, setSidebarOpen }) => {
       </div>
 
       {/* Right Side */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 lg:gap-4">
         {/* Notifications */}
         <button
           className={`relative p-2 rounded-lg transition-colors duration-300 ${
@@ -82,7 +83,8 @@ const DashboardHeader = ({ sidebarOpen, setSidebarOpen }) => {
           </svg>
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>
-
+        {/* Dark/Light Mode Toggle */}
+        <ToogleTheme />
         {/* Logout */}
         <button
           onClick={handleLogout}

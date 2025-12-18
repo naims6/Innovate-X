@@ -6,7 +6,7 @@ import DashboardHeader from "../Pages/Shared/DashboardHeader/DashboardHeader";
 
 const DashboardLayout = () => {
   const { theme } = useTheme();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
 
   return (
     <div

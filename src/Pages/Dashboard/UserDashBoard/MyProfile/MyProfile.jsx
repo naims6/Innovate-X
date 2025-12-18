@@ -53,7 +53,7 @@ const MyProfile = () => {
 
   return (
     <div
-      className={`min-h-screen p-8 ${
+      className={`min-h-screen ${
         theme === "dark"
           ? "bg-linnear-to-br from-gray-900 to-gray-800 text-white"
           : "bg-linnear-to-br from-blue-50 to-indigo-100 text-gray-900"

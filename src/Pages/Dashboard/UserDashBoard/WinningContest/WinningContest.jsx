@@ -37,7 +37,7 @@ const MyWinningContests = () => {
   }
 
   return (
-    <div className={`min-h-screen p-8`}>
+    <div className={`min-h-screen`}>
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
         <h1 className="text-4xl font-extrabold mb-8 text-center bg-clip-text text-transparent bg-linear-to-r from-green-600 to-blue-600">
