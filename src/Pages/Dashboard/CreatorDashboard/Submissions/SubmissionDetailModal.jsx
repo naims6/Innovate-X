@@ -14,13 +14,11 @@ const SubmissionDetailModal = ({ submission, theme, onClose, user }) => {
       return res.data;
     },
   });
-  console.log(submission);
+
   const isDeadlineOver =
     new Date() > new Date(contest?.deadline).setHours(23, 59, 59, 999);
 
   const isWinnerDeclared = contest?.winner ? true : false;
-
-  console.log({ isDeadlineOver });
 
   const handleDeclareWinner = async (submission) => {
     const { submittedBy } = submission;
@@ -30,10 +28,27 @@ const SubmissionDetailModal = ({ submission, theme, onClose, user }) => {
         winnerImage: submittedBy?.image,
         winnerEmail: submittedBy?.email,
       };
+      // add winner in contest
       const res = await axiosSecure.patch(
         `/contests/${submission.contestId}`,
         updatedDoc
       );
+      // update user totalWon
+      await axiosSecure.patch(`/users/email/${submittedBy?.email}`);
+
+      const winnerData = {
+        name: submittedBy?.name,
+        avatar: submittedBy?.image,
+        prize: contest?.prizeMoney,
+        email: submittedBy?.email,
+        contestName: contest?.name,
+        position: "1st Place",
+        badge: "🥇",
+      };
+      // add user in winners database
+      await axiosSecure.post("/winners", winnerData);
+
+      console.log(winnerData);
       if (res.data.modifiedCount) {
         toast.success("Winner is Declared");
       }

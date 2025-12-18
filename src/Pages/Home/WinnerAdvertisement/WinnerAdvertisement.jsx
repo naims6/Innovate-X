@@ -5,75 +5,37 @@ import Container from "../../../Components/Container";
 import WinnerHeader from "./WinnerHeader";
 import StatCard from "./StatCard";
 import WinnerCard from "./WinnerCard";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const WinnerAdvertisement = () => {
   const { theme } = useTheme;
-  const [winners, setWinners] = useState([]);
+
+  const axiosSecure = useAxiosSecure();
   const [stats, setStats] = useState({
     totalWinners: 0,
     totalPrizeMoney: 0,
     activeContests: 0,
   });
-  const [loading, setLoading] = useState(true);
 
-  // Sample winner data
-  const winnersData = [
-    {
-      id: 1,
-      name: "Alex Johnson",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
-      prize: 5000,
-      contestName: "Web Design Showdown",
-      position: "1st Place",
-      badge: "🥇",
+  const { data: winners = [], isLoading } = useQuery({
+    queryKey: ["winners"],
+    queryFn: async () => {
+      const res = await axiosSecure(`/winners`);
+      return res.data;
     },
-    {
-      id: 2,
-      name: "Sarah Chen",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
-      prize: 3000,
-      contestName: "Algorithm Master Challenge",
-      position: "1st Place",
-      badge: "🥇",
-    },
-    {
-      id: 3,
-      name: "Michael Rodriguez",
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
-      prize: 2000,
-      contestName: "UI/UX Innovation",
-      position: "1st Place",
-      badge: "🥇",
-    },
-    {
-      id: 4,
-      name: "Emma Wilson",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop",
-      prize: 2500,
-      contestName: "Full Stack Developer Quest",
-      position: "1st Place",
-      badge: "🥇",
-    },
-  ];
+  });
+  console.log(winners);
 
   useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
-      setWinners(winnersData.slice(0, 4));
-      setStats({
-        totalWinners: 1250,
-        totalPrizeMoney: 125000,
-        activeContests: 24,
-      });
-      setLoading(false);
-    }, 600);
+    setStats({
+      totalWinners: 50,
+      totalPrizeMoney: 12500,
+      activeContests: 14,
+    });
   }, []);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <section
         className={`py-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${
@@ -148,9 +110,9 @@ const WinnerAdvertisement = () => {
 
         {/* Winners Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {winners.map((winner, index) => (
+          {winners.slice(0, 4).map((winner, index) => (
             <WinnerCard
-              key={winner.id}
+              key={winner._id}
               theme={theme}
               winner={winner}
               index={index}

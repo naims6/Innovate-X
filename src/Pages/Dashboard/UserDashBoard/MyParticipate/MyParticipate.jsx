@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import { Link } from "react-router";
-// Import an icon for the empty state
 import { FiAward } from "react-icons/fi";
 
 const MyParticipate = () => {
