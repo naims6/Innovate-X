@@ -110,7 +110,7 @@ const EditContest = () => {
       {/* ================= FORM ================= */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`rounded-2xl p-8 transition-colors duration-300 ${
+        className={`rounded-2xl p-4 md:p-8 transition-colors duration-300 ${
           theme === "dark"
             ? "bg-slate-800 border border-slate-700"
             : "bg-white border border-gray-200"

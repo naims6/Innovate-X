@@ -117,6 +117,7 @@ const DashboardSidebar = ({ sidebarOpen, setSidebarOpen }) => {
         <nav className="flex-1 px-2 py-6 space-y-2 overflow-y-auto">
           {menuItems.map((item) => (
             <Link
+              onClick={() => setSidebarOpen(false)}
               key={item.href}
               to={item.href}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${

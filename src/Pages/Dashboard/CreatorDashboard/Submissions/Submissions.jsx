@@ -66,19 +66,19 @@ const Submissions = () => {
           submissions.map((submission) => (
             <div
               key={submission._id}
-              className={`rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 cursor-pointer ${
+              className={`rounded-xl p-4 md:p-6 transition-all duration-300 hover:-translate-y-1 cursor-pointer ${
                 theme === "dark"
                   ? "bg-slate-800 border border-slate-700 hover:border-indigo-500 hover:shadow-lg hover:shadow-indigo-500/20"
                   : "bg-white border border-gray-200 hover:shadow-lg"
               }`}
               onClick={() => setSelectedSubmission(submission)}
             >
-              <div className="flex items-start justify-between">
-                <div className="flex items-start gap-4 flex-1">
+              <div className="flex flex-col md:flex-row items-start justify-between">
+                <div className="flex items-start gap-2 md:gap-4 flex-1">
                   <img
                     src={submission.submittedBy.image}
                     alt={submission.submittedBy.name}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-indigo-500"
+                    className="w-12 md:w-16 h-12 md:h-16 rounded-full object-cover border-2 border-indigo-500"
                   />
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
@@ -109,7 +109,7 @@ const Submissions = () => {
                     </div>
 
                     <p
-                      className={`text-sm line-clamp-2 ${
+                      className={`text-sm wrap-break-word ${
                         theme === "dark" ? "text-gray-400" : "text-gray-600"
                       }`}
                     >
