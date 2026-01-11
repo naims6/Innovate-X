@@ -1,5 +1,6 @@
 import { CalendarIcon, UserIcon, ArrowRightIcon } from "lucide-react";
 import useTheme from "../../../hooks/useTheme";
+import { Link } from "react-router";
 import Container from "../../../Components/Container";
 
 const Blogs = () => {
@@ -129,10 +130,13 @@ const Blogs = () => {
                   >
                     {post.readTime}
                   </span>
-                  <button className="flex items-center gap-2 text-cyan-500 hover:text-cyan-600 font-medium transition-colors">
+                  <Link
+                    to={`/blog/${post.id}`}
+                    className="flex items-center gap-2 text-cyan-500 hover:text-cyan-600 font-medium transition-colors"
+                  >
                     Read More
                     <ArrowRightIcon className="w-4 h-4" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </article>
@@ -140,9 +144,12 @@ const Blogs = () => {
         </div>
 
         <div className="text-center mt-12">
-          <button className="bg-linear-to-r from-blue-600 to-cyan-500 text-white px-8 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105">
+          <Link
+            to="/blog"
+            className="bg-linear-to-r from-blue-600 to-cyan-500 text-white px-8 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105"
+          >
             View All Articles
-          </button>
+          </Link>
         </div>
       </Container>
     </section>

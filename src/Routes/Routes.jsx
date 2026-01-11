@@ -25,6 +25,8 @@ import EditContest from "../Pages/Dashboard/CreatorDashboard/EditContest/EditCon
 import CreatorRoute from "./CreatorRoute";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
+import Blog from "../Pages/Blog/Blog";
+import BlogDetail from "../Pages/Blog/BlogDetail";
 
 export const router = createBrowserRouter([
   // root layout
@@ -55,6 +57,14 @@ export const router = createBrowserRouter([
       {
         path: "leaderboard",
         Component: Leaderboard,
+      },
+      {
+        path: "blog",
+        Component: Blog,
+      },
+      {
+        path: "blog/:id",
+        Component: BlogDetail,
       },
     ],
   },
