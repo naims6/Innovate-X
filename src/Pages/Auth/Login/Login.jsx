@@ -35,9 +35,17 @@ const Login = () => {
     }
   };
 
-  const handleDemoLogin = () => {
-    setValue("email", "naimss@gmail.com");
-    setValue("password", "121212");
+  const handleDemoLogin = (role) => {
+    if (role === "admin") {
+      setValue("email", "naim1@gmail.com");
+      setValue("password", "121212");
+    } else if (role === "creator") {
+      setValue("email", "naim2@gmail.com");
+      setValue("password", "121212");
+    } else {
+      setValue("email", "naimss@gmail.com");
+      setValue("password", "121212");
+    }
   };
 
   return (
@@ -127,10 +135,24 @@ const Login = () => {
             {/* Demo Login Button */}
             <button
               type="button"
-              onClick={handleDemoLogin}
+              onClick={() => handleDemoLogin("user")}
               className="w-full py-3 bg-gray-700 text-white font-medium rounded-xl hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 transition border border-gray-600"
             >
-              Demo Login
+              Demo User
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemoLogin("admin")}
+              className="w-full py-3 bg-gray-700 text-white font-medium rounded-xl hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 transition border border-gray-600"
+            >
+              Demo Admin
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemoLogin("creator")}
+              className="w-full py-3 bg-gray-700 text-white font-medium rounded-xl hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 transition border border-gray-600"
+            >
+              Demo Creator
             </button>
           </form>
 
