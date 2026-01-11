@@ -13,6 +13,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
@@ -31,6 +32,19 @@ const Login = () => {
       toast.error(message);
     } finally {
       setIsAuthticating(false);
+    }
+  };
+
+  const handleDemoLogin = (role) => {
+    if (role === "admin") {
+      setValue("email", "naim1@gmail.com");
+      setValue("password", "121212");
+    } else if (role === "creator") {
+      setValue("email", "naim2@gmail.com");
+      setValue("password", "121212");
+    } else {
+      setValue("email", "naimss@gmail.com");
+      setValue("password", "121212");
     }
   };
 
@@ -105,15 +119,40 @@ const Login = () => {
                   Remember me
                 </label>
               </div>
-              <Link>Fogot Password?</Link>
+              <Link className="text-cyan-400 hover:text-cyan-300">
+                Forgot Password?
+              </Link>
             </div>
 
-            {/* Sign Up Button */}
+            {/* Login Button */}
             <button
               type="submit"
               className="w-full py-3.5 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium rounded-xl hover:from-blue-700 hover:to-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
-              {isAuthenticating ? "Login In..." : "Log in"}
+              {isAuthenticating ? "Logging In..." : "Log in"}
+            </button>
+
+            {/* Demo Login Button */}
+            <button
+              type="button"
+              onClick={() => handleDemoLogin("user")}
+              className="w-full py-3 bg-gray-700 text-white font-medium rounded-xl hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 transition border border-gray-600"
+            >
+              Demo User
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemoLogin("admin")}
+              className="w-full py-3 bg-gray-700 text-white font-medium rounded-xl hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 transition border border-gray-600"
+            >
+              Demo Admin
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemoLogin("creator")}
+              className="w-full py-3 bg-gray-700 text-white font-medium rounded-xl hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 transition border border-gray-600"
+            >
+              Demo Creator
             </button>
           </form>
 
@@ -129,7 +168,7 @@ const Login = () => {
 
           {/* Sign In Link */}
           <p className="text-center mt-6 text-gray-400 text-sm">
-            don't have an account?{" "}
+            Don't have an account?{" "}
             <Link
               to="/signup"
               className="text-cyan-400 hover:text-cyan-300 font-medium"

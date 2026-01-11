@@ -18,12 +18,15 @@ import MyProfile from "../Pages/Dashboard/UserDashBoard/MyProfile/MyProfile";
 import PaymentSuccess from "../Pages/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentCancel from "../Pages/Payment/PaymentCancel/PaymentCancel";
 import HowItWorks from "../Pages/HowItWorks/HowItWorks";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 import Leaderboard from "../Pages/Leaderboard/Leaderboard";
 import ManageContests from "../Pages/Dashboard/AdminDashboard/ManageContests/ManageContests";
 import EditContest from "../Pages/Dashboard/CreatorDashboard/EditContest/EditContest";
 import CreatorRoute from "./CreatorRoute";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
+import Blog from "../Pages/Blog/Blog";
+import BlogDetail from "../Pages/Blog/BlogDetail";
 
 export const router = createBrowserRouter([
   // root layout
@@ -41,19 +44,27 @@ export const router = createBrowserRouter([
       },
       {
         path: "contests/:id",
-        element: (
-          <PrivateRoute>
-            <ContestDetails></ContestDetails>
-          </PrivateRoute>
-        ),
+        element: <ContestDetails></ContestDetails>,
       },
       {
         path: "how-it-works",
         Component: HowItWorks,
       },
       {
+        path: "about-us",
+        Component: AboutUs,
+      },
+      {
         path: "leaderboard",
         Component: Leaderboard,
+      },
+      {
+        path: "blog",
+        Component: Blog,
+      },
+      {
+        path: "blog/:id",
+        Component: BlogDetail,
       },
     ],
   },

@@ -8,7 +8,7 @@ A modern, full-stack contest management platform that lets users discover and jo
 
 ## About the Project
 
-ContestHub is a complete, production-ready web application designed to demonstrate real-world full-stack development practices. It supports:
+InnovateX is a complete, production-ready web application designed to demonstrate real-world full-stack development practices. It supports:
 
 - **Users** — Browse contests, pay to participate, track payments, view winnings, and see their performance on a global leaderboard.
 - **Contest Creators** — Create new contests, set entry fees and prizes, manage submissions, and declare winners.
@@ -54,7 +54,6 @@ The project emphasizes security, scalability, clean architecture, and a polished
 
 - Fully responsive design (mobile, tablet, desktop)
 - Dark/Light theme toggle (saved in localStorage)
-- Smooth animations with Framer Motion
 - Notifications via React Hot Toast
 - Custom 404 page
 
@@ -73,7 +72,6 @@ The project emphasizes security, scalability, clean architecture, and a polished
 - TanStack Query
 - React Hook Form (with validation)
 - Tailwind CSS
-- Framer Motion (animations)
 - Axios
 - React Hot Toast / SweetAlert2
 

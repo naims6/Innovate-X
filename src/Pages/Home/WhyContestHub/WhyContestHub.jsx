@@ -1,6 +1,6 @@
+import Container from "../../../Components/Container";
 import useTheme from "../../../hooks/useTheme";
 import ContestHubHeader from "./ContestHubHeader";
-import CTASection from "./CTASection";
 import FeatureCard from "./FeatureCard";
 
 const WhyContestHub = () => {
@@ -58,10 +58,8 @@ const WhyContestHub = () => {
   ];
 
   return (
-    <section
-      className={`py-24 px-4 sm:px-6 lg:px-8 transition-colors duration-300 bg-bg-secondary`}
-    >
-      <div className="max-w-7xl mx-auto">
+    <section className={`py-24 transition-colors duration-300 bg-bg-secondary`}>
+      <Container>
         {/* Section Header */}
         <ContestHubHeader theme={theme} />
 
@@ -144,10 +142,7 @@ const WhyContestHub = () => {
             rewarding platform for talent.
           </p>
         </div>
-
-        {/* CTA Section */}
-        <CTASection theme={theme} />
-      </div>
+      </Container>
     </section>
   );
 };

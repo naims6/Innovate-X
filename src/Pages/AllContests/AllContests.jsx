@@ -88,7 +88,7 @@ const AllContests = () => {
         categories={categories}
         setSelectedCategory={setSelectedCategory}
         selectedCategory={selectedCategory}
-      />
+      /> 
 
       {isLoading ? (
         <div className="flex items-center justify-center">

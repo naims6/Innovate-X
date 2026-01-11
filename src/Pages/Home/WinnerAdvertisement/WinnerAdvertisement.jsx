@@ -118,38 +118,6 @@ const WinnerAdvertisement = () => {
             />
           ))}
         </div>
-
-        {/* Call to Action */}
-        <div
-          className={`rounded-2xl p-8 sm:p-12 text-center transition-all duration-300 bg-bg-surface/30 border border-border/40 shadow-sm hover:shadow-md`}
-        >
-          <h3 className={`text-3xl font-bold mb-4 `}>
-            Ready to Become a Champion?
-          </h3>
-          <p className={`text-lg mb-8 max-w-2xl mx-auto text-text-secondary`}>
-            Join thousands of talented developers and compete for amazing
-            prizes. Your journey to success starts here!
-          </p>
-          <Link
-            to="/all-contests"
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Explore Contests Now
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
-          </Link>
-        </div>
       </Container>
     </section>
   );
