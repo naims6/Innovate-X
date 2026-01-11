@@ -7,7 +7,6 @@ import {
   BellIcon,
 } from "lucide-react";
 import useTheme from "../../../hooks/useTheme";
-import Container from "../../../Components/Container";
 
 const Newsletter = () => {
   const { theme } = useTheme();
@@ -48,8 +47,7 @@ const Newsletter = () => {
           : "bg-linear-to-r from-blue-600 via-purple-600 to-cyan-600"
       }`}
     >
-      <Container>
-      <div className="relative z-10">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full mb-6">
@@ -162,7 +160,6 @@ const Newsletter = () => {
           </div>
         </div>
       </div>
-      </Container>
     </section>
   );
 };

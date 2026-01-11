@@ -11,6 +11,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import useTheme from "../../hooks/useTheme";
+import { Link } from "react-router";
 
 const HowItWorks = () => {
   const { theme } = useTheme();
@@ -117,9 +118,9 @@ const HowItWorks = () => {
             transparent environment.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-primary text-text-reverse px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-opacity duration-300 flex items-center justify-center gap-2">
+            <Link to={"/all-contests"} className="bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-opacity duration-300 flex items-center justify-center gap-2">
               Get Started <FaArrowRight />
-            </button>
+            </Link>
             <button className="border border-border text-text-primary px-8 py-4 rounded-xl font-semibold hover:bg-bg-surface transition-colors duration-300">
               Watch Demo
             </button>
@@ -278,9 +279,9 @@ const HowItWorks = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <button className="bg-primary text-text-reverse px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-opacity duration-300 flex items-center justify-center gap-2">
+            <Link to={"/all-contests"} className="bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-opacity duration-300 flex items-center justify-center gap-2">
               Browse Contests <FaArrowRight />
-            </button>
+            </Link>
             <button className="border border-border text-text-primary px-8 py-4 rounded-xl font-semibold hover:bg-bg-surface transition-colors duration-300">
               Learn More
             </button>

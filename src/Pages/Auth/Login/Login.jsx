@@ -111,15 +111,17 @@ const Login = () => {
                   Remember me
                 </label>
               </div>
-              <Link>Fogot Password?</Link>
+              <Link className="text-cyan-400 hover:text-cyan-300">
+                Forgot Password?
+              </Link>
             </div>
 
-            {/* Sign Up Button */}
+            {/* Login Button */}
             <button
               type="submit"
               className="w-full py-3.5 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium rounded-xl hover:from-blue-700 hover:to-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
-              {isAuthenticating ? "Login In..." : "Log in"}
+              {isAuthenticating ? "Logging In..." : "Log in"}
             </button>
 
             {/* Demo Login Button */}
@@ -144,7 +146,7 @@ const Login = () => {
 
           {/* Sign In Link */}
           <p className="text-center mt-6 text-gray-400 text-sm">
-            don't have an account?{" "}
+            Don't have an account?{" "}
             <Link
               to="/signup"
               className="text-cyan-400 hover:text-cyan-300 font-medium"

@@ -45,7 +45,11 @@ const Blogs = () => {
   ];
 
   return (
-    <section className={`py-16 transition-colors duration-300 bg-bg-secondary`}>
+    <section
+      className={`py-16 transition-colors duration-300 ${
+        theme === "dark" ? "bg-gray-50 dark:bg-gray-900" : "bg-gray-50"
+      }`}
+    >
       <Container>
         <div className="text-center mb-12">
           <h2

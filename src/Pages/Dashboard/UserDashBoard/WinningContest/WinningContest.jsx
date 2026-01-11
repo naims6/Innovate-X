@@ -23,11 +23,7 @@ const MyWinningContests = () => {
   if (isLoading) {
     return (
       <div
-        className={`min-h-screen flex items-center justify-center ${
-          theme === "dark"
-            ? "bg-gray-900 text-white"
-            : "bg-gray-100 text-gray-900"
-        }`}
+        className={`min-h-screen flex items-center justify-center`}
       >
         <div className="text-xl font-medium animate-pulse">
           Loading winnings...
