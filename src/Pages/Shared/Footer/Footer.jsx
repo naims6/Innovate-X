@@ -1,5 +1,6 @@
 import React from "react";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
+import { Link } from "react-router";
 import Logo from "../../../Components/Logo";
 
 const Footer = () => {
@@ -22,28 +23,28 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-5 ">Platform</h3>
             <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/all-contests"
                   className="hover:text-blue-600 dark:hover:text-blue-400 hover:font-semibold transition-all duration-200"
                 >
                   Contests
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/leaderboard"
                   className="hover:text-blue-600 dark:hover:text-blue-400 hover:font-semibold transition-all duration-200"
                 >
                   Leaderboard
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/how-it-works"
                   className="hover:text-blue-600 dark:hover:text-blue-400 hover:font-semibold transition-all duration-200"
                 >
-                  Pricing
-                </a>
+                  How It Works
+                </Link>
               </li>
               <li>
                 <a
@@ -61,12 +62,12 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-5">Company</h3>
             <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/about-us"
                   className="hover:text-blue-600 dark:hover:text-blue-400 hover:font-semibold transition-all duration-200"
                 >
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
                 <a

@@ -22,6 +22,7 @@ function Navbar() {
     { name: "Home", href: "/" },
     { name: "All Contests", href: "/all-contests" },
     { name: "How It Works", href: "/how-it-works" },
+    { name: "About Us", href: "/about-us" },
     { name: "Leaderboard", href: "/leaderboard" },
   ];
 

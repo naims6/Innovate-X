@@ -1,6 +1,5 @@
 import useTheme from "../../../hooks/useTheme";
 import ContestHubHeader from "./ContestHubHeader";
-import CTASection from "./CTASection";
 import FeatureCard from "./FeatureCard";
 
 const WhyContestHub = () => {
@@ -144,9 +143,6 @@ const WhyContestHub = () => {
             rewarding platform for talent.
           </p>
         </div>
-
-        {/* CTA Section */}
-        <CTASection theme={theme} />
       </div>
     </section>
   );

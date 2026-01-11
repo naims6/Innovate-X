@@ -18,6 +18,7 @@ import MyProfile from "../Pages/Dashboard/UserDashBoard/MyProfile/MyProfile";
 import PaymentSuccess from "../Pages/Payment/PaymentSuccess/PaymentSuccess";
 import PaymentCancel from "../Pages/Payment/PaymentCancel/PaymentCancel";
 import HowItWorks from "../Pages/HowItWorks/HowItWorks";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 import Leaderboard from "../Pages/Leaderboard/Leaderboard";
 import ManageContests from "../Pages/Dashboard/AdminDashboard/ManageContests/ManageContests";
 import EditContest from "../Pages/Dashboard/CreatorDashboard/EditContest/EditContest";
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path: "how-it-works",
         Component: HowItWorks,
+      },
+      {
+        path: "about-us",
+        Component: AboutUs,
       },
       {
         path: "leaderboard",
