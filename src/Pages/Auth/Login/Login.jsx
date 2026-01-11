@@ -13,6 +13,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
@@ -32,6 +33,11 @@ const Login = () => {
     } finally {
       setIsAuthticating(false);
     }
+  };
+
+  const handleDemoLogin = () => {
+    setValue("email", "naimss@gmail.com");
+    setValue("password", "121212");
   };
 
   return (
@@ -114,6 +120,15 @@ const Login = () => {
               className="w-full py-3.5 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium rounded-xl hover:from-blue-700 hover:to-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
               {isAuthenticating ? "Login In..." : "Log in"}
+            </button>
+
+            {/* Demo Login Button */}
+            <button
+              type="button"
+              onClick={handleDemoLogin}
+              className="w-full py-3 bg-gray-700 text-white font-medium rounded-xl hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 transition border border-gray-600"
+            >
+              Demo Login
             </button>
           </form>
 
