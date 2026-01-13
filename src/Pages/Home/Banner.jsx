@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Search, Sparkles, Zap, Trophy } from "lucide-react";
 import useTheme from "../../hooks/useTheme";
 import { useNavigate } from "react-router";
@@ -168,11 +167,7 @@ const BannerSection = () => {
 
           <button
             type="submit"
-            className={`px-8 py-4 font-semibold transition-all duration-300 flex items-center gap-2 text-white ${
-              theme === "dark"
-                ? "bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg shadow-cyan-500/20"
-                : "bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-lg shadow-blue-500/20"
-            }`}
+            className="px-8 py-4 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105 flex items-center gap-2"
           >
             <Search className="w-4 h-4" />
             Search
@@ -187,7 +182,7 @@ const BannerSection = () => {
               onClick={() => handleTypeClick(type)}
               className={`px-3 py-1 rounded-full text-sm font-medium transition ${
                 search === type
-                  ? "bg-blue-600 text-white"
+                  ? "bg-linear-to-r from-blue-600 to-cyan-500 text-white"
                   : theme === "dark"
                   ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
                   : "bg-gray-100 text-gray-800 hover:bg-gray-200"

@@ -15,7 +15,7 @@ const PaymentCancel = () => {
         </p>
         <Link
           to="/all-contests"
-          className="mt-8 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="mt-8 px-6 py-2 bg-linear-to-r from-blue-600 to-cyan-500 text-white rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105"
         >
           Try Again
         </Link>

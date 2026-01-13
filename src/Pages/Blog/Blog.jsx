@@ -140,7 +140,7 @@ const Blog = () => {
     const matchesSearch =
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
     const matchesCategory =
       selectedCategory === "All" || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -158,14 +158,14 @@ const Blog = () => {
       <Container>
         {/* Header Section */}
         <div className="py-16 text-center">
-           <h1
+          <h1
             className={`text-5xl sm:text-6xl font-bold mb-4 ${
               theme === "dark" ? "text-white" : "text-gray-900"
             }`}
           >
             InnovateX{" "}
             <span className="bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-               Blog
+              Blog
             </span>
           </h1>
           <p
@@ -209,7 +209,7 @@ const Blog = () => {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     selectedCategory === category
-                      ? "bg-cyan-500 text-white"
+                      ? "bg-linear-to-r from-blue-600 to-cyan-500 text-white"
                       : theme === "dark"
                       ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
                       : "bg-white text-gray-600 hover:bg-gray-100"
@@ -469,7 +469,7 @@ const Blog = () => {
                   : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
               } focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20`}
             />
-            <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-xl font-medium transition-colors">
+            <button className="bg-linear-to-r from-blue-600 to-cyan-500 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105">
               Subscribe
             </button>
           </div>

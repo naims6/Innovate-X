@@ -1,4 +1,4 @@
-import {  Link } from "react-router";
+import { Link } from "react-router";
 import {
   CalendarIcon,
   UserIcon,
@@ -13,7 +13,6 @@ import Container from "../../Components/Container";
 
 const BlogDetail = () => {
   const { theme } = useTheme();
-
 
   // Mock blog data - in real app, this would come from API
   const blogPost = {
@@ -266,7 +265,7 @@ const BlogDetail = () => {
                 >
                   {blogPost.authorBio}
                 </p>
-                <button className="text-cyan-500 hover:text-cyan-600 font-medium transition-colors">
+                <button className="bg-linear-to-r from-blue-600 to-cyan-500 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105">
                   Follow Author
                 </button>
               </div>
