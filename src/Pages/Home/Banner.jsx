@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search, Sparkles, Zap, Trophy } from "lucide-react";
 import useTheme from "../../hooks/useTheme";
 import { useNavigate } from "react-router";
+import { motion } from "framer-motion";
 
 const BannerSection = () => {
   const [search, setSearch] = useState("");

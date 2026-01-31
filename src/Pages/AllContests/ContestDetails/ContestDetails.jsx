@@ -149,8 +149,8 @@ const ContestDetails = () => {
                     contest.level === "Beginner"
                       ? "bg-green-500"
                       : contest.level === "Intermediate"
-                      ? "bg-blue-500"
-                      : "bg-red-500"
+                        ? "bg-blue-500"
+                        : "bg-red-500"
                   }`}
                 >
                   {contest.level}
