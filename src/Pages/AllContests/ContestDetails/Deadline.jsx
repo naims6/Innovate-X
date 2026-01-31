@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { calculateTimeLeft } from "../../../utility/calculateTimeLeft";
 
-const Deadline = ({ theme, contest, timeLeft }) => {
+const Deadline = ({ theme, contest, onEnd }) => {
+  const [timeLeft, setTimeLeft] = useState(() =>
+    contest?.deadline ? calculateTimeLeft(contest.deadline) : null,
+  );
+
+  useEffect(() => {
+    if (!contest?.deadline) return;
+
+    // Set initial time left when contest data arrives
+    setTimeLeft(calculateTimeLeft(contest.deadline));
+
+    const intervalId = setInterval(() => {
+      const calculated = calculateTimeLeft(contest.deadline);
+      setTimeLeft(calculated);
+
+      if (calculated.ended) {
+        clearInterval(intervalId);
+        if (onEnd) onEnd();
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [contest?.deadline, onEnd]);
+
   return (
     <div
       className={`rounded-2xl p-8 mb-6 transition-colors duration-300 ${
@@ -9,8 +33,8 @@ const Deadline = ({ theme, contest, timeLeft }) => {
             ? "bg-red-900/30 border border-red-700/50"
             : "bg-red-50 border border-red-200"
           : theme === "dark"
-          ? "bg-linear-to-br from-slate-800 to-slate-700 border border-slate-700"
-          : "bg-linear-to-br from-white to-gray-50 border border-gray-200"
+            ? "bg-linear-to-br from-slate-800 to-slate-700 border border-slate-700"
+            : "bg-linear-to-br from-white to-gray-50 border border-gray-200"
       }`}
     >
       <p
@@ -53,7 +77,7 @@ const Deadline = ({ theme, contest, timeLeft }) => {
               }`}
             >
               <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-                {String(item.value).padStart(2, "0")}
+                {String(item.value || 0).padStart(2, "0")}
               </p>
               <p
                 className={`text-xs font-semibold ${
