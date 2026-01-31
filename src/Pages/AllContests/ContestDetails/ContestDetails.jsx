@@ -63,7 +63,7 @@ const ContestDetails = () => {
       </div>
     );
   }
-  
+
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
@@ -367,17 +367,10 @@ const ContestDetails = () => {
                     }`}
                     disabled={isEnded || checkingRegistration}
                   >
-                    {checkingRegistration ? (
-                      <>
-                        <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full font-bold"></div>
-                        <span>Checking...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>💳</span>
-                        Register & Pay
-                      </>
-                    )}
+                    <>
+                      <span>💳</span>
+                      Register & Pay
+                    </>
                   </button>
 
                   {isEnded && !checkingRegistration && (
