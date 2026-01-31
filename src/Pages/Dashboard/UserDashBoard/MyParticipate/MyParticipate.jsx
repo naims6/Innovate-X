@@ -22,9 +22,7 @@ const MyParticipate = () => {
 
   if (isLoading) {
     return (
-      <div
-        className={`min-h-screen flex items-center justify-center`}
-      >
+      <div className={`min-h-screen flex items-center justify-center`}>
         <div className="text-xl">Loading contests...</div>
       </div>
     );
@@ -80,7 +78,7 @@ const MyParticipate = () => {
                   </p>
                   <Link
                     to={`/contests/${contest.contestId}`}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
+                    className="px-4 py-2 bg-linear-to-r from-blue-600 to-cyan-500 text-white rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105"
                   >
                     View Details
                   </Link>

@@ -108,11 +108,7 @@ const Newsletter = () => {
                 </div>
                 <button
                   type="submit"
-                  className={`px-8 py-3 font-medium rounded-xl focus:outline-none focus:ring-4 focus:ring-white/20 transition-all duration-300 hover:scale-105 ${
-                    theme === "dark"
-                      ? "bg-white text-blue-900 hover:bg-blue-50"
-                      : "bg-white text-blue-700 hover:bg-gray-100"
-                  }`}
+                  className="px-8 py-3 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-medium rounded-xl hover:from-blue-700 hover:to-cyan-600 focus:outline-none focus:ring-4 focus:ring-white/20 transition-all duration-300 hover:scale-105"
                 >
                   Subscribe
                 </button>

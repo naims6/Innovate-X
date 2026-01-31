@@ -108,20 +108,23 @@ const HowItWorks = () => {
           >
             How InnovateX{" "}
             <span className="bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-               Works
+              Works
             </span>
           </h1>
-         
+
           <p className="text-xl md:text-2xl text-text-secondary max-w-4xl mx-auto leading-relaxed mb-8">
             Join the world's most trusted creative contest platform. Compete
             fairly, grow your skills, and win meaningful rewards in a
             transparent environment.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to={"/all-contests"} className="bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-opacity duration-300 flex items-center justify-center gap-2">
+            <Link
+              to={"/all-contests"}
+              className="bg-linear-to-r from-blue-600 to-cyan-500 text-white px-8 py-4 rounded-xl font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
+            >
               Get Started <FaArrowRight />
             </Link>
-            <button className="border border-border text-text-primary px-8 py-4 rounded-xl font-semibold hover:bg-bg-surface transition-colors duration-300">
+            <button className="border border-border text-text-primary px-8 py-4 rounded-xl font-medium hover:bg-bg-surface transition-colors duration-300">
               Watch Demo
             </button>
           </div>
@@ -279,7 +282,10 @@ const HowItWorks = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link to={"/all-contests"} className="bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-opacity duration-300 flex items-center justify-center gap-2">
+            <Link
+              to={"/all-contests"}
+              className="bg-linear-to-r from-blue-600 to-cyan-500 text-white px-8 py-4 rounded-xl font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
+            >
               Browse Contests <FaArrowRight />
             </Link>
             <button className="border border-border text-text-primary px-8 py-4 rounded-xl font-semibold hover:bg-bg-surface transition-colors duration-300">

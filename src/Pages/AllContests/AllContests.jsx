@@ -10,6 +10,7 @@ import Pagination from "./Pagination";
 
 const AllContests = () => {
   const { theme } = useTheme();
+  console.log("all contest page rerender check");
 
   const axiosSecure = useAxiosSecure();
   const [searchParams] = useSearchParams();
@@ -64,9 +65,6 @@ const AllContests = () => {
     return colors[category] || "from-indigo-500 to-purple-500";
   };
 
-  // useEffect(() => {
-  //   setPage(1);
-  // }, [searchTerm, selectedCategory, sortBy]);
 
   useEffect(() => {
     window.scrollTo({
@@ -88,7 +86,7 @@ const AllContests = () => {
         categories={categories}
         setSelectedCategory={setSelectedCategory}
         selectedCategory={selectedCategory}
-      /> 
+      />
 
       {isLoading ? (
         <div className="flex items-center justify-center">

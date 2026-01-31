@@ -158,14 +158,14 @@ const MyProfile = () => {
               {editMode ? (
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
+                  className="px-6 py-2 bg-linear-to-r from-blue-600 to-cyan-500 text-white rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105"
                 >
                   Save Changes
                 </button>
               ) : (
                 <span
                   onClick={() => setEditMode(true)}
-                  className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
+                  className="px-6 py-2 bg-linear-to-r from-blue-600 to-cyan-500 text-white rounded-lg hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105 cursor-pointer"
                 >
                   Edit Profile
                 </span>

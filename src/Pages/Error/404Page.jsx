@@ -54,7 +54,7 @@ const NotFoundPage = () => {
       >
         <Link
           to="/"
-          className="mt-6 inline-block px-8 py-3 bg-blue-600 text-white font-semibold text-lg rounded-lg shadow hover:bg-blue-700 transition"
+          className="mt-6 inline-block px-8 py-3 bg-linear-to-r from-blue-600 to-cyan-500 text-white font-semibold text-lg rounded-lg shadow hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105"
         >
           Back to Home
         </Link>

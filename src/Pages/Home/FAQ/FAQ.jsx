@@ -88,8 +88,8 @@ const FAQ = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {faqs.map((faq, index) => (
               <div
                 key={index}
@@ -151,7 +151,7 @@ const FAQ = () => {
           </div>
 
           {/* Contact Support */}
-          <div className="mt-12 text-center">
+          <div className="mt-16 text-center">
             <div
               className={`border rounded-2xl p-8 ${
                 theme === "dark"
@@ -175,14 +175,14 @@ const FAQ = () => {
                 journey.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors">
+                <button className="bg-linear-to-r from-blue-600 to-cyan-500 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-cyan-600 transition-all duration-300 hover:scale-105">
                   Contact Support
                 </button>
                 <button
                   className={`border px-6 py-3 rounded-xl font-medium transition-colors ${
                     theme === "dark"
-                      ? "border-blue-600 text-blue-400 hover:bg-blue-900/20"
-                      : "border-blue-600 text-blue-600 hover:bg-blue-50"
+                      ? "border-gray-600 text-gray-300 hover:bg-gray-700"
+                      : "border-gray-300 text-gray-600 hover:bg-gray-100"
                   }`}
                 >
                   Browse Help Center

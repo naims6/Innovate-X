@@ -72,10 +72,7 @@ const UserTableRow = ({ user, theme, ROLE_OPTIONS }) => {
           <button
             onClick={() => handleUserRoleUpdate(user._id)}
             className={
-              "px-4 py-1.5 rounded-md text-sm font-medium shadow-sm transition " +
-              (theme === "dark"
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-blue-600 text-white hover:bg-blue-700")
+              "px-4 py-1.5 rounded-md text-sm font-medium shadow-sm transition bg-linear-to-r from-blue-600 to-cyan-500 text-white hover:from-blue-700 hover:to-cyan-600"
             }
           >
             Update
