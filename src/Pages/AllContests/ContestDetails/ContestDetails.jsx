@@ -24,7 +24,7 @@ const ContestDetails = () => {
       return result.data;
     },
     staleTime: 10 * 60 * 1000,
-    cacheTime: 30 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
     retry: 2,
   });
 
@@ -56,13 +56,14 @@ const ContestDetails = () => {
     setIsPaymentModalOpen(false);
   };
 
-  if (isLoading || checkingRegistration) {
+  if (isLoading && !contest?.name) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
+  
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
@@ -335,14 +336,23 @@ const ContestDetails = () => {
                         : "bg-green-50 border border-green-200"
                     }`}
                   >
-                    <p
-                      className={`font-semibold flex items-center justify-center gap-2 ${
-                        theme === "dark" ? "text-green-400" : "text-green-700"
-                      }`}
-                    >
-                      <span>✓</span>
-                      You are Registered
-                    </p>
+                    {checkingRegistration ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="animate-spin h-4 w-4 border-2 border-green-500 border-t-transparent rounded-full"></div>
+                        <span className="text-sm font-medium">
+                          Checking status...
+                        </span>
+                      </div>
+                    ) : (
+                      <p
+                        className={`font-semibold flex items-center justify-center gap-2 ${
+                          theme === "dark" ? "text-green-400" : "text-green-700"
+                        }`}
+                      >
+                        <span>✓</span>
+                        You are Registered
+                      </p>
+                    )}
                   </div>
                 </>
               ) : (
@@ -351,19 +361,28 @@ const ContestDetails = () => {
                   <button
                     onClick={() => setIsPaymentModalOpen(true)}
                     className={`w-full py-4 px-6 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all duration-300 transform ${
-                      isEnded
+                      isEnded || checkingRegistration
                         ? "bg-gray-400 text-white cursor-not-allowed opacity-50"
                         : "bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-1 active:scale-95"
                     }`}
-                    disabled={isEnded}
+                    disabled={isEnded || checkingRegistration}
                   >
-                    <span>💳</span>
-                    Register & Pay
+                    {checkingRegistration ? (
+                      <>
+                        <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full font-bold"></div>
+                        <span>Checking...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>💳</span>
+                        Register & Pay
+                      </>
+                    )}
                   </button>
 
-                  {isEnded && (
+                  {isEnded && !checkingRegistration && (
                     <div
-                      className={`rounded-lg p-4 text-center ${
+                      className={`rounded-lg p-4 text-center mt-4 ${
                         theme === "dark"
                           ? "bg-red-900/30 border border-red-700/50"
                           : "bg-red-50 border border-red-200"

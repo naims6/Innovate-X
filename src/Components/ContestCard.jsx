@@ -1,7 +1,23 @@
 import React from "react";
 import { Link } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
+  const queryClient = useQueryClient();
+  const axiosSecure = useAxiosSecure();
+
+  const prefetchContest = () => {
+    queryClient.prefetchQuery({
+      queryKey: ["contest", contest._id],
+      queryFn: async () => {
+        const result = await axiosSecure(`/contests/${contest._id}`);
+        return result.data;
+      },
+      staleTime: 10 * 60 * 1000,
+    });
+  };
+
   return (
     <div
       className={`flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 bg-bg-surface/30 border-border/50 border shadow-sm`}
@@ -23,7 +39,7 @@ const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
         {/* Category Badge */}
         <div
           className={`absolute top-4 right-4 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-linear-to-r ${getCategoryColor(
-            contest.category
+            contest.category,
           )} shadow-lg backdrop-blur-sm`}
         >
           {contest.category}
@@ -72,6 +88,7 @@ const ContestCard = ({ contest, index, theme, getCategoryColor }) => {
         {/* Details Button */}
         <Link
           to={`/contests/${contest._id}`}
+          onMouseEnter={prefetchContest}
           className={`w-full mt-2 py-2.5 px-4 rounded-lg font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 transform active:scale-95 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5  
           }`}
         >
