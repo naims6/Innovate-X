@@ -43,7 +43,7 @@ const Login = () => {
       setValue("email", "naim2@gmail.com");
       setValue("password", "121212");
     } else {
-      setValue("email", "naimss@gmail.com");
+      setValue("email", "tawhid1@gmail.com");
       setValue("password", "121212");
     }
   };
